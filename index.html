@@ -37,7 +37,47 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><!DOCTYPE html>
+        </script><script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+</script>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -493,12 +533,9 @@
         .compact-contact {
             background: var(--dark-bg);
             padding: 60px 0;
-            display: block !important;
-            opacity: 1 !important;
-            visibility: visible !important;
             z-index: 10;
+            overflow-x: hidden;
         }
-
         .contact-container {
             display: flex;
             gap: 40px;
@@ -508,13 +545,9 @@
             margin-left: auto;
             margin-right: auto;
         }
-
         .contact-list {
             max-width: 600px;
-            display: block !important;
-            opacity: 1 !important;
         }
-
         .contact-item {
             display: flex;
             align-items: center;
@@ -523,14 +556,11 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             transition: all 0.3s ease;
-            opacity: 1 !important;
         }
-
         .contact-item:hover {
             transform: translateX(10px);
             box-shadow: 0 0 15px var(--neon-cyan);
         }
-
         .contact-icon {
             width: 50px;
             height: 50px;
@@ -542,7 +572,6 @@
             font-size: 1.5rem;
             color: var(--text-light);
         }
-
         .contact-text a, .contact-text p {
             color: #FFFFFF;
             text-decoration: none;
@@ -551,24 +580,94 @@
             font-weight: 600;
             font-size: 1.1rem;
         }
-
         .contact-text a:hover {
             color: var(--neon-cyan);
             text-shadow: 0 0 10px var(--neon-cyan);
         }
-
         .contact-map {
             flex: 1;
             max-width: 600px;
             position: relative;
         }
-
         .contact-map iframe {
             width: 100%;
             height: 100%;
             border: 0;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 221, 235, 0.3);
+        }
+
+        /* Responsive Contact */
+        @media (max-width: 992px) {
+            .contact-container {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                max-width: 100%;
+            }
+            .contact-list {
+                max-width: 100%;
+                width: 100%;
+            }
+            .contact-map {
+                max-width: 100%;
+                width: 100%;
+                height: 400px;
+            }
+        }
+        @media (max-width: 768px) {
+            .compact-contact {
+                padding: 40px 0;
+            }
+            .contact-container {
+                gap: 30px;
+            }
+            .contact-list {
+                max-width: 500px;
+            }
+            .contact-item {
+                padding: 12px;
+                margin-bottom: 15px;
+                gap: 10px;
+            }
+            .contact-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.4rem;
+                margin-right: 15px;
+            }
+            .contact-text a, .contact-text p {
+                font-size: 1rem;
+            }
+            .contact-map {
+                height: 350px;
+                max-width: 500px;
+            }
+        }
+        @media (max-width: 480px) {
+            .compact-contact {
+                padding: 30px 0;
+            }
+            .contact-container {
+                gap: 20px;
+            }
+            .contact-item {
+                padding: 10px;
+                margin-bottom: 12px;
+            }
+            .contact-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1.3rem;
+                margin-right: 12px;
+            }
+            .contact-text a, .contact-text p {
+                font-size: 0.95rem;
+            }
+            .contact-map {
+                height: 300px;
+                max-width: 100%;
+            }
         }
 
         /* Footer */
@@ -610,20 +709,6 @@
 
             header, .parallax-banner, section, footer {
                 max-width: 100%;
-            }
-
-            .contact-container {
-                flex-direction: column;
-                justify-content: center;
-                max-width: 100%;
-            }
-
-            .contact-list, .contact-map {
-                max-width: 100%;
-            }
-
-            .contact-map {
-                height: 400px !important;
             }
         }
 
@@ -692,20 +777,12 @@
                 top: 60px;
             }
 
-            .contact-text a, .contact-text p {
-                font-size: 0.9rem;
-            }
-
             .equalizer {
                 max-width: 200px;
             }
 
             .sea-waves {
                 height: 30px;
-            }
-
-            .contact-map {
-                height: 300px !important;
             }
         }
     </style>
@@ -881,7 +958,6 @@
             <h2 data-lang="en">Contact Us</h2>
             <h2 data-lang="me" style="display:none">Kontaktirajte nas</h2>
             <h2 data-lang="ru" style="display:none">Свяжитесь с нами</h2>
-
             <div class="contact-container">
                 <div class="contact-list">
                     <div class="contact-item">
@@ -907,7 +983,7 @@
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div class="contact-text">
-                            <a href="mailto:info@vinyl-m.me">info@vinyl-m.me</a>
+                            <a href="mailto:Vinylmbudva@gmail.com">Vinylmbudva@gmail.com</a>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -1046,14 +1122,17 @@
             function setMapHeight() {
                 const contactList = document.querySelector('.contact-list');
                 const contactMap = document.querySelector('.contact-map');
-                if (contactList && contactMap && window.innerWidth > 992) {
-                    const listHeight = contactList.offsetHeight;
-                    contactMap.style.height = `${listHeight}px`;
-                } else {
-                    contactMap.style.height = '400px';
+                if (contactList && contactMap) {
+                    if (window.innerWidth > 992) {
+                        const listHeight = contactList.offsetHeight;
+                        contactMap.style.height = `${listHeight}px`;
+                    } else if (window.innerWidth <= 768) {
+                        contactMap.style.height = '350px';
+                    } else {
+                        contactMap.style.height = '400px';
+                    }
                 }
             }
-
             setMapHeight();
             window.addEventListener('resize', setMapHeight);
 
@@ -1092,20 +1171,24 @@
             });
             gsap.from('.contact-item', {
                 scrollTrigger: { trigger: '.contact-list', start: 'top 80%' },
-                x: -50,
+                x: window.innerWidth <= 768 ? -30 : -50,
                 opacity: 0,
-                duration: 0.8,
+                duration: window.innerWidth <= 768 ? 0.6 : 0.8,
                 stagger: 0.2,
                 onStart: () => {
+                    console.log('Contact items animation started');
                     document.querySelectorAll('.contact-item').forEach(item => {
-                        item.style.opacity = '1';
                         item.style.display = 'flex';
+                        item.style.opacity = '1';
                     });
+                },
+                onComplete: () => {
+                    console.log('Contact items animation completed');
                 }
             });
             gsap.from('.contact-map', {
                 scrollTrigger: { trigger: '.contact-map', start: 'top 80%' },
-                y: 50,
+                y: window.innerWidth <= 768 ? 30 : 50,
                 opacity: 0,
                 duration: 1
             });
@@ -1132,13 +1215,21 @@
             }
 
             // Инициализация контактов
-            document.querySelector('.compact-contact').style.display = 'block';
-            document.querySelector('.contact-list').style.display = 'block';
-            document.querySelectorAll('.contact-item').forEach(item => {
-                item.style.display = 'flex';
-                item.style.opacity = '1';
-            });
+            const compactContact = document.querySelector('.compact-contact');
+            const contactList = document.querySelector('.contact-list');
+            if (compactContact && contactList) {
+                compactContact.style.display = 'block';
+                contactList.style.display = 'block';
+                document.querySelectorAll('.contact-item').forEach(item => {
+                    item.style.display = 'flex';
+                    item.style.opacity = '1';
+                    console.log('Contact item initialized:', item);
+                });
+            } else {
+                console.error('Contact section or list not found');
+            }
         });
     </script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9340a58a0db8b0d3',t:'MTc0NTI3Nzk4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
