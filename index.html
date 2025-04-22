@@ -80,7 +80,6 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
-            overflow-x: hidden;
         }
 
         /* Page Particles */
@@ -364,7 +363,6 @@
             z-index: 5;
             max-width: 1400px;
             margin: 0 auto;
-            overflow-x: hidden;
         }
 
         h2 {
@@ -419,13 +417,10 @@
             margin-bottom: 40px;
             justify-items: center;
             max-width: 100%;
-            overflow-x: hidden;
         }
         .list-block {
+            width: 100%;
             max-width: 600px;
-            width: auto;
-            min-width: 0;
-            margin: 0 auto;
             padding: 20px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
@@ -433,6 +428,7 @@
             text-align: center;
         }
         .worked-with, .organized {
+            width: 100%;
             max-width: 600px;
             text-align: center;
         }
@@ -444,9 +440,8 @@
         }
         .feature-list {
             margin: 15px 0 20px 0;
-            width: auto;
+            width: 100%;
             max-width: 600px;
-            min-width: 0;
             list-style: none;
             display: flex;
             flex-direction: column;
@@ -461,12 +456,8 @@
             text-align: center;
         }
         .feature-item.card {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: auto;
+            width: 100%;
             max-width: 600px;
-            min-width: 0;
             margin-bottom: 15px;
             padding: 15px;
             font-size: 1.125rem;
@@ -478,8 +469,6 @@
             box-shadow: 0 0 10px rgba(0, 221, 235, 0.3);
             opacity: 1;
             text-align: center;
-            margin-left: auto;
-            margin-right: auto;
             will-change: transform;
         }
         .feature-item.card:hover {
@@ -554,7 +543,6 @@
             background: var(--dark-bg);
             padding: 60px 0;
             z-index: 10;
-            overflow-x: hidden;
         }
         .contact-container {
             display: flex;
@@ -627,11 +615,9 @@
             }
             .contact-list {
                 max-width: 100%;
-                width: auto;
             }
             .contact-map {
                 max-width: 100%;
-                width: auto;
                 height: 400px;
             }
             .about-content {
@@ -645,31 +631,22 @@
                 grid-template-columns: 1fr;
                 justify-items: center;
                 max-width: 100%;
-                overflow-x: hidden;
             }
             .list-block {
-                max-width: 600px;
-                width: auto;
-                min-width: 0;
+                max-width: 100%;
                 padding: 15px;
             }
             .worked-with, .organized {
-                max-width: 600px;
+                max-width: 100%;
             }
             .feature-list {
-                width: auto;
-                max-width: 600px;
-                min-width: 0;
-                margin: 15px 0 15px 0;
+                max-width: 100%;
+                margin: 15px 0;
             }
             .feature-item.card {
-                max-width: 600px;
-                min-width: 0;
+                max-width: 100%;
                 margin-bottom: 12px;
                 padding: 12px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
                 text-align: center;
             }
             .about-text h3 {
@@ -693,17 +670,17 @@
                 font-size: 0.95rem;
             }
             .list-block {
-                max-width: 500px;
+                max-width: 100%;
                 padding: 15px;
             }
             .worked-with, .organized {
-                max-width: 500px;
+                max-width: 100%;
             }
             .feature-list {
-                max-width: 500px;
+                max-width: 100%;
             }
             .feature-item.card {
-                max-width: 500px;
+                max-width: 100%;
                 font-size: 0.95rem;
                 padding: 12px;
                 margin-bottom: 12px;
@@ -718,7 +695,7 @@
                 gap: 30px;
             }
             .contact-list {
-                max-width: 500px;
+                max-width: 100%;
             }
             .contact-item {
                 padding: 12px;
@@ -736,7 +713,7 @@
             }
             .contact-map {
                 height: 350px;
-                max-width: 500px;
+                max-width: 100%;
             }
         }
         @media (max-width: 480px) {
@@ -753,17 +730,17 @@
                 font-size: 0.875rem;
             }
             .list-block {
-                max-width: 360px;
+                max-width: 100%;
                 padding: 10px;
             }
             .worked-with, .organized {
-                max-width: 360px;
+                max-width: 100%;
             }
             .feature-list {
-                max-width: 360px;
+                max-width: 100%;
             }
             .feature-item.card {
-                max-width: 360px;
+                max-width: 100%;
                 font-size: 0.875rem;
                 padding: 10px;
                 margin-bottom: 10px;
@@ -805,7 +782,6 @@
             z-index: 5;
             max-width: 1400px;
             margin: 0 auto;
-            overflow-x: hidden;
         }
 
         #particles-js {
@@ -1285,26 +1261,12 @@
                     document.querySelectorAll('.feature-item.card').forEach(item => {
                         item.style.opacity = '1';
                         console.log('Card rendered:', item.textContent, 
-                            'Alignment:', window.getComputedStyle(item).textAlign, 
-                            'Font-size:', window.getComputedStyle(item).fontSize, 
-                            'Display:', window.getComputedStyle(item).display, 
                             'Width:', window.getComputedStyle(item).width, 
                             'Max-width:', window.getComputedStyle(item).maxWidth, 
                             'ClientWidth:', item.clientWidth, 
                             'OffsetWidth:', item.offsetWidth, 
                             'Overflow-x:', window.getComputedStyle(item).overflowX, 
                             'Screen width:', window.innerWidth);
-                    });
-                    document.querySelectorAll('.organized .feature-item.card').forEach(item => {
-                        console.log('Organized card:', item.textContent, 
-                            'Alignment:', window.getComputedStyle(item).textAlign, 
-                            'Font-size:', window.getComputedStyle(item).fontSize, 
-                            'Display:', window.getComputedStyle(item).display, 
-                            'Width:', window.getComputedStyle(item).width, 
-                            'Max-width:', window.getComputedStyle(item).maxWidth, 
-                            'ClientWidth:', item.clientWidth, 
-                            'OffsetWidth:', item.offsetWidth, 
-                            'Overflow-x:', window.getComputedStyle(item).overflowX);
                     });
                     console.log('Horizontal scroll check:', document.documentElement.scrollWidth > window.innerWidth ? 'Overflow detected' : 'No overflow');
                 }
@@ -1327,17 +1289,7 @@
                 x: window.innerWidth <= 768 ? -30 : -50,
                 opacity: 0,
                 duration: window.innerWidth <= 768 ? 0.6 : 0.8,
-                stagger: 0.2,
-                onStart: () => {
-                    console.log('Contact items animation started');
-                    document.querySelectorAll('.contact-item').forEach(item => {
-                        item.style.display = 'flex';
-                        item.style.opacity = '1';
-                    });
-                },
-                onComplete: () => {
-                    console.log('Contact items animation completed');
-                }
+                stagger: 0.2
             });
             gsap.from('.contact-map', {
                 scrollTrigger: { trigger: '.contact-map', start: 'top 80%' },
@@ -1369,7 +1321,6 @@
                     element.style.opacity = shouldDisplay ? '1' : '0';
                     if (shouldDisplay && element.classList.contains('feature-list')) {
                         console.log('Displaying feature list:', element, 
-                            'Items:', element.querySelectorAll('.feature-item.card').length, 
                             'Width:', window.getComputedStyle(element).width, 
                             'Max-width:', window.getComputedStyle(element).maxWidth, 
                             'ClientWidth:', element.clientWidth, 
@@ -1377,9 +1328,6 @@
                             'Overflow-x:', window.getComputedStyle(element).overflowX);
                         element.querySelectorAll('.feature-item.card').forEach(item => {
                             console.log('Feature item:', item.textContent, 
-                                'Alignment:', window.getComputedStyle(item).textAlign, 
-                                'Font-size:', window.getComputedStyle(item).fontSize, 
-                                'Display:', window.getComputedStyle(item).display, 
                                 'Width:', window.getComputedStyle(item).width, 
                                 'Max-width:', window.getComputedStyle(item).maxWidth, 
                                 'ClientWidth:', item.clientWidth, 
@@ -1388,19 +1336,6 @@
                         });
                     }
                 });
-                document.querySelectorAll('.organized .feature-item.card').forEach(item => {
-                    console.log('Post-language switch - Organized card:', item.textContent, 
-                        'Alignment:', window.getComputedStyle(item).textAlign, 
-                        'Font-size:', window.getComputedStyle(item).fontSize, 
-                        'Display:', window.getComputedStyle(item).display, 
-                        'Width:', window.getComputedStyle(item).width, 
-                        'Max-width:', window.getComputedStyle(item).maxWidth, 
-                        'ClientWidth:', item.clientWidth, 
-                        'OffsetWidth:', item.offsetWidth, 
-                        'Overflow-x:', window.getComputedStyle(item).overflowX);
-                });
-                document.querySelector('.compact-contact').style.display = 'block';
-                document.querySelector('.contact-list').style.display = 'block';
             }
 
             // Инициализация контактов
@@ -1412,10 +1347,7 @@
                 document.querySelectorAll('.contact-item').forEach(item => {
                     item.style.display = 'flex';
                     item.style.opacity = '1';
-                    console.log('Contact item initialized:', item);
                 });
-            } else {
-                console.error('Contact section or list not found');
             }
 
             // Инициализация текста карточек
@@ -1424,9 +1356,6 @@
                 list.querySelectorAll('.feature-item.card').forEach(item => {
                     item.style.opacity = '1';
                     console.log('Initialized card:', item.textContent, 
-                        'Alignment:', window.getComputedStyle(item).textAlign, 
-                        'Font-size:', window.getComputedStyle(item).fontSize, 
-                        'Display:', window.getComputedStyle(item).display, 
                         'Width:', window.getComputedStyle(item).width, 
                         'Max-width:', window.getComputedStyle(item).maxWidth, 
                         'ClientWidth:', item.clientWidth, 
