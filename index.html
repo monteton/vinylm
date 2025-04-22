@@ -404,6 +404,8 @@
             width: 100%;
             max-width: 100%;
             list-style: none;
+            display: block;
+            opacity: 1;
         }
         .feature-item {
             display: flex;
@@ -415,6 +417,7 @@
             transition: all 0.3s ease;
             width: 100%;
             max-width: 100%;
+            opacity: 1;
         }
         .feature-item:hover {
             background: rgba(0, 221, 235, 0.1);
@@ -515,6 +518,8 @@
         .contact-list {
             max-width: 600px;
             width: 100%;
+            display: block;
+            opacity: 1;
         }
         .contact-item {
             display: flex;
@@ -525,6 +530,7 @@
             border-radius: 10px;
             transition: all 0.3s ease;
             width: 100%;
+            opacity: 1;
         }
         .contact-item:hover {
             transform: translateX(10px);
@@ -588,6 +594,7 @@
             }
             .contact-list {
                 max-width: 100%;
+                display: block;
             }
             .contact-map {
                 max-width: 100%;
@@ -646,11 +653,13 @@
             }
             .contact-list {
                 max-width: 500px;
+                display: block;
             }
             .contact-item {
                 padding: 12px;
                 margin-bottom: 15px;
                 gap: 10px;
+                display: flex;
             }
             .contact-icon {
                 width: 40px;
@@ -671,10 +680,14 @@
             .about-text p {
                 font-size: 1rem;
             }
+            .feature-list {
+                display: block;
+            }
             .feature-item {
                 padding: 8px;
                 margin-bottom: 15px;
                 font-size: 0.95rem;
+                display: flex;
             }
         }
         @media (max-width: 480px) {
@@ -709,9 +722,13 @@
             .contact-container {
                 gap: 20px;
             }
+            .contact-list {
+                display: block;
+            }
             .contact-item {
                 padding: 10px;
                 margin-bottom: 12px;
+                display: flex;
             }
             .contact-icon {
                 width: 35px;
@@ -732,10 +749,14 @@
             .about-text p {
                 font-size: 0.875rem;
             }
+            .feature-list {
+                display: block;
+            }
             .feature-item {
                 padding: 6px;
                 margin-bottom: 12px;
                 font-size: 0.875rem;
+                display: flex;
             }
         }
 
@@ -884,7 +905,7 @@
                         <li class="feature-item"><i class="fas fa-microphone"></i> Travega (Irska)</li>
                         <li class="feature-item"><i class="fas fa-microphone"></i> Dubioza Kolektiv</li>
                         <li class="feature-item"><i class="fas fa-microphone"></i> Boris Grebenšikov (Ruski Bob Dylan)</li>
-                        <li class="feature-item"><i class="fas display: flex;"></i> Psoy Korolenko (Rusija)</li>
+                        <li class="feature-item"><i class="fas fa-microphone"></i> Psoy Korolenko (Rusija)</li>
                         <li class="feature-item"><i class="fas fa-microphone"></i> Hermes Brothers (Rusija)</li>
                         <li class="feature-item"><i class="fas fa-microphone"></i> Grupa Megapolis – Oleg Nestorov (Rusija)</li>
                     </ul>
@@ -924,7 +945,7 @@
                         <li class="feature-item"><i class="fas fa-calendar-alt"></i> Reggae Festival — Будва</li>
                         <li class="feature-item"><i class="fas fa-calendar-alt"></i> Garden Planet Festival — Будва</li>
                         <li class="feature-item"><i class="fas fa-calendar-alt"></i> Фестиваль духовых оркестров — Будва</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Фестиваль «С drinksлово ново»</li>
+                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Фестиваль «Слово ново»</li>
                         <li class="feature-item"><i class="fas fa-calendar-alt"></i> Tivat World Music Festival</li>
                         <li class="feature-item"><i class="fas fa-calendar-alt"></i> Dukley Music Festival — Будва</li>
                     </ul>
@@ -1067,6 +1088,9 @@
                 });
             });
 
+            // Initialize language
+            changeLanguage('en');
+
             // Mobile Menu
             const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
             const nav = document.querySelector('nav');
@@ -1166,6 +1190,7 @@
                 const contactList = document.querySelector('.contact-list');
                 const contactMap = document.querySelector('.contact-map');
                 if (contactList && contactMap) {
+                    console.log('Contact list found:', contactList.children.length, 'items');
                     if (window.innerWidth > 992) {
                         const listHeight = contactList.offsetHeight;
                         contactMap.style.height = `${listHeight}px`;
@@ -1174,6 +1199,8 @@
                     } else {
                         contactMap.style.height = '400px';
                     }
+                } else {
+                    console.error('Contact list or map not found');
                 }
             }
             setMapHeight();
@@ -1184,7 +1211,6 @@
             gsap.from('.language-switcher', { y: -20, opacity: 0, duration: 1, delay: 0.7 });
             gsap.from('.banner-content h2', { scale: 0.5, opacity: 0, duration: 1.5, ease: 'back' });
             gsap.from('.equalizer rect', {
-                scrollTrigger: { trigger: '.parallax-banner', start: 'top 80%' },
                 scaleY: 0,
                 opacity: 0,
                 stagger: 0.1,
@@ -1192,21 +1218,18 @@
                 ease: 'power2.out'
             });
             gsap.from('.sea-waves path', {
-                scrollTrigger: { trigger: '.parallax-banner', start: 'top 80%' },
                 opacity: 0,
                 y: 20,
                 stagger: 0.2,
                 duration: 1
             });
             gsap.from('.about-content', {
-                scrollTrigger: { trigger: '#about', start: 'top 80%' },
                 y: 100,
                 opacity: 0,
                 duration: 1,
                 stagger: 0.2
             });
             gsap.from('.feature-item', {
-                scrollTrigger: { trigger: '.feature-list', start: 'top 80%' },
                 x: -30,
                 opacity: 0,
                 duration: 0.6,
@@ -1214,21 +1237,21 @@
                 ease: 'power2.out'
             });
             gsap.from('.work-item', {
-                scrollTrigger: { trigger: '.work-grid', start: 'top 80%' },
                 scale: 0.8,
                 opacity: 0,
                 duration: 0.8,
                 stagger: 0.2
             });
             gsap.from('.contact-item', {
-                scrollTrigger: { trigger: '.contact-list', start: 'top 80%' },
                 x: -30,
                 opacity: 0,
                 duration: 0.6,
-                stagger: 0.2
+                stagger: 0.2,
+                onStart: () => {
+                    console.log('Contact items animation started:', document.querySelectorAll('.contact-item').length);
+                }
             });
             gsap.from('.contact-map', {
-                scrollTrigger: { trigger: '.contact-map', start: 'top 80%' },
                 y: 30,
                 opacity: 0,
                 duration: 1
@@ -1249,6 +1272,7 @@
                 document.querySelectorAll('[data-lang]').forEach(element => {
                     if (element.classList.contains('lang-btn')) return;
                     element.style.display = element.getAttribute('data-lang') === lang ? '' : 'none';
+                    console.log('Language:', lang, 'Element:', element.tagName, 'data-lang:', element.getAttribute('data-lang'), 'Display:', element.style.display);
                 });
             }
         });
