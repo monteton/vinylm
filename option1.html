@@ -37,7 +37,47 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><!DOCTYPE html>
+        </script><script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+</script>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -314,6 +354,7 @@
         .category:nth-child(3) { animation-delay: 0.6s; }
         .category:nth-child(4) { animation-delay: 0.8s; }
         .category:nth-child(5) { animation-delay: 1s; }
+        .category:nth-child(6) { animation-delay: 1.2s; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -563,7 +604,9 @@
         <div class="container">
             <!-- Speakers -->
             <div class="category">
-                <h3>SPEAKERS</h3>
+                <h3 data-lang="en">SPEAKERS</h3>
+                <h3 data-lang="me" style="display:none">ZVUČNICI</h3>
+                <h3 data-lang="ru" style="display:none">ДИНАМИКИ</h3>
                 <div class="models">
                     <div class="model">D&B B22 Sub<svg class="mini-equalizer" viewBox="0 0 40 15">
                         <defs>
@@ -671,7 +714,9 @@
 
             <!-- Mixing Consoles -->
             <div class="category">
-                <h3>MIXING CONSOLES</h3>
+                <h3 data-lang="en">MIXING CONSOLES</h3>
+                <h3 data-lang="me" style="display:none">MIKS PULT</h3>
+                <h3 data-lang="ru" style="display:none">МИКШЕРНЫЕ ПУЛЬТЫ</h3>
                 <div class="models">
                     <div class="model">DIGICO Quantum 225<svg class="mini-equalizer" viewBox="0 0 40 15">
                         <rect class="eq-bar-1" x="8" y="7" width="6" height="8" />
@@ -696,7 +741,7 @@
                     <div class="model">BEHRINGER X32<svg class="mini-equalizer" viewBox="0 0 40 15">
                         <rect class="eq-bar-1" x="8" y="7" width="6" height="8" />
                         <rect class="eq-bar-2" x="20" y="4" width="6" height="11" />
-                        <rect jurado="eq-bar-3" x="32" y="6" width="6" height="9" />
+                        <rect class="eq-bar-3" x="32" y="6" width="6" height="9" />
                     </svg></div>
                     <div class="model">ALLEN & HEATH 16:2<svg class="mini-equalizer" viewBox="0 0 40 15">
                         <rect class="eq-bar-1" x="8" y="7" width="6" height="8" />
@@ -723,7 +768,9 @@
 
             <!-- Microphones -->
             <div class="category">
-                <h3>MICROPHONES</h3>
+                <h3 data-lang="en">MICROPHONES</h3>
+                <h3 data-lang="me" style="display:none">MIKROFONI</h3>
+                <h3 data-lang="ru" style="display:none">МИКРОФОНЫ</h3>
                 <div class="models">
                     <div class="model">DPA<svg class="mini-equalizer" viewBox="0 0 40 15">
                         <rect class="eq-bar-1" x="8" y="7" width="6" height="8" />
@@ -760,7 +807,9 @@
 
             <!-- Audio Monitoring -->
             <div class="category">
-                <h3>AUDIO MONITORING</h3>
+                <h3 data-lang="en">AUDIO MONITORING</h3>
+                <h3 data-lang="me" style="display:none">AUDIO MONITORING</h3>
+                <h3 data-lang="ru" style="display:none">АУДИО МОНИТОРИНГ</h3>
                 <div class="models">
                     <div class="model">Sennheiser G4<svg class="mini-equalizer" viewBox="0 0 40 15">
                         <rect class="eq-bar-1" x="8" y="7" width="6" height="8" />
@@ -777,7 +826,9 @@
 
             <!-- Backline -->
             <div class="category">
-                <h3>BACKLINE</h3>
+                <h3 data-lang="en">BACKLINE</h3>
+                <h3 data-lang="me" style="display:none">BACKLINE</h3>
+                <h3 data-lang="ru" style="display:none">БЭКЛАЙН</h3>
                 <div class="models">
                     <div class="model">YAMAHA RECORDING CUSTOM<svg class="mini-equalizer" viewBox="0 0 40 15">
                         <rect class="eq-bar-1" x="8" y="7" width="6" height="8" />
@@ -880,6 +931,41 @@
                         <rect class="eq-bar-3" x="32" y="6" width="6" height="9" />
                     </svg></div>
                     <div class="model">FENDER Precision Bass<svg class="mini-equalizer" viewBox="0 0 40 15">
+                        <rect class="eq-bar-1" x="8" y="7" width="6" height="8" />
+                        <rect class="eq-bar-2" x="20" y="4" width="6" height="11" />
+                        <rect class="eq-bar-3" x="32" y="6" width="6" height="9" />
+                    </svg></div>
+                </div>
+            </div>
+
+            <!-- DJ Equipment -->
+            <div class="category">
+                <h3 data-lang="en">DJ EQUIPMENT</h3>
+                <h3 data-lang="me" style="display:none">DJ OPREMA</h3>
+                <h3 data-lang="ru" style="display:none">DJ ОБОРУДОВАНИЕ</h3>
+                <div class="models">
+                    <div class="model">Pioneer CDJ 3000 (4 units)<svg class="mini-equalizer" viewBox="0 0 40 15">
+                        <defs>
+                            <linearGradient id="eq-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:var(--neon-purple)" />
+                                <stop offset="100%" style="stop-color:var(--neon-orange)" />
+                            </linearGradient>
+                        </defs>
+                        <rect class="eq-bar-1" x="8" y="7" width="6" height="8" />
+                        <rect class="eq-bar-2" x="20" y="4" width="6" height="11" />
+                        <rect class="eq-bar-3" x="32" y="6" width="6" height="9" />
+                    </svg></div>
+                    <div class="model">Pioneer DJM 900 NXS<svg class="mini-equalizer" viewBox="0 0 40 15">
+                        <rect class="eq-bar-1" x="8" y="7" width="6" height="8" />
+                        <rect class="eq-bar-2" x="20" y="4" width="6" height="11" />
+                        <rect class="eq-bar-3" x="32" y="6" width="6" height="9" />
+                    </svg></div>
+                    <div class="model">Pioneer DJM A9<svg class="mini-equalizer" viewBox="0 0 40 15">
+                        <rect class="eq-bar-1" x="8" y="7" width="6" height="8" />
+                        <rect class="eq-bar-2" x="20" y="4" width="6" height="11" />
+                        <rect class="eq-bar-3" x="32" y="6" width="6" height="9" />
+                    </svg></div>
+                    <div class="model">Pioneer DJM V10<svg class="mini-equalizer" viewBox="0 0 40 15">
                         <rect class="eq-bar-1" x="8" y="7" width="6" height="8" />
                         <rect class="eq-bar-2" x="20" y="4" width="6" height="11" />
                         <rect class="eq-bar-3" x="32" y="6" width="6" height="9" />
@@ -995,10 +1081,23 @@
                     }
                 });
 
-                // GSAP Animations (only for non-catalog elements)
+                // GSAP Animations
                 gsap.from('.logo', { y: -50, opacity: 0, duration: 1, delay: 0.5 });
                 gsap.from('.language-switcher', { y: -20, opacity: 0, duration: 1, delay: 0.7 });
                 gsap.from('.hero-content h2', { scale: 0.5, opacity: 0, duration: 1.5, ease: 'back' });
+                gsap.from('.category', {
+                    scrollTrigger: { trigger: '.equipment-list', start: 'top 80%' },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    onStart: () => {
+                        console.log('Category animation started');
+                    },
+                    onComplete: () => {
+                        console.log('Category animation completed');
+                    }
+                });
 
                 // Set active menu
                 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
@@ -1024,5 +1123,6 @@
             }
         });
     </script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93442271f9b2b057',t:'MTc0NTMxNDU2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
