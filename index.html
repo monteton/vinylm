@@ -37,47 +37,7 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-</script>
-<!DOCTYPE html>
+        </script><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -407,7 +367,7 @@
         }
 
         h2 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             text-align: center;
             margin-bottom: 50px;
             background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta));
@@ -419,55 +379,115 @@
         /* About Section */
         .about-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            align-items: start;
+            margin-bottom: 40px;
         }
-
+        .about-text h3 {
+            font-size: 2rem;
+            color: var(--neon-magenta);
+            margin: 20px 0 10px;
+            text-align: center;
+        }
         .about-text p {
+            font-size: 1.125rem;
             margin-bottom: 20px;
             line-height: 1.8;
         }
-
-        .feature-list {
-            margin: 30px 0;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding: 10px;
-            border-left: 4px solid var(--neon-cyan);
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            background: rgba(0, 221, 235, 0.1);
-            transform: translateX(10px);
-        }
-
-        .feature-item i {
-            color: var(--neon-magenta);
-            font-size: 1.5rem;
-        }
-
         .about-image {
             position: relative;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 0 20px rgba(0, 221, 235, 0.3);
+            aspect-ratio: 1/1;
         }
-
         .about-image img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             transition: transform 0.5s ease;
         }
-
         .about-image:hover img {
             transform: scale(1.1);
+        }
+        .about-lists {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+            justify-items: center;
+            text-align: center !important;
+        }
+        .list-block {
+            max-width: 640px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 221, 235, 0.2);
+            text-align: center !important;
+        }
+        .worked-with, .organized {
+            width: 100%;
+            text-align: center;
+        }
+        .organized {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .feature-list {
+            margin: 15px 0 20px 0;
+            width: 100%;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center !important;
+        }
+        .worked-with .feature-list {
+            text-align: center !important;
+        }
+        .organized .feature-list {
+            text-align: center !important;
+        }
+        .feature-item.card {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 15px;
+            font-size: 1.125rem;
+            color: var(--text-light);
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 221, 235, 0.3);
+            opacity: 1;
+            text-align: center !important;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .list-block .organized .feature-item.card {
+            text-align: center !important;
+        }
+        .feature-item.card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px var(--neon-cyan);
+            background: rgba(0, 221, 235, 0.1);
+        }
+        .about-footer {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .about-footer p {
+            font-size: 1.125rem;
+            margin-bottom: 20px;
+            line-height: 1.8;
         }
 
         /* Work Section */
@@ -476,7 +496,6 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
         }
-
         .work-item {
             position: relative;
             border-radius: 10px;
@@ -485,23 +504,19 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .work-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
-
         .work-item:hover {
             transform: translateY(-10px);
             box-shadow: 0 0 30px var(--neon-cyan);
         }
-
         .work-item:hover img {
             transform: scale(1.1);
         }
-
         .work-overlay {
             position: absolute;
             bottom: 0;
@@ -513,17 +528,14 @@
             transform: translateY(100%);
             transition: transform 0.3s ease;
         }
-
         .work-item:hover .work-overlay {
             transform: translateY(0);
         }
-
         .work-overlay h3 {
             color: var(--neon-magenta);
             margin-bottom: 10px;
             font-size: 1.5rem;
         }
-
         .work-overlay p {
             font-size: 1rem;
             line-height: 1.5;
@@ -597,7 +609,7 @@
             box-shadow: 0 0 15px rgba(0, 221, 235, 0.3);
         }
 
-        /* Responsive Contact */
+        /* Responsive */
         @media (max-width: 992px) {
             .contact-container {
                 flex-direction: column;
@@ -614,8 +626,53 @@
                 width: 100%;
                 height: 400px;
             }
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            .about-image {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .about-lists {
+                grid-template-columns: 1fr;
+            }
+            .list-block {
+                max-width: 100%;
+            }
+            .organized {
+                flex-direction: column;
+            }
+            .feature-list {
+                width: 100%;
+            }
+            .about-text h3 {
+                font-size: 1.8rem;
+            }
+            .about-text p, .feature-item.card, .about-footer p {
+                font-size: 1rem;
+            }
         }
         @media (max-width: 768px) {
+            section#about h2 {
+                font-size: 2.5rem;
+            }
+            .about-text h3 {
+                font-size: 1.6rem;
+            }
+            .about-text p, .about-footer p {
+                font-size: 0.95rem;
+            }
+            .feature-item.card {
+                font-size: 0.95rem;
+                padding: 12px;
+            }
+            .about-image {
+                max-width: 300px;
+            }
+            .list-block {
+                max-width: 100%;
+                padding: 15px;
+            }
             .compact-contact {
                 padding: 40px 0;
             }
@@ -645,6 +702,25 @@
             }
         }
         @media (max-width: 480px) {
+            section#about h2 {
+                font-size: 2rem;
+            }
+            .about-text h3 {
+                font-size: 1.4rem;
+            }
+            .about-text p, .about-footer p {
+                font-size: 0.875rem;
+            }
+            .feature-item.card {
+                font-size: 0.875rem;
+                padding: 10px;
+            }
+            .about-image {
+                max-width: 250px;
+            }
+            .list-block {
+                padding: 10px;
+            }
             .compact-contact {
                 padding: 30px 0;
             }
@@ -691,99 +767,6 @@
         footer p {
             position: relative;
             z-index: 1;
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .work-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .banner-content h2 {
-                font-size: 3rem;
-            }
-
-            header, .parallax-banner, section, footer {
-                max-width: 100%;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            nav {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: rgba(0, 0, 0, 0.9);
-            }
-
-            nav.open {
-                display: block;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 0;
-            }
-
-            nav ul li a {
-                display: block;
-                padding: 15px 20px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            .work-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .banner-content h2 {
-                font-size: 2.5rem;
-            }
-
-            .language-switcher {
-                top: 70px;
-                left: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .parallax-banner {
-                height: 50vh;
-            }
-
-            .banner-content h2 {
-                font-size: 2rem;
-                -webkit-text-stroke: 0.5px #1A1A2E;
-            }
-
-            .logo h1 {
-                font-size: 1.8rem;
-            }
-
-            .logo img {
-                width: 40px;
-            }
-
-            .language-switcher {
-                top: 60px;
-            }
-
-            .equalizer {
-                max-width: 200px;
-            }
-
-            .sea-waves {
-                height: 30px;
-            }
         }
     </style>
 </head>
@@ -864,47 +847,118 @@
 
             <div class="about-content">
                 <div class="about-text">
-                    <p data-lang="en"><strong>Vinyl-M – Professional Sound and Lighting Equipment Rental in Montenegro</strong></p>
-                    <p data-lang="me" style="display:none"><strong>Vinyl-M – Profesionalni najam zvučne i svjetlosne opreme u Crnoj Gori</strong></p>
-                    <p data-lang="ru" style="display:none"><strong>Vinyl-M – Профессиональная аренда звукового и светового оборудования в Черногории</strong></p>
+                    <!-- Английский -->
+                    <p data-lang="en">🎧 <strong>VinylM</strong> is a company that for many years has successfully provided professional equipment and personnel for corporate events, festivals, concerts, celebrations, seminars, and conferences.</p>
+                    <p data-lang="en">We offer top-tier gear: musical instruments, sound systems, concert/theatre lighting, stages and trusses, video walls, projectors, conference systems, and complete event logistics.</p>
+                    <p data-lang="en">We also assist with selecting musicians and fulfilling special technical requests for music-related equipment.</p>
+                    <p data-lang="en">Our team includes professionals in sound, video, photography, decoration, and design.</p>
 
-                    <p data-lang="en">We provide high-quality sound and impressive lighting for events of any scale — from small private parties to large outdoor festivals.</p>
-                    <p data-lang="me" style="display:none">Pružamo visokokvalitetan zvuk i impresivnu rasvjetu za događaje bilo koje veličine — od malih privatnih zabava do velikih festivala na otvorenom.</p>
-                    <p data-lang="ru" style="display:none">Мы предоставляем высококачественный звук и впечатляющее освещение для мероприятий любого масштаба — от небольших частных вечеринок до крупных уличных фестивалей.</p>
+                    <!-- Черногорский -->
+                    <p data-lang="me" style="display:none">🎧 <strong>VinylM</strong> je kompanija koja dugi niz godina uspješno pruža usluge obezbjeđivanja profesionalne opreme i ljudstva za korporativne događaje, festivale, koncerte, proslave, seminare/konferencije.</p>
+                    <p data-lang="me" style="display:none">Naša kompanija raspolaže najsavremenijom opremom: muzičkih instrumenata, ozvučenja, koncertne/pozorišne rasvjete, bine (podijum)/konstrukcije (truss), video zida, projektora, konferencijskih sistema, kao i logistikom za obezbjeđivanje svih vrsta događaja.</p>
+                    <p data-lang="me" style="display:none">Takođe pružamo usluge u odabiru profesionalnih muzičara, kao i pomoć pri posebnim zahtjevima u vezi sa specifičnom muzičkom opremom.</p>
+                    <p data-lang="me" style="display:none">Naša kompanija upošljava profesionalce u oblasti zvuka, videa, fotografije, kao i dekoratere i dizajnere.</p>
 
-                    <div class="feature-list">
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <p data-lang="en"><strong>State-of-the-Art Equipment</strong> – Rental of professional audio systems, lighting fixtures, and stage equipment from top brands.</p>
-                            <p data-lang="me" style="display:none"><strong>Najsavremenija oprema</strong> – Najam profesionalnih audio sistema, rasvjetnih tijela i scenografije od vrhunskih brendova.</p>
-                            <p data-lang="ru" style="display:none"><strong>Современное оборудование</strong> – Аренда профессиональных аудиосистем, осветительных приборов и сценического оборудования от ведущих брендов.</p>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <p data-lang="en"><strong>Expert Team</strong> – Experienced sound engineers and technical specialists ensure flawless sound and visual support.</p>
-                            <p data-lang="me" style="display:none"><strong>Stručni tim</strong> – Iskusni zvučni inženjeri i tehničari osiguravaju besprijekoran zvuk i vizuelnu podršku.</p>
-                            <p data-lang="ru" style="display:none"><strong>Команда экспертов</strong> – Опытные звукорежиссеры и технические специалисты обеспечивают безупречный звук и визуальную поддержку.</p>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <p data-lang="en"><strong>Personalized Approach</strong> – We tailor solutions to fit your budget and event concept.</p>
-                            <p data-lang="me" style="display:none"><strong>Personalizirani pristup</strong> – Prilagođavamo rješenja vašem budžetu i konceptu događaja.</p>
-                            <p data-lang="ru" style="display:none"><strong>Индивидуальный подход</strong> – Мы адаптируем решения под ваш бюджет и концепцию мероприятия.</p>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <p data-lang="en"><strong>Full-Service Support</strong> – Delivery, installation, setup, and technical assistance throughout your event.</p>
-                            <p data-lang="me" style="display:none"><strong>Potpuna podrška</strong> – Dostava, instalacija, postavljanje i tehnička pomoć tokom cijelog događaja.</p>
-                            <p data-lang="ru" style="display:none"><strong>Полная поддержка</strong> – Доставка, установка, настройка и техническая помощь на протяжении всего мероприятия.</p>
-                        </div>
-                    </div>
-                    <p data-lang="en" class="font-bold">With Vinyl-M, your sound will be powerful, and your lighting unforgettable! 🎶</p>
-                    <p data-lang="me" style="display:none" class="font-bold">Sa Vinyl-M, vaš zvuk će biti moćan, a rasvjeta nezaboravna! 🎶</p>
-                    <p data-lang="ru" style="display:none" class="font-bold">С Vinyl-M ваш звук будет мощным, а освещение незабываемым! 🎶</p>
+                    <!-- Русский -->
+                    <p data-lang="ru" style="display:none">🎧 <strong>VinylM</strong> — это компания, которая уже много лет успешно предоставляет профессиональное оборудование и команду специалистов для корпоративных мероприятий, фестивалей, концертов, торжеств, семинаров и конференций.</p>
+                    <p data-lang="ru" style="display:none">Мы располагаем современным оборудованием: музыкальными инструментами, звуковыми системами, концертным и театральным светом, сценическими конструкциями (truss), видеостенами, проекторами, конференц-системами и всей необходимой логистикой для мероприятий любого формата.</p>
+                    <p data-lang="ru" style="display:none">Также мы предлагаем подбор профессиональных музыкантов и помощь в поиске специфического музыкального оборудования под индивидуальные запросы.</p>
+                    <p data-lang="ru" style="display:none">Наша команда — это профессионалы в области звука, видео, фото, декора и дизайна.</p>
                 </div>
                 <div class="about-image">
                     <img src="images/about.png" alt="About Vinyl-M">
                 </div>
+            </div>
+
+            <div class="about-lists">
+                <div class="list-block">
+                    <div class="worked-with">
+                        <h3 data-lang="en">🎤 We’ve worked with:</h3>
+                        <h3 data-lang="me" style="display:none">🎤 Sarađivali smo sa:</h3>
+                        <h3 data-lang="ru" style="display:none">🎤 С кем мы работали:</h3>
+                        <ul class="feature-list" data-lang="en">
+                            <li class="feature-item card">Leb i Sol</li>
+                            <li class="feature-item card">Električni orgazam</li>
+                            <li class="feature-item card">Perper</li>
+                            <li class="feature-item card">Travega (Ireland)</li>
+                            <li class="feature-item card">Dubioza Kolektiv</li>
+                            <li class="feature-item card">Boris Grebenshikov (Russian Bob Dylan)</li>
+                            <li class="feature-item card">Psoy Korolenko (Russia)</li>
+                            <li class="feature-item card">Hermes Brothers (Russia)</li>
+                            <li class="feature-item card">Group Megapolis – Oleg Nestorov (Russia)</li>
+                        </ul>
+                        <ul class="feature-list" data-lang="me" style="display:none">
+                            <li class="feature-item card">Leb i Sol</li>
+                            <li class="feature-item card">Električni orgazam</li>
+                            <li class="feature-item card">Perper</li>
+                            <li class="feature-item card">Travega (Irska)</li>
+                            <li class="feature-item card">Dubioza Kolektiv</li>
+                            <li class="feature-item card">Boris Grebenšikov (Ruski Bob Dylan)</li>
+                            <li class="feature-item card">Psoy Korolenko (Rusija)</li>
+                            <li class="feature-item card">Hermes Brothers (Rusija)</li>
+                            <li class="feature-item card">Grupa Megapolis – Oleg Nestorov (Rusija)</li>
+                        </ul>
+                        <ul class="feature-list" data-lang="ru" style="display:none">
+                            <li class="feature-item card">Leb i Sol</li>
+                            <li class="feature-item card">Električni orgazam</li>
+                            <li class="feature-item card">Perper</li>
+                            <li class="feature-item card">Travega (Ирландия)</li>
+                            <li class="feature-item card">Dubioza Kolektiv</li>
+                            <li class="feature-item card">Борис Гребенщиков (русский Боб Дилан)</li>
+                            <li class="feature-item card">Псой Короленко (Россия)</li>
+                            <li class="feature-item card">Hermes Brothers (Россия)</li>
+                            <li class="feature-item card">Группа «Мегаполис» — Олег Нестеров (Россия)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="list-block">
+                    <div class="organized">
+                        <h3 data-lang="en">🎪 Events we’ve organized:</h3>
+                        <h3 data-lang="me" style="display:none">🎪 Organizovali smo:</h3>
+                        <h3 data-lang="ru" style="display:none">🎪 Мы организовали:</h3>
+                        <ul class="feature-list" data-lang="en">
+                            <li class="feature-item card" style="text-align: center !important">Montenegro Jazz Festival – Petrovac</li>
+                            <li class="feature-item card" style="text-align: center !important">Reggae Festival – Budva</li>
+                            <li class="feature-item card" style="text-align: center !important">Garden Planet Festival – Budva</li>
+                            <li class="feature-item card" style="text-align: center !important">Wind Orchestra Festival – Budva</li>
+                            <li class="feature-item card" style="text-align: center !important">“Slovo novo” Festival</li>
+                            <li class="feature-item card" style="text-align: center !important">Tivat World Music Festival</li>
+                            <li class="feature-item card" style="text-align: center !important">Dukley Music Festival – Budva</li>
+                        </ul>
+                        <ul class="feature-list" data-lang="me" style="display:none">
+                            <li class="feature-item card" style="text-align: center !important">Montenegro Jazz Festival – Petrovac</li>
+                            <li class="feature-item card" style="text-align: center !important">Reggae festival – Budva</li>
+                            <li class="feature-item card" style="text-align: center !important">Garden Planet Festival – Budva</li>
+                            <li class="feature-item card" style="text-align: center !important">Festival Duvačkih Orkestara – Budva</li>
+                            <li class="feature-item card" style="text-align: center !important">Festival „Slovo novo“</li>
+                            <li class="feature-item card" style="text-align: center !important">Tivat World Music Festival</li>
+                            <li class="feature-item card" style="text-align: center !important">Dukley Music Festival – Budva</li>
+                        </ul>
+                        <ul class="feature-list" data-lang="ru" style="display:none">
+                            <li class="feature-item card" style="text-align: center !important">Montenegro Jazz Festival — Петровац</li>
+                            <li class="feature-item card" style="text-align: center !important">Reggae Festival — Будва</li>
+                            <li class="feature-item card" style="text-align: center !important">Garden Planet Festival — Будва</li>
+                            <li class="feature-item card" style="text-align: center !important">Фестиваль духовых оркестров — Будва</li>
+                            <li class="feature-item card" style="text-align: center !important">Фестиваль «Слово ново»</li>
+                            <li class="feature-item card" style="text-align: center !important">Tivat World Music Festival</li>
+                            <li class="feature-item card" style="text-align: center !important">Dukley Music Festival — Будва</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-footer">
+                <!-- Английский -->
+                <p data-lang="en">🎶 Being professional musicians ourselves, music is our life — we turned our passion into a mission to share it with others and help create unforgettable experiences.</p>
+                <p data-lang="en" class="font-bold">“Steve Jobs was a digital pioneer, but when he went home, he listened to vinyl.” — Neil Young</p>
+
+                <!-- Черногорский -->
+                <p data-lang="me" style="display:none">🎶 Budući da je naša kompanija sastavljena od profesionalnih muzičara, muzika je ključni deo naših života — pretočili smo svoju strast u mogućnost da delimo muziku sa drugima i stvaramo jedinstvene i nezaboravne trenutke.</p>
+                <p data-lang="me" style="display:none" class="font-bold"> “Steve Jobs je bio digitalni pionir, ali kada god je bio kući — slušao je vinil.” — Neil Young</p>
+
+                <!-- Русский -->
+                <p data-lang="ru" style="display:none">🎶 Будучи командой профессиональных музыкантов, мы превратили свою любовь к музыке в возможность делиться ею с другими, создавая яркие, живые и незабываемые моменты.</p>
+                <p data-lang="ru" style="display:none" class="font-bold">«Стив Джобс был цифровым пионером, но дома он слушал винил.» — Нил Янг</p>
             </div>
         </div>
     </section>
@@ -983,7 +1037,7 @@
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div class="contact-text">
-                            <a href="mailto:Vinylmbudva@gmail.com">Vinylmbudva@gmail.com</a>
+                            <a href="/cdn-cgi/l/email-protection#d7e1fef9eefbfaf5e2f3e1f6d7f0faf6fefbb9f4f8fa"><span class="__cf_email__" data-cfemail="c1f7e8eff8edece3f4e5f7e0c1e6ece0e8edafe2eeec">[email protected]</span></a>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -1162,6 +1216,36 @@
                 duration: 1,
                 stagger: 0.2
             });
+            gsap.from('.list-block', {
+                scrollTrigger: { trigger: '.about-lists', start: 'top 80%' },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2
+            });
+            gsap.from('.feature-item.card', {
+                scrollTrigger: { trigger: '.about-lists', start: 'top 80%' },
+                scale: 0.9,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: 'power2.out',
+                onComplete: () => {
+                    document.querySelectorAll('.feature-item.card').forEach(item => {
+                        item.style.opacity = '1';
+                        console.log('Card rendered:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign);
+                    });
+                    document.querySelectorAll('.organized .feature-item.card').forEach(item => {
+                        console.log('Organized card:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign);
+                    });
+                }
+            });
+            gsap.from('.about-footer', {
+                scrollTrigger: { trigger: '.about-footer', start: 'top 80%' },
+                y: 50,
+                opacity: 0,
+                duration: 0.8
+            });
             gsap.from('.work-item', {
                 scrollTrigger: { trigger: '.work-grid', start: 'top 80%' },
                 scale: 0.8,
@@ -1202,13 +1286,24 @@
             });
 
             function changeLanguage(lang) {
+                console.log('Changing language to:', lang);
                 document.querySelectorAll('.lang-btn').forEach(btn => {
                     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
                 });
                 document.querySelectorAll('[data-lang]').forEach(element => {
                     if (element.classList.contains('lang-btn')) return;
-                    element.style.display = element.getAttribute('data-lang') === lang ? '' : 'none';
-                    element.style.opacity = '1';
+                    const shouldDisplay = element.getAttribute('data-lang') === lang;
+                    element.style.display = shouldDisplay ? '' : 'none';
+                    element.style.opacity = shouldDisplay ? '1' : '0';
+                    if (shouldDisplay && element.classList.contains('feature-list')) {
+                        console.log('Displaying feature list:', element, 'Items:', element.querySelectorAll('.feature-item.card').length);
+                        element.querySelectorAll('.feature-item.card').forEach(item => {
+                            console.log('Feature item:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign);
+                        });
+                    }
+                });
+                document.querySelectorAll('.organized .feature-item.card').forEach(item => {
+                    console.log('Post-language switch - Organized card:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign);
                 });
                 document.querySelector('.compact-contact').style.display = 'block';
                 document.querySelector('.contact-list').style.display = 'block';
@@ -1228,8 +1323,16 @@
             } else {
                 console.error('Contact section or list not found');
             }
+
+            // Инициализация текста карточек
+            document.querySelectorAll('.feature-list').forEach(list => {
+                list.style.display = list.getAttribute('data-lang') === 'en' ? '' : 'none';
+                list.querySelectorAll('.feature-item.card').forEach(item => {
+                    item.style.opacity = '1';
+                    console.log('Initialized card:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign);
+                });
+            });
         });
     </script>
-    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9340a58a0db8b0d3',t:'MTc0NTI3Nzk4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
