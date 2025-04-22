@@ -418,10 +418,11 @@
             margin-bottom: 40px;
             justify-items: center;
             text-align: center !important;
+            max-width: 100%;
         }
         .list-block {
             max-width: 640px;
-            width: 100%;
+            width: auto;
             margin: 0 auto;
             padding: 20px;
             background: rgba(255, 255, 255, 0.05);
@@ -431,6 +432,7 @@
         }
         .worked-with, .organized {
             width: 100%;
+            max-width: 640px;
             text-align: center;
         }
         .organized {
@@ -442,6 +444,7 @@
         .feature-list {
             margin: 15px 0 20px 0;
             width: 100%;
+            max-width: 640px;
             list-style: none;
             display: flex;
             flex-direction: column;
@@ -460,6 +463,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
+            max-width: 640px;
             margin-bottom: 15px;
             padding: 15px;
             font-size: 1.125rem;
@@ -638,20 +642,23 @@
             .about-lists {
                 grid-template-columns: 1fr;
                 justify-items: center;
+                max-width: 100%;
             }
             .list-block {
-                max-width: 100%;
+                max-width: 600px;
+                width: auto;
                 padding: 15px;
             }
-            .organized {
-                flex-direction: column;
-                align-items: center;
+            .worked-with, .organized {
+                max-width: 600px;
             }
             .feature-list {
                 width: 100%;
+                max-width: 600px;
                 margin: 15px 0 15px 0;
             }
             .feature-item.card {
+                max-width: 600px;
                 margin-bottom: 12px;
                 padding: 12px;
                 display: flex;
@@ -670,6 +677,9 @@
             }
         }
         @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
             section#about h2 {
                 font-size: 2.5rem;
             }
@@ -679,17 +689,24 @@
             .about-text p, .about-footer p {
                 font-size: 0.95rem;
             }
+            .list-block {
+                max-width: 500px;
+                padding: 15px;
+            }
+            .worked-with, .organized {
+                max-width: 500px;
+            }
+            .feature-list {
+                max-width: 500px;
+            }
             .feature-item.card {
+                max-width: 500px;
                 font-size: 0.95rem;
                 padding: 12px;
                 margin-bottom: 12px;
             }
             .about-image {
                 max-width: 300px;
-            }
-            .list-block {
-                max-width: 100%;
-                padding: 15px;
             }
             .compact-contact {
                 padding: 40px 0;
@@ -720,6 +737,9 @@
             }
         }
         @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
             section#about h2 {
                 font-size: 2rem;
             }
@@ -729,16 +749,24 @@
             .about-text p, .about-footer p {
                 font-size: 0.875rem;
             }
+            .list-block {
+                max-width: 360px;
+                padding: 10px;
+            }
+            .worked-with, .organized {
+                max-width: 360px;
+            }
+            .feature-list {
+                max-width: 360px;
+            }
             .feature-item.card {
+                max-width: 360px;
                 font-size: 0.875rem;
                 padding: 10px;
                 margin-bottom: 10px;
             }
             .about-image {
                 max-width: 250px;
-            }
-            .list-block {
-                padding: 10px;
             }
             .compact-contact {
                 padding: 30px 0;
@@ -1252,10 +1280,21 @@
                 onComplete: () => {
                     document.querySelectorAll('.feature-item.card').forEach(item => {
                         item.style.opacity = '1';
-                        console.log('Card rendered:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign, 'Font-size:', window.getComputedStyle(item).fontSize, 'Display:', window.getComputedStyle(item).display);
+                        console.log('Card rendered:', item.textContent, 
+                            'Alignment:', window.getComputedStyle(item).textAlign, 
+                            'Font-size:', window.getComputedStyle(item).fontSize, 
+                            'Display:', window.getComputedStyle(item).display, 
+                            'Width:', window.getComputedStyle(item).width, 
+                            'Max-width:', window.getComputedStyle(item).maxWidth, 
+                            'Screen width:', window.innerWidth);
                     });
                     document.querySelectorAll('.organized .feature-item.card').forEach(item => {
-                        console.log('Organized card:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign, 'Font-size:', window.getComputedStyle(item).fontSize, 'Display:', window.getComputedStyle(item).display);
+                        console.log('Organized card:', item.textContent, 
+                            'Alignment:', window.getComputedStyle(item).textAlign, 
+                            'Font-size:', window.getComputedStyle(item).fontSize, 
+                            'Display:', window.getComputedStyle(item).display, 
+                            'Width:', window.getComputedStyle(item).width, 
+                            'Max-width:', window.getComputedStyle(item).maxWidth);
                     });
                 }
             });
@@ -1317,12 +1356,22 @@
                     if (shouldDisplay && element.classList.contains('feature-list')) {
                         console.log('Displaying feature list:', element, 'Items:', element.querySelectorAll('.feature-item.card').length);
                         element.querySelectorAll('.feature-item.card').forEach(item => {
-                            console.log('Feature item:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign, 'Font-size:', window.getComputedStyle(item).fontSize, 'Display:', window.getComputedStyle(item).display);
+                            console.log('Feature item:', item.textContent, 
+                                'Alignment:', window.getComputedStyle(item).textAlign, 
+                                'Font-size:', window.getComputedStyle(item).fontSize, 
+                                'Display:', window.getComputedStyle(item).display, 
+                                'Width:', window.getComputedStyle(item).width, 
+                                'Max-width:', window.getComputedStyle(item).maxWidth);
                         });
                     }
                 });
                 document.querySelectorAll('.organized .feature-item.card').forEach(item => {
-                    console.log('Post-language switch - Organized card:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign, 'Font-size:', window.getComputedStyle(item).fontSize, 'Display:', window.getComputedStyle(item).display);
+                    console.log('Post-language switch - Organized card:', item.textContent, 
+                        'Alignment:', window.getComputedStyle(item).textAlign, 
+                        'Font-size:', window.getComputedStyle(item).fontSize, 
+                        'Display:', window.getComputedStyle(item).display, 
+                        'Width:', window.getComputedStyle(item).width, 
+                        'Max-width:', window.getComputedStyle(item).maxWidth);
                 });
                 document.querySelector('.compact-contact').style.display = 'block';
                 document.querySelector('.contact-list').style.display = 'block';
@@ -1348,7 +1397,13 @@
                 list.style.display = list.getAttribute('data-lang') === 'en' ? '' : 'none';
                 list.querySelectorAll('.feature-item.card').forEach(item => {
                     item.style.opacity = '1';
-                    console.log('Initialized card:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign, 'Font-size:', window.getComputedStyle(item).fontSize, 'Display:', window.getComputedStyle(item).display);
+                    console.log('Initialized card:', item.textContent, 
+                        'Alignment:', window.getComputedStyle(item).textAlign, 
+                        'Font-size:', window.getComputedStyle(item).fontSize, 
+                        'Display:', window.getComputedStyle(item).display, 
+                        'Width:', window.getComputedStyle(item).width, 
+                        'Max-width:', window.getComputedStyle(item).maxWidth, 
+                        'Screen width:', window.innerWidth);
                 });
             });
         });
