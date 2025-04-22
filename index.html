@@ -456,7 +456,9 @@
             text-align: center !important;
         }
         .feature-item.card {
-            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 100%;
             margin-bottom: 15px;
             padding: 15px;
@@ -635,15 +637,30 @@
             }
             .about-lists {
                 grid-template-columns: 1fr;
+                justify-items: center;
             }
             .list-block {
                 max-width: 100%;
+                padding: 15px;
             }
             .organized {
                 flex-direction: column;
+                align-items: center;
             }
             .feature-list {
                 width: 100%;
+                margin: 15px 0 15px 0;
+            }
+            .feature-item.card {
+                margin-bottom: 12px;
+                padding: 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center !important;
+            }
+            .list-block .organized .feature-item.card {
+                text-align: center !important;
             }
             .about-text h3 {
                 font-size: 1.8rem;
@@ -665,6 +682,7 @@
             .feature-item.card {
                 font-size: 0.95rem;
                 padding: 12px;
+                margin-bottom: 12px;
             }
             .about-image {
                 max-width: 300px;
@@ -714,6 +732,7 @@
             .feature-item.card {
                 font-size: 0.875rem;
                 padding: 10px;
+                margin-bottom: 10px;
             }
             .about-image {
                 max-width: 250px;
@@ -1225,7 +1244,7 @@
             });
             gsap.from('.feature-item.card', {
                 scrollTrigger: { trigger: '.about-lists', start: 'top 80%' },
-                scale: 0.9,
+                scale: window.innerWidth <= 768 ? 0.95 : 0.9,
                 opacity: 0,
                 duration: 0.6,
                 stagger: 0.1,
@@ -1233,10 +1252,10 @@
                 onComplete: () => {
                     document.querySelectorAll('.feature-item.card').forEach(item => {
                         item.style.opacity = '1';
-                        console.log('Card rendered:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign);
+                        console.log('Card rendered:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign, 'Font-size:', window.getComputedStyle(item).fontSize, 'Display:', window.getComputedStyle(item).display);
                     });
                     document.querySelectorAll('.organized .feature-item.card').forEach(item => {
-                        console.log('Organized card:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign);
+                        console.log('Organized card:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign, 'Font-size:', window.getComputedStyle(item).fontSize, 'Display:', window.getComputedStyle(item).display);
                     });
                 }
             });
@@ -1248,7 +1267,7 @@
             });
             gsap.from('.work-item', {
                 scrollTrigger: { trigger: '.work-grid', start: 'top 80%' },
-                scale: 0.8,
+                scale: window.innerWidth <= 768 ? 0.95 : 0.8,
                 opacity: 0,
                 duration: 0.8,
                 stagger: 0.2
@@ -1286,7 +1305,7 @@
             });
 
             function changeLanguage(lang) {
-                console.log('Changing language to:', lang);
+                console.log('Changing language to:', lang, 'Screen width:', window.innerWidth);
                 document.querySelectorAll('.lang-btn').forEach(btn => {
                     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
                 });
@@ -1298,12 +1317,12 @@
                     if (shouldDisplay && element.classList.contains('feature-list')) {
                         console.log('Displaying feature list:', element, 'Items:', element.querySelectorAll('.feature-item.card').length);
                         element.querySelectorAll('.feature-item.card').forEach(item => {
-                            console.log('Feature item:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign);
+                            console.log('Feature item:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign, 'Font-size:', window.getComputedStyle(item).fontSize, 'Display:', window.getComputedStyle(item).display);
                         });
                     }
                 });
                 document.querySelectorAll('.organized .feature-item.card').forEach(item => {
-                    console.log('Post-language switch - Organized card:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign);
+                    console.log('Post-language switch - Organized card:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign, 'Font-size:', window.getComputedStyle(item).fontSize, 'Display:', window.getComputedStyle(item).display);
                 });
                 document.querySelector('.compact-contact').style.display = 'block';
                 document.querySelector('.contact-list').style.display = 'block';
@@ -1329,7 +1348,7 @@
                 list.style.display = list.getAttribute('data-lang') === 'en' ? '' : 'none';
                 list.querySelectorAll('.feature-item.card').forEach(item => {
                     item.style.opacity = '1';
-                    console.log('Initialized card:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign);
+                    console.log('Initialized card:', item.textContent, 'Alignment:', window.getComputedStyle(item).textAlign, 'Font-size:', window.getComputedStyle(item).fontSize, 'Display:', window.getComputedStyle(item).display);
                 });
             });
         });
