@@ -234,11 +234,13 @@
         /* Parallax Banner */
         .parallax-banner {
             height: 70vh;
+            overflow: hidden;
             position: relative;
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
             z-index: 1;
+            clip-path: inset(0);
         }
 
         .parallax-layer {
@@ -247,6 +249,7 @@
             height: 100%;
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             will-change: transform, opacity, scale;
         }
 
@@ -870,7 +873,7 @@
 
                     <!-- Черногорский -->
                     <p data-lang="me" style="display:none">🎧 <strong>VinylM</strong> je kompanija koja dugi niz godina uspješno pruža usluge obezbjeđivanja profesionalne opreme i ljudstva za korporativne događaje, festivale, koncerte, proslave, seminare/konferencije.</p>
-                   [Assistant: <p data-lang="me" style="display:none">Naša kompanija raspolaže najsavremenijom opremom: muzičkih instrumenata, ozvučenja, koncertne/pozorišne rasvjete, bine (podijum)/konstrukcije (truss), video zida, projektora, konferencijskih sistema, kao i logistikom za obezbjeđivanje svih vrsta događaja.</p>
+                    <p data-lang="me" style="display:none">Naša kompanija raspolaže najsavremenijom opremom: muzičkih instrumenata, ozvučenja, koncertne/pozorišne rasvjete, bine (podijum)/konstrukcije (truss), video zida, projektora, konferencijskih sistema, kao i logistikom za obezbjeđivanje svih vrsta događaja.</p>
                     <p data-lang="me" style="display:none">Takođe pružamo usluge u odabiru profesionalnih muzičara, kao i pomoć pri posebnim zahtjevima u vezi sa specifičnom muzičkom opremom.</p>
                     <p data-lang="me" style="display:none">Naša kompanija upošljava profesionalce u oblasti zvuka, videa, fotografije, kao i dekoratere i dizajnere.</p>
                     <h3 data-lang="me" style="display:none">🎤 Sarađivali smo sa:</h3>
@@ -881,7 +884,7 @@
                         <li class="feature-item"><i class="fas fa-microphone"></i> Travega (Irska)</li>
                         <li class="feature-item"><i class="fas fa-microphone"></i> Dubioza Kolektiv</li>
                         <li class="feature-item"><i class="fas fa-microphone"></i> Boris Grebenšikov (Ruski Bob Dylan)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Psoy Korolenko (Rusija)</li>
+                        <li class="feature-item"><i class="fas display: flex;"></i> Psoy Korolenko (Rusija)</li>
                         <li class="feature-item"><i class="fas fa-microphone"></i> Hermes Brothers (Rusija)</li>
                         <li class="feature-item"><i class="fas fa-microphone"></i> Grupa Megapolis – Oleg Nestorov (Rusija)</li>
                     </ul>
@@ -921,7 +924,7 @@
                         <li class="feature-item"><i class="fas fa-calendar-alt"></i> Reggae Festival — Будва</li>
                         <li class="feature-item"><i class="fas fa-calendar-alt"></i> Garden Planet Festival — Будва</li>
                         <li class="feature-item"><i class="fas fa-calendar-alt"></i> Фестиваль духовых оркестров — Будва</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Фестиваль «Слово ново»</li>
+                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Фестиваль «С drinksлово ново»</li>
                         <li class="feature-item"><i class="fas fa-calendar-alt"></i> Tivat World Music Festival</li>
                         <li class="feature-item"><i class="fas fa-calendar-alt"></i> Dukley Music Festival — Будва</li>
                     </ul>
@@ -1009,7 +1012,7 @@
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div class="contact-text">
-                            <a href="/cdn-cgi/l/email-protection#d7e1fef9eefbfaf5e2f3e1f6d7f0faf6fefbb9f4f8fa"><span class="__cf_email__" data-cfemail="c1f7e8eff8edece3f4e5f7e0c1e6ece0e8edafe2eeec">[email&#160;protected]</span></a>
+                            <a href="mailto:info@vinyl-m.com">info@vinyl-m.com</a>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -1072,7 +1075,7 @@
                 gsap.from('nav.open ul li', { y: 20, opacity: 0, stagger: 0.1, duration: 0.5 });
             });
 
-            // Enhanced Parallax Effect with GSAP
+            // Parallax Effect with GSAP
             gsap.to('.layer2', {
                 scrollTrigger: {
                     trigger: '.parallax-banner',
@@ -1080,9 +1083,16 @@
                     end: 'bottom top',
                     scrub: 1
                 },
-                y: 300,
-                scale: 1.1,
-                opacity: 0.6
+                y: 50,
+                scale: 1.01,
+                opacity: 0.6,
+                onUpdate: () => {
+                    console.log('Layer2:', 
+                        'Width:', document.querySelector('.layer2').offsetWidth, 
+                        'Height:', document.querySelector('.layer2').offsetHeight, 
+                        'ParentWidth:', document.querySelector('.parallax-banner').offsetWidth, 
+                        'ParentHeight:', document.querySelector('.parallax-banner').offsetHeight);
+                }
             });
 
             gsap.to('.layer3', {
@@ -1092,9 +1102,16 @@
                     end: 'bottom top',
                     scrub: 1
                 },
-                y: 150,
-                scale: 1.05,
-                opacity: 0.4
+                y: 25,
+                scale: 1.005,
+                opacity: 0.4,
+                onUpdate: () => {
+                    console.log('Layer3:', 
+                        'Width:', document.querySelector('.layer3').offsetWidth, 
+                        'Height:', document.querySelector('.layer3').offsetHeight, 
+                        'ParentWidth:', document.querySelector('.parallax-banner').offsetWidth, 
+                        'ParentHeight:', document.querySelector('.parallax-banner').offsetHeight);
+                }
             });
 
             // Particles in Footer
@@ -1194,20 +1211,7 @@
                 opacity: 0,
                 duration: 0.6,
                 stagger: 0.1,
-                ease: 'power2.out',
-                onComplete: () => {
-                    document.querySelectorAll('.feature-item').forEach(item => {
-                        console.log('Feature item rendered:', item.textContent, 
-                            'Width:', window.getComputedStyle(item).width, 
-                            'Max-width:', window.getComputedStyle(item).maxWidth, 
-                            'ClientWidth:', item.clientWidth, 
-                            'OffsetWidth:', item.offsetWidth, 
-                            'ParentWidth:', item.parentElement.clientWidth, 
-                            'Overflow-x:', window.getComputedStyle(item).overflowX, 
-                            'Screen width:', window.innerWidth);
-                    });
-                    console.log('Horizontal scroll check:', document.documentElement.scrollWidth > window.innerWidth ? 'Overflow detected' : 'No overflow');
-                }
+                ease: 'power2.out'
             });
             gsap.from('.work-item', {
                 scrollTrigger: { trigger: '.work-grid', start: 'top 80%' },
@@ -1218,24 +1222,14 @@
             });
             gsap.from('.contact-item', {
                 scrollTrigger: { trigger: '.contact-list', start: 'top 80%' },
-                x: window.innerWidth <= 768 ? -30 : -50,
+                x: -30,
                 opacity: 0,
-                duration: window.innerWidth <= 768 ? 0.6 : 0.8,
-                stagger: 0.2,
-                onStart: () => {
-                    console.log('Contact items animation started');
-                    document.querySelectorAll('.contact-item').forEach(item => {
-                        item.style.display = 'flex';
-                        item.style.opacity = '1';
-                    });
-                },
-                onComplete: () => {
-                    console.log('Contact items animation completed');
-                }
+                duration: 0.6,
+                stagger: 0.2
             });
             gsap.from('.contact-map', {
                 scrollTrigger: { trigger: '.contact-map', start: 'top 80%' },
-                y: window.innerWidth <= 768 ? 30 : 50,
+                y: 30,
                 opacity: 0,
                 duration: 1
             });
@@ -1249,86 +1243,14 @@
             });
 
             function changeLanguage(lang) {
-                console.log('Changing language to:', lang, 
-                    'Screen width:', window.innerWidth, 
-                    'Document scrollWidth:', document.documentElement.scrollWidth, 
-                    'Horizontal scroll:', document.documentElement.scrollWidth > window.innerWidth ? 'Overflow detected' : 'No overflow');
                 document.querySelectorAll('.lang-btn').forEach(btn => {
                     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
                 });
                 document.querySelectorAll('[data-lang]').forEach(element => {
                     if (element.classList.contains('lang-btn')) return;
-                    const shouldDisplay = element.getAttribute('data-lang') === lang;
-                    element.style.display = shouldDisplay ? '' : 'none';
-                    element.style.opacity = shouldDisplay ? '1' : '0';
-                    if (shouldDisplay && element.classList.contains('feature-list')) {
-                        console.log('Displaying feature list:', element, 
-                            'Width:', window.getComputedStyle(element).width, 
-                            'Max-width:', window.getComputedStyle(element).maxWidth, 
-                            'ClientWidth:', element.clientWidth, 
-                            'OffsetWidth:', element.offsetWidth, 
-                            'ParentWidth:', element.parentElement.clientWidth, 
-                            'Overflow-x:', window.getComputedStyle(element).overflowX);
-                        element.querySelectorAll('.feature-item').forEach(item => {
-                            console.log('Feature item:', item.textContent, 
-                                'Width:', window.getComputedStyle(item).width, 
-                                'Max-width:', window.getComputedStyle(item).maxWidth, 
-                                'ClientWidth:', item.clientWidth, 
-                                'OffsetWidth:', item.offsetWidth, 
-                                'ParentWidth:', item.parentElement.clientWidth, 
-                                'Overflow-x:', window.getComputedStyle(item).overflowX);
-                        });
-                    }
-                });
-                // Force reflow to fix layout issues
-                document.body.offsetHeight;
-                console.log('Layout reflow triggered');
-            }
-
-            // Инициализация контактов
-            const compactContact = document.querySelector('.compact-contact');
-            const contactList = document.querySelector('.contact-list');
-            if (compactContact && contactList) {
-                compactContact.style.display = 'block';
-                contactList.style.display = 'block';
-                document.querySelectorAll('.contact-item').forEach(item => {
-                    item.style.display = 'flex';
-                    item.style.opacity = '1';
+                    element.style.display = element.getAttribute('data-lang') === lang ? '' : 'none';
                 });
             }
-
-            // Инициализация текста списков
-            document.querySelectorAll('.feature-list').forEach(list => {
-                list.style.display = list.getAttribute('data-lang') === 'en' ? '' : 'none';
-                list.querySelectorAll('.feature-item').forEach(item => {
-                    item.style.opacity = '1';
-                    console.log('Initialized feature item:', item.textContent, 
-                        'Width:', window.getComputedStyle(item).width, 
-                        'Max-width:', window.getComputedStyle(item).maxWidth, 
-                        'ClientWidth:', item.clientWidth, 
-                        'OffsetWidth:', item.offsetWidth, 
-                        'ParentWidth:', item.parentElement.clientWidth, 
-                        'Overflow-x:', window.getComputedStyle(item).overflowX, 
-                        'Screen width:', window.innerWidth);
-                });
-            });
-
-            // Debug layout on resize
-            window.addEventListener('resize', () => {
-                console.log('Window resized:', 
-                    'Screen width:', window.innerWidth, 
-                    'Document scrollWidth:', document.documentElement.scrollWidth, 
-                    'Horizontal scroll:', document.documentElement.scrollWidth > window.innerWidth ? 'Overflow detected' : 'No overflow');
-                document.querySelectorAll('.feature-item').forEach(item => {
-                    console.log('Feature item on resize:', item.textContent, 
-                        'Width:', window.getComputedStyle(item).width, 
-                        'Max-width:', window.getComputedStyle(item).maxWidth, 
-                        'ClientWidth:', item.clientWidth, 
-                        'OffsetWidth:', item.offsetWidth, 
-                        'ParentWidth:', item.parentElement.clientWidth, 
-                        'Overflow-x:', window.getComputedStyle(item).overflowX);
-                });
-            });
         });
     </script>
 </body>
