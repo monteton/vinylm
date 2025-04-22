@@ -824,6 +824,9 @@
         <div class="parallax-layer layer1"></div>
         <div class="parallax-layer layer2"></div>
         <div class="parallax-layer layer3"></div>
+        <div class="join-button">
+            <button class="join-btn">Join the Party</button>
+        </div>
         <div class="banner-content">
             <h2 data-lang="en">Premium Sound & Light in Montenegro</h2>
             <h2 data-lang="me" style="display:none">Premium zvuk i svjetlo u Crnoj Gori</h2>
@@ -1229,28 +1232,57 @@
                 duration: 1,
                 stagger: 0.2
             });
-            gsap.from('.feature-item', {
-                x: -30,
-                opacity: 0,
-                duration: 0.6,
-                stagger: 0.1,
-                ease: 'power2.out'
-            });
+
+            function animateFeatureItems() {
+                gsap.fromTo('.feature-item', 
+                    { x: -30, opacity: 0 },
+                    { 
+                        x: 0, 
+                        opacity: 1, 
+                        duration: 0.6, 
+                        stagger: 0.1, 
+                        ease: 'power2.out',
+                        force3D: true,
+                        onComplete: () => {
+                            document.querySelectorAll('.feature-item').forEach(item => {
+                                console.log('Feature item:', item.textContent, 'Opacity:', item.style.opacity, 'X:', item.style.transform);
+                            });
+                        }
+                    }
+                );
+            }
+            animateFeatureItems();
+
             gsap.from('.work-item', {
                 scale: 0.8,
                 opacity: 0,
                 duration: 0.8,
                 stagger: 0.2
             });
-            gsap.from('.contact-item', {
-                x: -30,
-                opacity: 0,
-                duration: 0.6,
-                stagger: 0.2,
-                onStart: () => {
-                    console.log('Contact items animation started:', document.querySelectorAll('.contact-item').length);
-                }
-            });
+
+            function animateContactItems() {
+                gsap.fromTo('.contact-item', 
+                    { x: -30, opacity: 0 },
+                    { 
+                        x: 0, 
+                        opacity: 1, 
+                        duration: 0.6, 
+                        stagger: 0.2, 
+                        ease: 'power2.out',
+                        force3D: true,
+                        onStart: () => {
+                            console.log('Contact items animation started:', document.querySelectorAll('.contact-item').length);
+                        },
+                        onComplete: () => {
+                            document.querySelectorAll('.contact-item').forEach(item => {
+                                console.log('Contact item:', item.textContent, 'Opacity:', item.style.opacity, 'X:', item.style.transform);
+                            });
+                        }
+                    }
+                );
+            }
+            animateContactItems();
+
             gsap.from('.contact-map', {
                 y: 30,
                 opacity: 0,
@@ -1274,6 +1306,11 @@
                     element.style.display = element.getAttribute('data-lang') === lang ? '' : 'none';
                     console.log('Language:', lang, 'Element:', element.tagName, 'data-lang:', element.getAttribute('data-lang'), 'Display:', element.style.display);
                 });
+
+                // Reset and restart animations
+                gsap.killTweensOf('.feature-item, .contact-item');
+                animateFeatureItems();
+                animateContactItems();
             }
         });
     </script>
