@@ -395,37 +395,19 @@
             text-align: center;
         }
         .about-text p {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             line-height: 1.8;
             font-size: 1.125rem;
+            position: relative;
         }
-        .feature-list {
-            margin: 30px 0;
-            width: 100%;
-            max-width: 100%;
-            list-style: none;
+        .about-text p:not(:last-child)::after {
+            content: '';
             display: block;
-            opacity: 1;
-        }
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding: 10px;
-            border-left: 4px solid var(--neon-cyan);
-            transition: all 0.3s ease;
-            width: 100%;
-            max-width: 100%;
-            opacity: 1;
-        }
-        .feature-item:hover {
-            background: rgba(0, 221, 235, 0.1);
-            transform: translateX(10px);
-        }
-        .feature-item i {
-            color: var(--neon-magenta);
-            font-size: 1.5rem;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+            margin: 15px auto 0;
+            border-radius: 2px;
         }
         .about-image {
             position: relative;
@@ -442,6 +424,52 @@
         }
         .about-image:hover img {
             transform: scale(1.1);
+        }
+
+        /* Events Section */
+        .event-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+        }
+        .event-block {
+            background: linear-gradient(45deg, rgba(0, 221, 235, 0.1), rgba(255, 42, 109, 0.1));
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 221, 235, 0.2);
+        }
+        .event-block h3 {
+            font-size: 1.8rem;
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .event-list {
+            margin: 0;
+            width: 100%;
+            list-style: none;
+            display: block;
+            opacity: 1;
+        }
+        .event-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-left: 4px solid var(--neon-magenta);
+            transition: all 0.3s ease;
+            width: 100%;
+            opacity: 1;
+        }
+        .event-item:hover {
+            background: rgba(255, 42, 109, 0.2);
+            transform: translateX(10px);
+        }
+        .event-item i {
+            color: var(--neon-cyan);
+            font-size: 1.5rem;
         }
 
         /* Work Section */
@@ -578,7 +606,7 @@
             .container {
                 padding: 0 15px;
             }
-            .about-content {
+            .about-content, .event-content {
                 grid-template-columns: 1fr;
                 gap: 30px;
             }
@@ -674,16 +702,18 @@
                 height: 350px;
                 max-width: 500px;
             }
-            .about-text h3 {
-                font-size: 1.6rem;
-            }
             .about-text p {
                 font-size: 1rem;
             }
-            .feature-list {
-                display: block;
+            .about-text p:not(:last-child)::after {
+                width: 80px;
+                height: 2px;
+                margin: 12px auto 0;
             }
-            .feature-item {
+            .event-block h3 {
+                font-size: 1.6rem;
+            }
+            .event-item {
                 padding: 8px;
                 margin-bottom: 15px;
                 font-size: 0.95rem;
@@ -743,16 +773,18 @@
                 height: 300px;
                 max-width: 100%;
             }
-            .about-text h3 {
-                font-size: 1.4rem;
-            }
             .about-text p {
                 font-size: 0.875rem;
             }
-            .feature-list {
-                display: block;
+            .about-text p:not(:last-child)::after {
+                width: 60px;
+                height: 2px;
+                margin: 10px auto 0;
             }
-            .feature-item {
+            .event-block h3 {
+                font-size: 1.4rem;
+            }
+            .event-item {
                 padding: 6px;
                 margin-bottom: 12px;
                 font-size: 0.875rem;
@@ -824,9 +856,6 @@
         <div class="parallax-layer layer1"></div>
         <div class="parallax-layer layer2"></div>
         <div class="parallax-layer layer3"></div>
-        <div class="join-button">
-            <button class="join-btn">Join the Party</button>
-        </div>
         <div class="banner-content">
             <h2 data-lang="en">Premium Sound & Light in Montenegro</h2>
             <h2 data-lang="me" style="display:none">Premium zvuk i svjetlo u Crnoj Gori</h2>
@@ -870,28 +899,6 @@
                     <p data-lang="en">We offer top-tier gear: musical instruments, sound systems, concert/theatre lighting, stages and trusses, video walls, projectors, conference systems, and complete event logistics.</p>
                     <p data-lang="en">We also assist with selecting musicians and fulfilling special technical requests for music-related equipment.</p>
                     <p data-lang="en">Our team includes professionals in sound, video, photography, decoration, and design.</p>
-                    <h3 data-lang="en">🎤 We’ve worked with:</h3>
-                    <ul class="feature-list" data-lang="en">
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Leb i Sol</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Električni orgazam</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Perper</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Travega (Ireland)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Dubioza Kolektiv</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Boris Grebenshikov (Russian Bob Dylan)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Psoy Korolenko (Russia)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Hermes Brothers (Russia)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Group Megapolis – Oleg Nestorov (Russia)</li>
-                    </ul>
-                    <h3 data-lang="en">🎪 Events we’ve organized:</h3>
-                    <ul class="feature-list" data-lang="en">
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Montenegro Jazz Festival – Petrovac</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Reggae Festival – Budva</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Garden Planet Festival – Budva</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Wind Orchestra Festival – Budva</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> “Slovo novo” Festival</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Tivat World Music Festival</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Dukley Music Festival – Budva</li>
-                    </ul>
                     <p data-lang="en">🎶 Being professional musicians ourselves, music is our life — we turned our passion into a mission to share it with others and help create unforgettable experiences.</p>
                     <p data-lang="en" class="font-bold">“Steve Jobs was a digital pioneer, but when he went home, he listened to vinyl.” — Neil Young</p>
 
@@ -900,28 +907,6 @@
                     <p data-lang="me" style="display:none">Naša kompanija raspolaže najsavremenijom opremom: muzičkih instrumenata, ozvučenja, koncertne/pozorišne rasvjete, bine (podijum)/konstrukcije (truss), video zida, projektora, konferencijskih sistema, kao i logistikom za obezbjeđivanje svih vrsta događaja.</p>
                     <p data-lang="me" style="display:none">Takođe pružamo usluge u odabiru profesionalnih muzičara, kao i pomoć pri posebnim zahtjevima u vezi sa specifičnom muzičkom opremom.</p>
                     <p data-lang="me" style="display:none">Naša kompanija upošljava profesionalce u oblasti zvuka, videa, fotografije, kao i dekoratere i dizajnere.</p>
-                    <h3 data-lang="me" style="display:none">🎤 Sarađivali smo sa:</h3>
-                    <ul class="feature-list" data-lang="me" style="display:none">
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Leb i Sol</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Električni orgazam</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Perper</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Travega (Irska)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Dubioza Kolektiv</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Boris Grebenšikov (Ruski Bob Dylan)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Psoy Korolenko (Rusija)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Hermes Brothers (Rusija)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Grupa Megapolis – Oleg Nestorov (Rusija)</li>
-                    </ul>
-                    <h3 data-lang="me" style="display:none">🎪 Organizovali smo:</h3>
-                    <ul class="feature-list" data-lang="me" style="display:none">
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Montenegro Jazz Festival – Petrovac</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Reggae festival – Budva</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Garden Planet Festival – Budva</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Festival Duvačkih Orkestara – Budva</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Festival „Slovo novo“</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Tivat World Music Festival</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Dukley Music Festival – Budva</li>
-                    </ul>
                     <p data-lang="me" style="display:none">🎶 Budući da je naša kompanija sastavljena od profesionalnih muzičara, muzika je ključni deo naših života — pretočili smo svoju strast u mogućnost da delimo muziku sa drugima i stvaramo jedinstvene i nezaboravne trenutke.</p>
                     <p data-lang="me" style="display:none" class="font-bold">“Steve Jobs je bio digitalni pionir, ali kada god je bio kući — slušao je vinil.” — Neil Young</p>
 
@@ -930,33 +915,100 @@
                     <p data-lang="ru" style="display:none">Мы располагаем современным оборудованием: музыкальными инструментами, звуковыми системами, концертным и театральным светом, сценическими конструкциями (truss), видеостенами, проекторами, конференц-системами и всей необходимой логистикой для мероприятий любого формата.</p>
                     <p data-lang="ru" style="display:none">Также мы предлагаем подбор профессиональных музыкантов и помощь в поиске специфического музыкального оборудования под индивидуальные запросы.</p>
                     <p data-lang="ru" style="display:none">Наша команда — это профессионалы в области звука, видео, фото, декора и дизайна.</p>
-                    <h3 data-lang="ru" style="display:none">🎤 С кем мы работали:</h3>
-                    <ul class="feature-list" data-lang="ru" style="display:none">
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Leb i Sol</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Električni orgazam</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Perper</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Travega (Ирландия)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Dubioza Kolektiv</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Борис Гребенщиков (русский Боб Дилан)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Псой Короленко (Россия)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Hermes Brothers (Россия)</li>
-                        <li class="feature-item"><i class="fas fa-microphone"></i> Группа «Мегаполис» — Олег Нестеров (Россия)</li>
-                    </ul>
-                    <h3 data-lang="ru" style="display:none">🎪 Мы организовали:</h3>
-                    <ul class="feature-list" data-lang="ru" style="display:none">
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Montenegro Jazz Festival — Петровац</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Reggae Festival — Будва</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Garden Planet Festival — Будва</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Фестиваль духовых оркестров — Будва</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Фестиваль «Слово ново»</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Tivat World Music Festival</li>
-                        <li class="feature-item"><i class="fas fa-calendar-alt"></i> Dukley Music Festival — Будва</li>
-                    </ul>
                     <p data-lang="ru" style="display:none">🎶 Будучи командой профессиональных музыкантов, мы превратили свою любовь к музыке в возможность делиться ею с другими, создавая яркие, живые и незабываемые моменты.</p>
                     <p data-lang="ru" style="display:none" class="font-bold">«Стив Джобс был цифровым пионером, но дома он слушал винил.» — Нил Янг</p>
                 </div>
                 <div class="about-image">
                     <img src="images/about.png" alt="About Vinyl-M">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="events" class="relative">
+        <div class="container">
+            <h2 data-lang="en">Our Collaborations & Events</h2>
+            <h2 data-lang="me" style="display:none">Naše saradnje i događaji</h2>
+            <h2 data-lang="ru" style="display:none">Наши коллаборации и события</h2>
+
+            <div class="event-content">
+                <!-- Artists Block -->
+                <div class="event-block">
+                    <h3 data-lang="en">Artists We’ve Worked With</h3>
+                    <h3 data-lang="me" style="display:none">Umjetnici sa kojima smo sarđivali</h3>
+                    <h3 data-lang="ru" style="display:none">Артисты, с которыми мы работали</h3>
+                    <!-- Английский -->
+                    <ul class="event-list" data-lang="en">
+                        <li class="event-item"><i class="fas fa-microphone"></i> Leb i Sol</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Električni orgazam</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Perper</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Travega (Ireland)</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Dubioza Kolektiv</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Boris Grebenshikov (Russian Bob Dylan)</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Psoy Korolenko (Russia)</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Hermes Brothers (Russia)</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Group Megapolis – Oleg Nestorov (Russia)</li>
+                    </ul>
+                    <!-- Черногорский -->
+                    <ul class="event-list" data-lang="me" style="display:none">
+                        <li class="event-item"><i class="fas fa-microphone"></i> Leb i Sol</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Električni orgazam</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Perper</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Travega (Irska)</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Dubioza Kolektiv</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Boris Grebenšikov (Ruski Bob Dylan)</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Psoy Korolenko (Rusija)</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Hermes Brothers (Rusija)</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Grupa Megapolis – Oleg Nestorov (Rusija)</li>
+                    </ul>
+                    <!-- Русский -->
+                    <ul class="event-list" data-lang="ru" style="display:none">
+                        <li class="event-item"><i class="fas fa-microphone"></i> Leb i Sol</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Električni orgazam</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Perper</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Travega (Ирландия)</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Dubioza Kolektiv</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Борис Гребенщиков (русский Боб Дилан)</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Псой Короленко (Россия)</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Hermes Brothers (Россия)</li>
+                        <li class="event-item"><i class="fas fa-microphone"></i> Группа «Мегаполис» — Олег Нестеров (Россия)</li>
+                    </ul>
+                </div>
+                <!-- Events Block -->
+                <div class="event-block">
+                    <h3 data-lang="en">Events We’ve Organized</h3>
+                    <h3 data-lang="me" style="display:none">Događaji koje smo organizovali</h3>
+                    <h3 data-lang="ru" style="display:none">События, которые мы организовали</h3>
+                    <!-- Английский -->
+                    <ul class="event-list" data-lang="en">
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Montenegro Jazz Festival – Petrovac</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Reggae Festival – Budva</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Garden Planet Festival – Budva</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Wind Orchestra Festival – Budva</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> “Slovo novo” Festival</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Tivat World Music Festival</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Dukley Music Festival – Budva</li>
+                    </ul>
+                    <!-- Черногорский -->
+                    <ul class="event-list" data-lang="me" style="display:none">
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Montenegro Jazz Festival – Petrovac</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Reggae festival – Budva</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Garden Planet Festival – Budva</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Festival Duvačkih Orkestara – Budva</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Festival „Slovo novo“</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Tivat World Music Festival</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Dukley Music Festival – Budva</li>
+                    </ul>
+                    <!-- Русский -->
+                    <ul class="event-list" data-lang="ru" style="display:none">
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Montenegro Jazz Festival — Петровац</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Reggae Festival — Будва</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Garden Planet Festival — Будва</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Фестиваль духовых оркестров — Будва</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Фестиваль «Слово ново»</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Tivat World Music Festival</li>
+                        <li class="event-item"><i class="fas fa-calendar-alt"></i> Dukley Music Festival — Будва</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -1233,25 +1285,26 @@
                 stagger: 0.2
             });
 
-            function animateFeatureItems() {
-                gsap.fromTo('.feature-item', 
-                    { x: -30, opacity: 0 },
+            function animateEventItems() {
+                gsap.fromTo('.event-item', 
+                    { y: 50, opacity: 0, scale: 0.9 },
                     { 
-                        x: 0, 
+                        y: 0, 
                         opacity: 1, 
+                        scale: 1,
                         duration: 0.6, 
-                        stagger: 0.1, 
+                        stagger: 0.15, 
                         ease: 'power2.out',
                         force3D: true,
                         onComplete: () => {
-                            document.querySelectorAll('.feature-item').forEach(item => {
-                                console.log('Feature item:', item.textContent, 'Opacity:', item.style.opacity, 'X:', item.style.transform);
+                            document.querySelectorAll('.event-item').forEach(item => {
+                                console.log('Event item:', item.textContent, 'Opacity:', item.style.opacity, 'Y:', item.style.transform, 'Scale:', item.style.transform);
                             });
                         }
                     }
                 );
             }
-            animateFeatureItems();
+            animateEventItems();
 
             gsap.from('.work-item', {
                 scale: 0.8,
@@ -1308,8 +1361,8 @@
                 });
 
                 // Reset and restart animations
-                gsap.killTweensOf('.feature-item, .contact-item');
-                animateFeatureItems();
+                gsap.killTweensOf('.event-item, .contact-item');
+                animateEventItems();
                 animateContactItems();
             }
         });
