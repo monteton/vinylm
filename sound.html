@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="sr-Latn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VinylM — Zvuk Oprema</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <style>
+    /* ОБЩИЕ СТИЛИ И ПЕРЕМЕННЫЕ */
+    :root {
+      --color-primary-red: #e53935;
+      --color-accent-yellow: #ffd600;
+      --color-dark: #111;
+      --color-light: #fff;
+      --color-gray: #222;
+    }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--color-dark);
+      color: var(--color-light);
+      overflow-x: hidden;
+    }
+    .container {
+      padding: 0 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* АНИМАЦИЯ ПОЯВЛЕНИЯ */
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    body.loaded .fade-in-section {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ШАПКА */
+    header {
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #000;
+    }
+    .logo {
+      height: 40px;
+      width: auto;
+    }
+    .lang-switcher {
+      display: flex;
+      gap: 5px;
+      background: var(--color-gray);
+      border-radius: 20px;
+      padding: 4px;
+    }
+    .lang-switcher button {
+      background: none;
+      border: none;
+      color: var(--color-light);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .lang-switcher button.active {
+      background: var(--color-primary-red);
+      color: var(--color-light);
+    }
+
+    /* ГЛАВНОЕ МЕНЮ */
+    .main-nav {
+      background: #000;
+      padding: 15px 0;
+      border-top: 1px solid var(--color-gray);
+      border-bottom: 2px solid var(--color-primary-red);
+      text-align: center;
+    }
+    .main-nav a {
+      color: var(--color-light);
+      text-decoration: none;
+      margin: 5px 12px;
+      font-weight: 700;
+      transition: color 0.3s;
+      display: inline-block;
+    }
+    .main-nav a:hover, .main-nav a.active {
+      color: var(--color-accent-yellow);
+    }
+
+    /* СТИЛИ СТРАНИЦЫ ОБОРУДОВАНИЯ */
+    .page-title {
+        font-size: 2.5em;
+        text-align: center;
+        margin: 40px 0;
+        color: var(--color-accent-yellow);
+    }
+    .equipment-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
+    }
+    .equipment-category {
+        background-color: var(--color-gray);
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .equipment-category h3 {
+        font-size: 1.5em;
+        color: var(--color-light);
+        margin: 0 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--color-primary-red);
+    }
+    .equipment-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .equipment-list li {
+        margin-bottom: 10px;
+        font-size: 1.05em;
+        line-height: 1.5;
+    }
+
+    /* ПОДВАЛ */
+    footer {
+      background: #000;
+      text-align: center;
+      padding: 25px;
+      margin-top: 50px;
+      border-top: 1px solid var(--color-gray);
+      font-size: 0.9em;
+    }
+
+    /* НИЖНЕЕ МЕНЮ */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #000;
+      display: none;
+      justify-content: space-around;
+      border-top: 2px solid var(--color-primary-red);
+      padding: 8px 0;
+      z-index: 1000;
+    }
+    .bottom-nav a {
+      color: var(--color-light);
+      font-size: 1.5em;
+      transition: color 0.3s;
+    }
+    .bottom-nav a:hover, .bottom-nav a.active {
+      color: var(--color-accent-yellow);
+    }
+    
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .bottom-nav { display: flex; }
+      .page-title { font-size: 1.8em; }
+    }
+
+  </style>
+</head>
+<body class="">
+
+  <header>
+    <a href="index.html"><img src="images/logo.png" alt="VinylM Logo" class="logo"></a>
+    <div class="lang-switcher">
+      <button onclick="changeLanguage('sr')" class="active">SR</button>
+      <button onclick="changeLanguage('ru')">RU</button>
+      <button onclick="changeLanguage('en')">EN</button>
+    </div>
+  </header>
+  
+  <nav class="main-nav">
+    <a href="index.html" data-lang-key="navHome">Главная</a>
+    <a href="index.html#about" data-lang-key="navAbout">О компании</a>
+    <a href="sound.html" class="active" data-lang-key="navSound">Звук</a>
+    <a href="light.html" data-lang-key="navLight">Свет</a>
+    <a href="effects.html" data-lang-key="navEffects">Эффекты</a>
+    <a href="gallery.html" data-lang-key="navGallery">Галерея</a>
+    <a href="index.html#contact" data-lang-key="navContact">Контакты</a>
+  </nav>
+
+  <main class="container">
+    <h1 class="page-title fade-in-section" data-lang-key="pageTitle">Звуковое Оборудование</h1>
+
+    <div class="equipment-grid">
+      
+      <div class="equipment-category fade-in-section">
+        <h3 data-lang-key="catSpeakers">Динамики</h3>
+        <ul class="equipment-list">
+          <li>D&B B22 Sub</li>
+          <li>D&B XSL Top</li>
+          <li>JBL VERTEC Series</li>
+          <li>JBL SRX 918</li>
+          <li>JBL SRX 906</li>
+          <li>JBL VRX 918</li>
+          <li>JBL VRX 932</li>
+          <li>JBL PRX 518</li>
+          <li>JBL PRX 635</li>
+          <li>JBL PRX 515</li>
+          <li>RCF 8003 & 8004</li>
+          <li>RCF TT+ Series</li>
+          <li>RCF 945</li>
+          <li>RCF 915</li>
+          <li>RCF 912</li>
+          <li>RCF 715</li>
+          <li>RCF NX Monitor</li>
+          <li>KV2 ES System</li>
+          <li>TURBO SOUND INSPIRE 2000</li>
+        </ul>
+      </div>
+
+      <div class="equipment-category fade-in-section">
+        <h3 data-lang-key="catConsoles">Микшерные пульты</h3>
+        <ul class="equipment-list">
+          <li>DIGICO Quantum 225</li>
+          <li>YAMAHA CL5</li>
+          <li>MIDAS M32 / M32R</li>
+          <li>BEHRINGER WING</li>
+          <li>BEHRINGER X32</li>
+          <li>ALLEN & HEATH 16:2</li>
+          <li>DYNACORD CMX 1600 / 1000</li>
+          <li>MACKIE CFX 16</li>
+          <li>MACKIE CFR 12</li>
+        </ul>
+      </div>
+
+      <div class="equipment-category fade-in-section">
+        <h3 data-lang-key="catMicrophones">Микрофоны</h3>
+        <ul class="equipment-list">
+          <li>DPA</li>
+          <li>SHURE QLXD, SLXD, BLX</li>
+          <li>SHURE BETA 57/58</li>
+          <li>Sennheiser Series 900/600</li>
+          <li>AKG</li>
+          <li>Audio-Technica</li>
+        </ul>
+      </div>
+
+       <div class="equipment-category fade-in-section">
+        <h3 data-lang-key="catMonitoring">Аудио Мониторинг</h3>
+        <ul class="equipment-list">
+          <li>Sennheiser G4</li>
+          <li>Sennheiser G3</li>
+        </ul>
+      </div>
+
+      <div class="equipment-category fade-in-section">
+        <h3 data-lang-key="catDj">DJ Оборудование</h3>
+        <ul class="equipment-list">
+          <li>Pioneer CDJ 3000 (4 units)</li>
+          <li>Pioneer DJM 900 NXS</li>
+          <li>Pioneer DJM A9</li>
+          <li>Pioneer DJM V10</li>
+        </ul>
+      </div>
+
+      <div class="equipment-category fade-in-section">
+        <h3 data-lang-key="catBackline">Бэклайн</h3>
+        <ul class="equipment-list">
+          <li>YAMAHA RECORDING CUSTOM</li>
+          <li>YAMAHA MAPLE CUSTOM</li>
+          <li>YAMAHA OAK CUSTOM</li>
+          <li>YAMAHA STAGE CUSTOM</li>
+          <li>DW COLLECTORS Exotic Maple</li>
+          <li>MARK BASS II / III</li>
+          <li>AMPEG SVT</li>
+          <li>TRACE ELLIOT</li>
+          <li>GALLIEN-KRUEGER 1001 RB-II 700W</li>
+          <li>FENDER TWIN REVERB 2×12'</li>
+          <li>FENDER HOT ROD DELUXE III</li>
+          <li>MARSHALL JCM 800</li>
+          <li>NORD STAGE 3/4 88</li>
+          <li>ROLAND 300 RD / 800 RD / 2000 RD</li>
+          <li>YAMAHA MONTAGE</li>
+          <li>LP GALAXY Conga Set</li>
+          <li>LP GALAXY Bongo Set</li>
+          <li>LP Timbales Karl Perazzo</li>
+          <li>FENDER Telecaster Custom Shop '68</li>
+          <li>FENDER Stratocaster Master Built</li>
+          <li>FENDER Precision Bass</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+  
+  <footer>
+    <p>&copy; 2025 VinylM. <span data-lang-key="footerRights">Все права защищены.</span></p>
+  </footer>
+
+  <nav class="bottom-nav">
+    <a href="index.html"><i class="fas fa-home"></i></a>
+    <a href="index.html#about"><i class="fas fa-info-circle"></i></a>
+    <a href="gallery.html"><i class="fas fa-images"></i></a>
+    <a href="index.html#contact"><i class="fas fa-envelope"></i></a>
+  </nav>
+
+  <script>
+    const langData = {
+      "sr": {
+        "navHome": "Početna", "navAbout": "O nama", "navSound": "Zvuk", "navLight": "Svetlo", "navEffects": "Efekti", "navGallery": "Galerija", "navContact": "Kontakt",
+        "pageTitle": "Audio Oprema",
+        "catSpeakers": "Zvučnici",
+        "catConsoles": "Miks Pult",
+        "catMicrophones": "Mikrofoni",
+        "catMonitoring": "Audio Monitoring",
+        "catBackline": "Backline",
+        "catDj": "DJ Oprema",
+        "footerRights": "Sva prava zadržana."
+      },
+      "ru": {
+        "navHome": "Главная", "navAbout": "О компании", "navSound": "Звук", "navLight": "Свет", "navEffects": "Эффекты", "navGallery": "Галерея", "navContact": "Контакты",
+        "pageTitle": "Звуковое Оборудование",
+        "catSpeakers": "Динамики",
+        "catConsoles": "Микшерные пульты",
+        "catMicrophones": "Микрофоны",
+        "catMonitoring": "Аудио Мониторинг",
+        "catBackline": "Бэклайн",
+        "catDj": "DJ Оборудование",
+        "footerRights": "Все права защищены."
+      },
+      "en": {
+        "navHome": "Home", "navAbout": "About Us", "navSound": "Sound", "navLight": "Light", "navEffects": "Effects", "navGallery": "Gallery", "navContact": "Contact",
+        "pageTitle": "Professional Audio Equipment",
+        "catSpeakers": "Speakers",
+        "catConsoles": "Mixing Consoles",
+        "catMicrophones": "Microphones",
+        "catMonitoring": "Audio Monitoring",
+        "catBackline": "Backline",
+        "catDj": "DJ Equipment",
+        "footerRights": "All rights reserved."
+      }
+    };
+
+    function changeLanguage(lang) {
+        document.documentElement.lang = lang === 'sr' ? 'sr-Latn' : lang;
+        document.querySelectorAll('[data-lang-key]').forEach(element => {
+            const key = element.getAttribute('data-lang-key');
+            if (langData[lang][key]) {
+                element.innerHTML = langData[lang][key];
+            }
+        });
+        document.querySelectorAll('.lang-switcher button').forEach(button => {
+            button.classList.remove('active');
+        });
+        document.querySelector(`.lang-switcher button[onclick="changeLanguage('${lang}')"]`).classList.add('active');
+        document.title = (lang === 'sr') ? 'VinylM — Audio Oprema' : (lang === 'ru') ? 'VinylM — Звуковое Оборудование' : 'VinylM — Sound Equipment';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        changeLanguage('sr');
+        setTimeout(() => {
+            document.body.classList.add('loaded');
+        }, 100);
+    });
+  </script>
+</body>
+</html>

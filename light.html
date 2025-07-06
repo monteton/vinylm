@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="sr-Latn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VinylM — Svetlosna Oprema</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <style>
+    /* ОБЩИЕ СТИЛИ И ПЕРЕМЕННЫЕ */
+    :root {
+      --color-primary-red: #e53935;
+      --color-accent-yellow: #ffd600;
+      --color-dark: #111;
+      --color-light: #fff;
+      --color-gray: #222;
+    }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--color-dark);
+      color: var(--color-light);
+      overflow-x: hidden;
+    }
+    .container {
+      padding: 0 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* АНИМАЦИЯ ПОЯВЛЕНИЯ */
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    body.loaded .fade-in-section {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ШАПКА */
+    header {
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #000;
+    }
+    .logo {
+      height: 40px;
+      width: auto;
+    }
+    .lang-switcher {
+      display: flex;
+      gap: 5px;
+      background: var(--color-gray);
+      border-radius: 20px;
+      padding: 4px;
+    }
+    .lang-switcher button {
+      background: none;
+      border: none;
+      color: var(--color-light);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .lang-switcher button.active {
+      background: var(--color-primary-red);
+      color: var(--color-light);
+    }
+
+    /* ГЛАВНОЕ МЕНЮ */
+    .main-nav {
+      background: #000;
+      padding: 15px 0;
+      border-top: 1px solid var(--color-gray);
+      border-bottom: 2px solid var(--color-primary-red);
+      text-align: center;
+    }
+    .main-nav a {
+      color: var(--color-light);
+      text-decoration: none;
+      margin: 5px 12px;
+      font-weight: 700;
+      transition: color 0.3s;
+      display: inline-block;
+    }
+    .main-nav a:hover, .main-nav a.active {
+      color: var(--color-accent-yellow);
+    }
+
+    /* СТИЛИ СТРАНИЦЫ ОБОРУДОВАНИЯ */
+    .page-title {
+        font-size: 2.5em;
+        text-align: center;
+        margin: 40px 0;
+        color: var(--color-accent-yellow);
+    }
+    .equipment-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
+        align-items: start;
+    }
+    .equipment-category {
+        background-color: var(--color-gray);
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .equipment-category h3 {
+        font-size: 1.5em;
+        color: var(--color-light);
+        margin: 0 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--color-primary-red);
+    }
+    .equipment-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .equipment-list li {
+        margin-bottom: 10px;
+        font-size: 1.05em;
+        line-height: 1.5;
+    }
+
+    /* ПОДВАЛ */
+    footer {
+      background: #000;
+      text-align: center;
+      padding: 25px;
+      margin-top: 50px;
+      border-top: 1px solid var(--color-gray);
+      font-size: 0.9em;
+    }
+
+    /* НИЖНЕЕ МЕНЮ */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #000;
+      display: none;
+      justify-content: space-around;
+      border-top: 2px solid var(--color-primary-red);
+      padding: 8px 0;
+      z-index: 1000;
+    }
+    .bottom-nav a {
+      color: var(--color-light);
+      font-size: 1.5em;
+      transition: color 0.3s;
+    }
+    .bottom-nav a:hover, .bottom-nav a.active {
+      color: var(--color-accent-yellow);
+    }
+    
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .bottom-nav { display: flex; }
+      .page-title { font-size: 1.8em; }
+    }
+
+  </style>
+</head>
+<body class="">
+
+  <header>
+    <a href="index.html"><img src="images/logo.png" alt="VinylM Logo" class="logo"></a>
+    <div class="lang-switcher">
+      <button onclick="changeLanguage('sr')" class="active">SR</button>
+      <button onclick="changeLanguage('ru')">RU</button>
+      <button onclick="changeLanguage('en')">EN</button>
+    </div>
+  </header>
+  
+  <nav class="main-nav">
+    <a href="index.html" data-lang-key="navHome">Главная</a>
+    <a href="index.html#about" data-lang-key="navAbout">О компании</a>
+    <a href="sound.html" data-lang-key="navSound">Звук</a>
+    <a href="light.html" class="active" data-lang-key="navLight">Свет</a>
+    <a href="effects.html" data-lang-key="navEffects">Эффекты</a>
+    <a href="gallery.html" data-lang-key="navGallery">Галерея</a>
+    <a href="index.html#contact" data-lang-key="navContact">Контакты</a>
+  </nav>
+
+  <main class="container">
+    <h1 class="page-title fade-in-section" data-lang-key="pageTitle">Световое Оборудование</h1>
+
+    <div class="equipment-grid">
+      
+      <div class="equipment-category fade-in-section">
+        <h3 data-lang-key="catStageLight">Сценическое освещение</h3>
+        <ul class="equipment-list">
+          <li data-lang-key="itemBeam">BEAM MOVING HEAD</li>
+          <li data-lang-key="itemWash">WASH MOVING HEAD</li>
+          <li data-lang-key="itemSpot">SPOT MOVING HEAD</li>
+          <li>LED PAR</li>
+          <li data-lang-key="itemWhite">WHITE LIGHT (Top, Fresnel)</li>
+          <li data-lang-key="itemLaser">LASER SYSTEMS</li>
+          <li data-lang-key="itemFollow">FOLLOW SPOTS</li>
+          <li data-lang-key="itemStrobe">STROBE LIGHTS</li>
+          <li data-lang-key="itemUv">UV LIGHTS</li>
+          <li>PIXEL MATRIX</li>
+        </ul>
+      </div>
+
+      <div class="equipment-category fade-in-section">
+        <h3 data-lang-key="catTruss">Фермы и Поддержка</h3>
+        <ul class="equipment-list">
+          <li data-lang-key="itemTrussSys">Алюминиевые фермовые системы</li>
+          <li data-lang-key="itemMotorLift">Моторизованные подъёмники для ферм</li>
+          <li data-lang-key="itemGroundSup">Наземные опорные конструкции</li>
+          <li data-lang-key="itemLightStand">Осветительные стойки</li>
+          <li data-lang-key="itemTrussBridge">Фермовые мосты</li>
+          <li data-lang-key="itemChainHoist">Цепные тали</li>
+          <li data-lang-key="itemSafety">Оборудование для безопасности</li>
+        </ul>
+      </div>
+
+      <div class="equipment-category fade-in-section">
+        <h3 data-lang-key="catControl">Системы Управления</h3>
+        <ul class="equipment-list">
+          <li data-lang-key="itemDmxControl">DMX контроллеры</li>
+          <li data-lang-key="itemLightConsole">Световые пульты</li>
+          <li data-lang-key="itemWirelessDmx">Беспроводной DMX</li>
+          <li data-lang-key="itemMediaServer">Медиасерверы</li>
+          <li data-lang-key="itemTimecode">Синхронизация по тайм-коду</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+  
+  <footer>
+    <p>&copy; 2025 VinylM. <span data-lang-key="footerRights">Все права защищены.</span></p>
+  </footer>
+
+  <nav class="bottom-nav">
+    <a href="index.html"><i class="fas fa-home"></i></a>
+    <a href="index.html#about"><i class="fas fa-info-circle"></i></a>
+    <a href="gallery.html"><i class="fas fa-images"></i></a>
+    <a href="index.html#contact"><i class="fas fa-envelope"></i></a>
+  </nav>
+
+  <script>
+    const langData = {
+      "sr": {
+        "navHome": "Početna", "navAbout": "O nama", "navSound": "Zvuk", "navLight": "Svetlo", "navEffects": "Efekti", "navGallery": "Galerija", "navContact": "Kontakt",
+        "pageTitle": "Svetlosna Oprema",
+        "catStageLight": "Scensko Osvetljenje",
+        "itemBeam": "BEAM Pokretne Glave",
+        "itemWash": "WASH Pokretne Glave",
+        "itemSpot": "SPOT Pokretne Glave",
+        "itemWhite": "Belo Svetlo (Top, Fresnel)",
+        "itemLaser": "Laserski Sistemi",
+        "itemFollow": "Prateći Reflektori",
+        "itemStrobe": "Stroboskopi",
+        "itemUv": "UV Svetla",
+        "catTruss": "Konstrukcije i Nosači",
+        "itemTrussSys": "Aluminijumski Truss Sistemi",
+        "itemMotorLift": "Motorizovani Liftovi za Konstrukcije",
+        "itemGroundSup": "Podne Potporne Konstrukcije",
+        "itemLightStand": "Stalci za Rasvetu",
+        "itemTrussBridge": "Mostovi od Konstrukcija",
+        "itemChainHoist": "Lančane Dizalice",
+        "itemSafety": "Sigurnosna Oprema",
+        "catControl": "Sistemi Upravljanja",
+        "itemDmxControl": "DMX Kontroleri",
+        "itemLightConsole": "Rasvetne Konzole",
+        "itemWirelessDmx": "Bežični DMX",
+        "itemMediaServer": "Medijski Serveri",
+        "itemTimecode": "Sinhronizacija Vremenskim Kodom",
+        "footerRights": "Sva prava zadržana."
+      },
+      "ru": {
+        "navHome": "Главная", "navAbout": "О компании", "navSound": "Звук", "navLight": "Свет", "navEffects": "Эффекты", "navGallery": "Галерея", "navContact": "Контакты",
+        "pageTitle": "Световое Оборудование",
+        "catStageLight": "Сценическое освещение",
+        "itemBeam": "Вращающиеся головы BEAM",
+        "itemWash": "Вращающиеся головы WASH",
+        "itemSpot": "Вращающиеся головы SPOT",
+        "itemWhite": "Белый свет (Top, Fresnel)",
+        "itemLaser": "Лазерные системы",
+        "itemFollow": "Следящие прожекторы",
+        "itemStrobe": "Стробоскопы",
+        "itemUv": "УФ-светильники",
+        "catTruss": "Фермы и Поддержка",
+        "itemTrussSys": "Алюминиевые фермовые системы",
+        "itemMotorLift": "Моторизованные подъёмники для ферм",
+        "itemGroundSup": "Наземные опорные конструкции",
+        "itemLightStand": "Осветительные стойки",
+        "itemTrussBridge": "Фермовые мосты",
+        "itemChainHoist": "Цепные тали",
+        "itemSafety": "Оборудование для безопасности",
+        "catControl": "Системы Управления",
+        "itemDmxControl": "DMX контроллеры",
+        "itemLightConsole": "Световые пульты",
+        "itemWirelessDmx": "Беспроводной DMX",
+        "itemMediaServer": "Медиасерверы",
+        "itemTimecode": "Синхронизация по тайм-коду",
+        "footerRights": "Все права защищены."
+      },
+      "en": {
+        "navHome": "Home", "navAbout": "About Us", "navSound": "Sound", "navLight": "Light", "navEffects": "Effects", "navGallery": "Gallery", "navContact": "Contact",
+        "pageTitle": "Lighting Equipment",
+        "catStageLight": "Stage Lighting",
+        "itemBeam": "BEAM MOVING HEAD",
+        "itemWash": "WASH MOVING HEAD",
+        "itemSpot": "SPOT MOVING HEAD",
+        "itemWhite": "WHITE LIGHT (Top, Fresnel)",
+        "itemLaser": "LASER SYSTEMS",
+        "itemFollow": "FOLLOW SPOTS",
+        "itemStrobe": "STROBE LIGHTS",
+        "itemUv": "UV LIGHTS",
+        "catTruss": "Truss & Support",
+        "itemTrussSys": "Aluminum Truss Systems",
+        "itemMotorLift": "Motorized Truss Lifts",
+        "itemGroundSup": "Ground Support Structures",
+        "itemLightStand": "Lighting Stands",
+        "itemTrussBridge": "Truss Bridges",
+        "itemChainHoist": "Chain Hoists",
+        "itemSafety": "Safety Equipment",
+        "catControl": "Control Systems",
+        "itemDmxControl": "DMX Controllers",
+        "itemLightConsole": "Lighting Consoles",
+        "itemWirelessDmx": "Wireless DMX",
+        "itemMediaServer": "Media Servers",
+        "itemTimecode": "Timecode Synchronization",
+        "footerRights": "All rights reserved."
+      }
+    };
+
+    function changeLanguage(lang) {
+        document.documentElement.lang = lang === 'sr' ? 'sr-Latn' : lang;
+        document.querySelectorAll('[data-lang-key]').forEach(element => {
+            const key = element.getAttribute('data-lang-key');
+            if (langData[lang][key]) {
+                element.innerHTML = langData[lang][key];
+            }
+        });
+        document.querySelectorAll('.lang-switcher button').forEach(button => {
+            button.classList.remove('active');
+        });
+        document.querySelector(`.lang-switcher button[onclick="changeLanguage('${lang}')"]`).classList.add('active');
+        document.title = (lang === 'sr') ? 'VinylM — Svetlosna Oprema' : (lang === 'ru') ? 'VinylM — Световое Оборудование' : 'VinylM — Lighting Equipment';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        changeLanguage('sr');
+        setTimeout(() => {
+            document.body.classList.add('loaded');
+        }, 100);
+    });
+  </script>
+</body>
+</html>
