@@ -1,529 +1,478 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="sr-Latn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Myuppy - Digital Marketing & Content Production</title>
-<style>
-@font-face {
-    font-family: 'Eurofurence Bold';
-    src: url('fonts/eurof55.ttf') format('truetype');
-    font-weight: bold;
-}
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body {
-    font-family: 'Eurofurence Bold', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #000000;
-    color: #ffffff;
-    overflow-x: hidden;
-    line-height: 1.6;
-    padding-bottom: 100px;
-}
-.wave {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 1000% 1000% 0 0;
-    position: fixed;
-    width: 200%;
-    height: 12em;
-    animation: wave 10s -3s linear infinite;
-    transform: translate3d(0, 0, 0);
-    opacity: 0.3;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-}
-.wave:nth-of-type(2) {
-    bottom: -1.25em;
-    animation: wave 18s linear reverse infinite;
-    opacity: 0.2;
-}
-.wave:nth-of-type(3) {
-    bottom: -2.5em;
-    animation: wave 20s -1s reverse infinite;
-    opacity: 0.1;
-}
-@keyframes wave {
-    2% { transform: translateX(1); }
-    25% { transform: translateX(-25%); }
-    50% { transform: translateX(-50%); }
-    75% { transform: translateX(-25%); }
-    100% { transform: translateX(1); }
-}
-@keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(50px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-@keyframes neonBorder {
-    0%, 100% { filter: drop-shadow(0 0 10px rgba(0, 150, 255, 0.7)); }
-    50% { filter: drop-shadow(0 0 20px rgba(0, 200, 255, 1)); }
-}
-@keyframes glowText {
-    from { text-shadow: 0 0 10px rgba(0,150,255,0.8); }
-    to { text-shadow: 0 0 30px rgba(0,200,255,1); }
-}
-@keyframes bounceIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.3) translateY(1000px);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VinylM — Event Solutions</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <style>
+    /* ОБЩИЕ СТИЛИ И ПЕРЕМЕННЫЕ */
+    :root {
+      --color-primary-red: #e53935;
+      --color-accent-yellow: #ffd600;
+      --color-dark: #111;
+      --color-light: #fff;
+      --color-gray: #222;
     }
-    60% {
-        opacity: 1;
-        transform: scale(1.05) translateY(-20px);
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--color-dark);
+      color: var(--color-light);
+      overflow-x: hidden;
     }
-    80% {
-        transform: scale(0.95) translateY(10px);
+    .container {
+      padding: 0 16px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    100% {
-        transform: scale(1) translateY(0);
+
+    /* АНИМАЦИЯ ПОЯВЛЕНИЯ */
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     }
-}
-.top-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(20px);
-    z-index: 1000;
-    padding: 20px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-.nav-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 40px;
-}
-.nav-logo {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #ffffff;
-    letter-spacing: 2px;
-}
-.nav-menu {
-    display: flex;
-    gap: 40px;
-    list-style: none;
-}
-.nav-menu a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #ffffff;
-    transition: width .3s;
-}
-.nav-menu a:hover::after {
-    width: 100%;
-}
-.nav-menu a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.1rem;
-    position: relative;
-    padding-bottom: 5px;
-}
-.hero {
-    height: 50vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    margin-top: 60px;
-}
-.banner-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-}
-.banner-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-}
-.logo-wrapper {
-    width: 160px;
-    height: 160px;
-    border: 4px solid rgba(0, 150, 255, 0.8);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    animation: bounceIn 1s ease-out forwards; /* Новая анимация "мячик" */
-}
-.logo-horizontal {
-    width: 100%;
-    max-width: 140px;
-    height: auto;
-    display: block;
-}
-.banner-tagline {
-    font-size: 1.5rem;
-    letter-spacing: 1px;
-    text-shadow: 0 0 10px rgba(0, 150, 255, 0.8);
-    animation: glowText 2s infinite alternate;
-    animation-delay: 1s;
-    opacity: 0;
-    animation-fill-mode: forwards;
-}
-section {
-    padding: 120px 40px;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-.section-title {
-    font-size: 3.5rem;
-    text-align: center;
-    margin-bottom: 60px;
-    letter-spacing: 2px;
-}
-.skewed-frame {
-    height: 300px;
-    overflow: hidden;
-    transform: skewY(-3deg);
-    margin-bottom: 30px;
-}
-.skewed-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: skewY(3deg) scale(1.1);
-    transition: .3s;
-}
-.skewed-frame:hover img {
-    transform: skewY(3deg) scale(1.15)
-}
-.about-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
-}
-.about-block {
-    background: rgba(255, 255, 255, .03);
-    padding: 40px;
-    border: 1px solid rgba(255, 255, 255, .1);
-    position: relative;
-    overflow: hidden;
-}
-.about-block h3 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-}
-.about-block p {
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, .8);
-}
-.about-cta {
-    text-align: center;
-}
-.section-button {
-    border: 2px solid #fff;
-    border-radius: 8px; /* Скругление кнопок */
-    color: #fff;
-    padding: 12px 30px;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: .3s;
-    display: inline-block; /* Для правильного центрирования и отступов */
-    margin-top: 20px;
-}
-.section-button:hover {
-    background: #fff;
-    color: #000
-}
-.services-section {
-    background: rgba(255, 255, 255, .02);
-    border-top: 1px solid rgba(255, 255, 255, .1);
-}
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 40px;
-}
-.service-card {
-    background: rgba(255, 255, 255, .03);
-    padding: 40px;
-    border: 1px solid rgba(255, 255, 255, .1);
-    text-align: center;
-    overflow: hidden;
-    display: flex; /* Для выравнивания кнопки */
-    flex-direction: column; /* Для выравнивания кнопки */
-    justify-content: space-between; /* Для выравнивания кнопки */
-}
-.service-icon img {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 20px;
-}
-.service-card h3 {
-    font-size: 1.8rem;
-    margin-bottom: 15px
-}
-.service-card p {
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, .8);
-    flex-grow: 1; /* Чтобы текст занимал доступное место, отодвигая кнопку вниз */
-    margin-bottom: 25px; /* Отступ от кнопки */
-}
-.service-button {
-    border: 1px solid rgba(255, 255, 255, .3);
-    border-radius: 8px; /* Скругление кнопок */
-    color: #fff;
-    padding: 10px 25px;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: .3s;
-    align-self: center; /* Центрируем кнопку в карточке */
-}
-.service-button:hover {
-    background: #fff;
-    color: #000
-}
-.contacts-section {
-    text-align: center;
-}
-.contacts-description {
-    font-size: 1.4rem;
-    color: rgba(255, 255, 255, .8);
-    margin-bottom: 40px;
-}
-.contact-info {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-}
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.2rem;
-    text-decoration: none;
-    color: #fff;
-}
-.contact-item img {
-    width: 24px;
-    height: 24px
-}
-.social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-}
-.social-icon {
-    width: 60px;
-    height: 60px;
-    border: 2px solid rgba(255, 255, 255, .3);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: .3s;
-}
-.social-icon:hover {
-    background: #fff;
-}
-.social-icon img {
-    width: 32px;
-    height: 32px;
-}
-.social-icon:hover img {
-    filter: invert(1); /* Инвертируем цвет иконки при наведении */
-}
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(255, 255, 255, .1);
-    display: flex;
-    justify-content: center;
-    padding: 10px 0;
-}
-.bottom-nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 20px;
-    color: rgba(255, 255, 255, .7);
-    text-decoration: none;
-    transition: .3s;
-}
-.bottom-nav-item:hover {
-    color: #fff;
-    transform: translateY(-3px)
-}
-.bottom-nav-item img {
-    width: 24px;
-    height: 24px;
-    margin-bottom: 5px
-}
-.bottom-nav-item span {
-    font-size: 0.8rem
-}
-footer {
-    text-align: center;
-    padding: 40px 0;
-    background: rgba(255, 255, 255, .02);
-    color: rgba(255, 255, 255, .6);
-    border-top: 1px solid rgba(255, 255, 255, .1);
-    font-size: 1rem;
-}
-@media (max-width: 768px) {
-    .nav-menu {
-        display: none
+    body.loaded .fade-in-section {
+      opacity: 1;
+      transform: translateY(0);
     }
-    .logo-horizontal {
-        width: 140px
+
+    /* ШАПКА И ЯЗЫКОВОЙ ПЕРЕКЛЮЧАТЕЛЬ */
+    header {
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #000;
+    }
+    .logo {
+      height: 40px;
+      width: auto;
+    }
+    .lang-switcher {
+      display: flex;
+      gap: 5px;
+      background: var(--color-gray);
+      border-radius: 20px;
+      padding: 4px;
+    }
+    .lang-switcher button {
+      background: none;
+      border: none;
+      color: var(--color-light);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .lang-switcher button.active {
+      background: var(--color-primary-red);
+      color: var(--color-light);
+    }
+
+    /* 1. БАННЕР */
+    .banner {
+      aspect-ratio: 16 / 5;
+      width: 100%;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/banner.png') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .banner-content h1 {
+      font-size: 3em;
+      margin: 0;
+      color: var(--color-light);
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    }
+
+    /* 2. ГЛАВНОЕ МЕНЮ */
+    .main-nav {
+      background: #000;
+      padding: 15px 0;
+      border-top: 1px solid var(--color-gray);
+      border-bottom: 2px solid var(--color-primary-red);
+      text-align: center;
+    }
+    .main-nav a {
+      color: var(--color-light);
+      text-decoration: none;
+      margin: 5px 12px;
+      font-weight: 700;
+      transition: color 0.3s;
+      display: inline-block;
+    }
+    .main-nav a:hover {
+      color: var(--color-accent-yellow);
+    }
+
+    /* СЕКЦИИ */
+    .section {
+      padding: 50px 0;
     }
     .section-title {
-        font-size: 2.5rem
+      font-size: 2em;
+      font-weight: 700;
+      color: var(--color-accent-yellow);
+      margin-bottom: 30px;
+      text-align: center;
     }
-    .about-content, .services-grid {
-        grid-template-columns: 1fr
+    
+    /* 3. О НАС */
+    .about-us {
+        text-align: center;
     }
-    .contact-info {
-        flex-direction: column
+    .about-us p {
+      font-size: 1.1em;
+      line-height: 1.7;
+      max-width: 800px;
+      margin: 0 auto 1.2em auto;
     }
-}
-@media (max-width: 480px) {
-    .logo-horizontal {
-        width: 120px
+    .about-us .quote {
+        font-style: italic;
+        color: var(--color-accent-yellow);
+        margin-top: 2em;
     }
-    .banner-tagline {
-        font-size: 1.2rem
+
+    /* КЕЙСЫ */
+    .cases-container {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
     }
-    .section-title {
-        font-size: 2rem
+    .case-column {
+        background: var(--color-gray);
+        padding: 20px 30px;
+        border-radius: 12px;
+        flex: 1;
+        min-width: 280px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-}
-</style>
+    .case-column h3 {
+        color: var(--color-accent-yellow);
+        border-bottom: 2px solid var(--color-primary-red);
+        padding-bottom: 10px;
+        margin-top: 0;
+    }
+    .case-column ul {
+        list-style: none;
+        padding: 0;
+    }
+    .case-column li {
+        margin-bottom: 10px;
+        font-size: 1.05em;
+    }
+
+    /* ГАЛЕРЕЯ */
+    .gallery-container {
+      max-width: 900px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    .gallery-slider {
+      display: flex;
+      width: 400%;
+      height: 100%;
+      position: relative;
+      animation: slide 20s infinite ease-in-out;
+    }
+    .gallery-slider img {
+      width: 25%;
+      height: 100%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    @keyframes slide {
+      0%, 20% { transform: translateX(0%); }
+      25%, 45% { transform: translateX(-25%); }
+      50%, 70% { transform: translateX(-50%); }
+      75%, 95% { transform: translateX(-75%); }
+      100% { transform: translateX(0%); }
+    }
+
+    /* КОНТАКТЫ */
+    .contacts-content {
+      text-align: center;
+      font-size: 1.2em;
+    }
+    .contacts-content p { margin: 10px 0; }
+    .social-links a {
+        color: var(--color-light);
+        font-size: 1.8em;
+        margin: 0 15px;
+        transition: color 0.3s;
+    }
+    .social-links a:hover {
+        color: var(--color-primary-red);
+    }
+
+    /* ПОДВАЛ */
+    footer {
+      background: #000;
+      text-align: center;
+      padding: 25px;
+      margin-top: 40px;
+      border-top: 1px solid var(--color-gray);
+      font-size: 0.9em;
+    }
+
+    /* НИЖНЕЕ МЕНЮ */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #000;
+      display: none; /* Скрыто по умолчанию, появляется на мобильных */
+      justify-content: space-around;
+      border-top: 2px solid var(--color-primary-red);
+      padding: 8px 0;
+      z-index: 1000;
+    }
+    .bottom-nav a {
+      color: var(--color-light);
+      font-size: 1.5em;
+      transition: color 0.3s;
+    }
+    .bottom-nav a:hover, .bottom-nav a.active {
+      color: var(--color-accent-yellow);
+    }
+    
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .bottom-nav { display: flex; }
+      .banner-content h1 { font-size: 1.8em; }
+      .section-title { font-size: 1.5em; }
+    }
+  </style>
 </head>
-<body>
+<body class="">
 
-<!-- Фоновые волны -->
-<div><div class="wave"></div><div class="wave"></div><div class="wave"></div></div>
-
-<!-- Верхняя навигация -->
-<nav class="top-nav">
-    <div class="nav-container">
-        <div class="nav-logo">MYUPPY</div>
-        <ul class="nav-menu">
-            <li><a href="#home">Главная</a></li>
-            <li><a href="#about">О компании</a></li>
-            <li><a href="#services">Услуги</a></li>
-            <li><a href="#contacts">Контакты</a></li>
-        </ul>
+  <header>
+    <a href="index.html"><img src="images/logo.png" alt="VinylM Logo" class="logo"></a>
+    <div class="lang-switcher">
+      <button onclick="changeLanguage('sr')" class="active">SR</button>
+      <button onclick="changeLanguage('ru')">RU</button>
+      <button onclick="changeLanguage('en')">EN</button>
     </div>
-</nav>
-
-<!-- Баннер -->
-<section class="hero" id="home">
-    <div class="banner-overlay"></div>
+  </header>
+  
+  <div class="banner">
     <div class="banner-content">
-        <div class="logo-wrapper"><img src="images/logo.png" alt="Myuppy Logo" class="logo-horizontal"></div>
-        <div class="banner-tagline">Твоя история — наш контент</div>
+      <h1 data-lang-key="bannerTitle">Решения для Ваших Событий</h1>
     </div>
-</section>
+  </div>
+  
+  <nav class="main-nav">
+    <a href="index.html" data-lang-key="navHome">Главная</a>
+    <a href="#about" data-lang-key="navAbout">О компании</a>
+    <a href="sound.html" data-lang-key="navSound">Звук</a>
+    <a href="light.html" data-lang-key="navLight">Свет</a>
+    <a href="effects.html" data-lang-key="navEffects">Эффекты</a>
+    <a href="gallery.html" data-lang-key="navGallery">Галерея</a>
+    <a href="#contact" data-lang-key="navContact">Контакты</a>
+  </nav>
 
-<!-- О компании -->
-<section class="about-section" id="about">
-    <h2 class="section-title">О компании</h2>
-    <div class="skewed-frame"><img src="images/pic1.png" alt="Команда"></div>
-    <div class="about-content">
-        <div class="about-block"><h3>Стратегический подход</h3><p>Myuppy — стратегический партнёр в цифровом маркетинге, создающий комплексные решения для роста вашего бизнеса.</p></div>
-        <div class="about-block"><h3>Профессиональная команда</h3><p>Маркетолог, сценарист, контент-мейкер и дизайнер с 7-летним опытом, использующие современные инструменты и ИИ.</p></div>
-        <div class="about-block"><h3>Результат с первого месяца</h3><p>Создаем видео и стратегии, которые напрямую влияют на рост продаж и экспертность вашего бренда.</p></div>
-    </div>
-    <div class="about-cta"><a href="#contacts" class="section-button">Оставить заявку</a></div>
-</section>
+  <main class="container">
+    <section id="about" class="section fade-in-section">
+      <h2 class="section-title" data-lang-key="aboutTitle">О компании</h2>
+      <div class="about-us">
+        <p data-lang-key="aboutP1">🎧 VinylM — это компания, которая уже много лет успешно предоставляет профессиональное оборудование и команду специалистов для корпоративных мероприятий, фестивалей, концертов, торжеств, семинаров и конференций.</p>
+        <p data-lang-key="aboutP2">Мы располагаем современным оборудованием: музыкальными инструментами, звуковыми системами, концертным и театральным светом, сценическими конструкциями (truss), видеостенами, проекторами, конференц-системами и всей необходимой логистикой для мероприятий любого формата.</p>
+        <p data-lang-key="aboutP3">Также мы предлагаем подбор профессиональных музыкантов и помощь в поиске специфического музыкального оборудования под индивидуальные запросы.</p>
+        <p data-lang-key="aboutP4">Наша команда — это профессионалы в области звука, видео, фото, декора и дизайна.</p>
+        <p data-lang-key="aboutP5">🎶 Будучи командой профессиональных музыкантов, мы превратили свою любовь к музыке в возможность делиться ею с другими, создавая яркие, живые и незабываемые моменты.</p>
+        <p class="quote" data-lang-key="aboutQuote">“Стив Джобс был цифровым пионером, но дома он слушал винил.” — Нил Янг</p>
+      </div>
+    </section>
 
-<!-- Услуги -->
-<section class="services-section" id="services">
-    <h2 class="section-title">Услуги</h2>
-    <div class="skewed-frame"><img src="images/pic2.png" alt="Услуги"></div>
-    <div class="services-grid">
-        <div class="service-card">
-            <div>
-                <div class="service-icon"><img src="images/icon-video.svg" alt="Видео"></div>
-                <h3>Видеопроизводство</h3>
-                <p>Монтаж роликов и написание сценариев, диагностика аккаунта.</p>
+    <section id="cases" class="section fade-in-section">
+        <h2 class="section-title" data-lang-key="casesTitle">Наши коллаборации и события</h2>
+        <div class="cases-container">
+            <div class="case-column">
+                <h3 data-lang-key="artistsTitle">Артисты, с которыми мы работали</h3>
+                <ul>
+                    <li>Leb i Sol</li>
+                    <li>Električni orgazam</li>
+                    <li>Perper</li>
+                    <li>Travega (Irska)</li>
+                    <li>Dubioza Kolektiv</li>
+                    <li data-lang-key="artistBG">Борис Гребенщиков (русский Боб Дилан)</li>
+                    <li data-lang-key="artistPK">Псой Короленко (Россия)</li>
+                    <li data-lang-key="artistHB">Hermes Brothers (Россия)</li>
+                    <li data-lang-key="artistMegapolis">Группа «Мегаполис» — Олег Нестеров (Россия)</li>
+                </ul>
             </div>
-            <a href="portfolio.html" class="service-button">Примеры работ</a>
-        </div>
-        <div class="service-card">
-            <div>
-                <div class="service-icon"><img src="images/icon-strategy.svg" alt="Стратегия"></div>
-                <h3>Стратегия и упаковка</h3>
-                <p>Разработка стратегии, контентных воронок и продающей упаковки блога.</p>
+            <div class="case-column">
+                <h3 data-lang-key="eventsTitle">События, которые мы организовали</h3>
+                <ul>
+                    <li>Montenegro Jazz Festival — Petrovac</li>
+                    <li>Reggae Festival — Budva</li>
+                    <li>Garden Planet Festival — Budva</li>
+                    <li data-lang-key="eventBrass">Фестиваль духовых оркестров — Будва</li>
+                    <li data-lang-key="eventSlovo">Фестиваль «Слово ново»</li>
+                    <li>Tivat World Music Festival</li>
+                    <li>Dukley Music Festival — Budva</li>
+                </ul>
             </div>
-            <a href="portfolio.html" class="service-button">Примеры работ</a>
         </div>
-        <div class="service-card">
-            <div>
-                <div class="service-icon"><img src="images/icon-tech.svg" alt="Техрешения"></div>
-                <h3>Технические решения</h3>
-                <p>Боты и мини-приложения для Telegram, настройка сайтов и автоматизация.</p>
-            </div>
-            <a href="tech-solutions.html" class="service-button">Примеры работ</a>
-        </div>
-        <div class="service-card">
-            <div>
-                <div class="service-icon"><img src="images/icon-brand.svg" alt="Бренд"></div>
-                <h3>Продвижение бренда</h3>
-                <p>Распаковка смыслов, создание УТП и продающего визуала.</p>
-            </div>
-            <a href="portfolio.html" class="service-button">Примеры работ</a>
-        </div>
-    </div>
-    <div class="about-cta"><a href="#contacts" class="section-button">Оставить заявку</a></div>
-</section>
+    </section>
 
-<!-- Контакты -->
-<section class="contacts-section" id="contacts">
-    <h2 class="section-title">Контакты</h2>
-    <div class="skewed-frame"><img src="images/pic3.png" alt="Свяжитесь с нами"></div>
-    <div class="contacts-content">
-        <p class="contacts-description">Свяжитесь с нами через удобный канал — мы выведем ваш бренд на новый уровень.</p>
-        <div class="contact-info">
-            <a href="mailto:muuppy.mne@gmail.com" class="contact-item"><img src="images/icon-mail.svg" alt="Почта"><span>muuppy.mne@gmail.com</span></a>
-            <a href="https://wa.me/38268471079" target="_blank" class="contact-item"><img src="images/icon-whatsapp.svg" alt="WhatsApp"><span>WhatsApp</span></a>
+    <section id="gallery-preview" class="section fade-in-section">
+      <h2 class="section-title" data-lang-key="galleryTitle">Галерея</h2>
+      <div class="gallery-container">
+        <div class="gallery-slider">
+          <img src="images/gallery1.jpg" alt="Фото с мероприятия 1">
+          <img src="images/gallery2.jpg" alt="Фото с мероприятия 2">
+          <img src="images/gallery13.jpg" alt="Фото с мероприятия 3">
+          <img src="images/gallery24.jpg" alt="Фото с мероприятия 4">
         </div>
-        <div class="social-icons">
-            <a href="https://www.instagram.com/myuppy.mne" target="_blank" class="social-icon"><img src="images/icon-instagram.svg" alt="Instagram"></a>
-            <a href="https://t.me/MyuppyTeam" target="_blank" class="social-icon"><img src="images/icon-telegram.svg" alt="Telegram"></a>
-            <a href="https://www.tiktok.com/@myuppy.mne" target="_blank" class="social-icon"><img src="images/icon-tiktok.svg" alt="TikTok"></a>
+      </div>
+    </section>
+
+    <section id="contact" class="section fade-in-section">
+      <h2 class="section-title" data-lang-key="contactTitle">Свяжитесь с нами</h2>
+      <div class="contacts-content">
+        <p>Budva, Montenegro</p>
+        <p>+382 67 439 100</p>
+        <p>vinylmbudva@gmail.com</p>
+        <div class="social-links">
+            <a href="https://www.facebook.com/share/198Ar6UoX1/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/_vinyl_m/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         </div>
-    </div>
-</section>
+      </div>
+    </section>
+  </main>
+  
+  <footer>
+    <p>&copy; 2025 VinylM. <span data-lang-key="footerRights">Все права защищены.</span></p>
+  </footer>
 
-<!-- Нижнее меню -->
-<nav class="bottom-nav">
-    <a href="#home" class="bottom-nav-item"><img src="images/nav-home.svg" alt="Главная"><span>Главная</span></a>
-    <a href="#about" class="bottom-nav-item"><img src="images/nav-about.svg" alt="О нас"><span>О нас</span></a>
-    <a href="#services" class="bottom-nav-item"><img src="images/nav-services.svg" alt="Услуги"><span>Услуги</span></a>
-    <a href="#contacts" class="bottom-nav-item"><img src="images/nav-contacts.svg" alt="Контакты"><span>Контакты</span></a>
-</nav>
+  <nav class="bottom-nav">
+    <a href="index.html" class="active"><i class="fas fa-home"></i></a>
+    <a href="#about"><i class="fas fa-info-circle"></i></a>
+    <a href="gallery.html"><i class="fas fa-images"></i></a>
+    <a href="#contact"><i class="fas fa-envelope"></i></a>
+  </nav>
 
-<!-- Подвал -->
-<footer>© 2025 Myuppy. Все права защищены.</footer>
+  <script>
+    const langData = {
+      "sr": {
+        "bannerTitle": "Rešenja za Vaše Događaje",
+        "navHome": "Početna",
+        "navAbout": "O nama",
+        "navSound": "Zvuk",
+        "navLight": "Svetlo",
+        "navEffects": "Efekti",
+        "navGallery": "Galerija",
+        "navContact": "Kontakt",
+        "aboutTitle": "O nama",
+        "aboutP1": "🎧 VinylM je kompanija koja već dugi niz godina uspešno pruža profesionalnu opremu i tim stručnjaka za korporativne događaje, festivale, koncerte, proslave, seminare i konferencije.",
+        "aboutP2": "Posedujemo savremenu opremu: muzičke instrumente, zvučne sisteme, koncertno i pozorišno svetlo, scenske konstrukcije (truss), video zidove, projektore, konferencijske sisteme i svu potrebnu logistiku za događaje bilo kog formata.",
+        "aboutP3": "Takođe, nudimo izbor profesionalnih muzičara i pomoć u pronalaženju specifične muzičke opreme prema individualnim zahtevima.",
+        "aboutP4": "Naš tim čine profesionalci iz oblasti zvuka, videa, fotografije, dekora i dizajna.",
+        "aboutP5": "🎶 Kao tim profesionalnih muzičara, svoju ljubav prema muzici pretvorili smo u priliku da je delimo sa drugima, stvarajući svetle, žive i nezaboravne trenutke.",
+        "aboutQuote": "“Stiv Džobs je bio digitalni pionir, ali kod kuće je slušao vinil.” — Nil Jang",
+        "casesTitle": "Naše saradnje i događaji",
+        "artistsTitle": "Umetnici sa kojima smo radili",
+        "eventsTitle": "Događaji koje smo organizovali",
+        "galleryTitle": "Galerija",
+        "contactTitle": "Kontaktirajte nas",
+        "footerRights": "Sva prava zadržana."
+      },
+      "ru": {
+        "bannerTitle": "Решения для Ваших Событий",
+        "navHome": "Главная",
+        "navAbout": "О компании",
+        "navSound": "Звук",
+        "navLight": "Свет",
+        "navEffects": "Эффекты",
+        "navGallery": "Галерея",
+        "navContact": "Контакты",
+        "aboutTitle": "О компании",
+        "aboutP1": "🎧 VinylM — это компания, которая уже много лет успешно предоставляет профессиональное оборудование и команду специалистов для корпоративных мероприятий, фестивалей, концертов, торжеств, семинаров и конференций.",
+        "aboutP2": "Мы располагаем современным оборудованием: музыкальными инструментами, звуковыми системами, концертным и театральным светом, сценическими конструкциями (truss), видеостенами, проекторами, конференц-системами и всей необходимой логистикой для мероприятий любого формата.",
+        "aboutP3": "Также мы предлагаем подбор профессиональных музыкантов и помощь в поиске специфического музыкального оборудования под индивидуальные запросы.",
+        "aboutP4": "Наша команда — это профессионалы в области звука, видео, фото, декора и дизайна.",
+        "aboutP5": "🎶 Будучи командой профессиональных музыкантов, мы превратили свою любовь к музыке в возможность делиться ею с другими, создавая яркие, живые и незабываемые моменты.",
+        "aboutQuote": "“Стив Джобс был цифровым пионером, но дома он слушал винил.” — Нил Янг",
+        "casesTitle": "Наши коллаборации и события",
+        "artistsTitle": "Артисты, с которыми мы работали",
+        "eventsTitle": "События, которые мы организовали",
+        "galleryTitle": "Галерея",
+        "contactTitle": "Свяжитесь с нами",
+        "footerRights": "Все права защищены."
+      },
+      "en": {
+        "bannerTitle": "Solutions for Your Events",
+        "navHome": "Home",
+        "navAbout": "About Us",
+        "navSound": "Sound",
+        "navLight": "Light",
+        "navEffects": "Effects",
+        "navGallery": "Gallery",
+        "navContact": "Contact",
+        "aboutTitle": "About Us",
+        "aboutP1": "🎧 VinylM is a company that has been successfully providing professional equipment and a team of specialists for corporate events, festivals, concerts, celebrations, seminars, and conferences for many years.",
+        "aboutP2": "We have modern equipment: musical instruments, sound systems, concert and theatrical lighting, stage structures (truss), video walls, projectors, conference systems, and all the necessary logistics for events of any format.",
+        "aboutP3": "We also offer the selection of professional musicians and assistance in finding specific musical equipment for individual requests.",
+        "aboutP4": "Our team consists of professionals in sound, video, photography, decor, and design.",
+        "aboutP5": "🎶 As a team of professional musicians, we have turned our love for music into an opportunity to share it with others, creating bright, lively, and unforgettable moments.",
+        "aboutQuote": "“Steve Jobs was a digital pioneer, but when he went home, he listened to vinyl.” — Neil Young",
+        "casesTitle": "Our Collaborations and Events",
+        "artistsTitle": "Artists We've Worked With",
+        "eventsTitle": "Events We've Organized",
+        "galleryTitle": "Gallery",
+        "contactTitle": "Contact Us",
+        "footerRights": "All rights reserved."
+      }
+    };
+
+    function changeLanguage(lang) {
+        document.documentElement.lang = lang === 'sr' ? 'sr-Latn' : lang;
+        document.querySelectorAll('[data-lang-key]').forEach(element => {
+            const key = element.getAttribute('data-lang-key');
+            if (langData[lang][key]) {
+                element.innerHTML = langData[lang][key];
+            }
+        });
+        document.querySelectorAll('.lang-switcher button').forEach(button => {
+            button.classList.remove('active');
+        });
+        document.querySelector(`.lang-switcher button[onclick="changeLanguage('${lang}')"]`).classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        changeLanguage('sr');
+
+        setTimeout(() => {
+            document.body.classList.add('loaded');
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        }, 100);
+    });
+  </script>
 </body>
 </html>

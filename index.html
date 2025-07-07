@@ -3,476 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VinylM — Event Solutions</title>
+  <title>VinylM — Dobrodošli</title>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   <style>
-    /* ОБЩИЕ СТИЛИ И ПЕРЕМЕННЫЕ */
     :root {
-      --color-primary-red: #e53935;
-      --color-accent-yellow: #ffd600;
-      --color-dark: #111;
+      --color-dark: #000000;
       --color-light: #fff;
-      --color-gray: #222;
+      --color-gray: #ccc;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
     }
     body {
-      margin: 0;
+      display: flex;
+      align-items: center; /* Центрирует по вертикали */
+      justify-content: center; /* Центрирует по горизонтали */
+      background-color: var(--color-dark);
       font-family: 'Montserrat', sans-serif;
-      background: var(--color-dark);
-      color: var(--color-light);
-      overflow-x: hidden;
+      position: relative; /* Необходимо для позиционирования дочерних элементов */
     }
-    .container {
-      padding: 0 16px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    /* АНИМАЦИЯ ПОЯВЛЕНИЯ */
-    .fade-in-section {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-    body.loaded .fade-in-section {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ШАПКА И ЯЗЫКОВОЙ ПЕРЕКЛЮЧАТЕЛЬ */
-    header {
-      padding: 10px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #000;
-    }
-    .logo {
-      height: 40px;
-      width: auto;
-    }
-    .lang-switcher {
-      display: flex;
-      gap: 5px;
-      background: var(--color-gray);
-      border-radius: 20px;
-      padding: 4px;
-    }
-    .lang-switcher button {
-      background: none;
-      border: none;
-      color: var(--color-light);
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      padding: 6px 12px;
-      cursor: pointer;
-      border-radius: 16px;
-      transition: background 0.3s, color 0.3s;
-    }
-    .lang-switcher button.active {
-      background: var(--color-primary-red);
-      color: var(--color-light);
-    }
-
-    /* 1. БАННЕР */
-    .banner {
-      aspect-ratio: 16 / 5;
-      width: 100%;
-      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/banner.png') center/cover no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .splash-container {
       text-align: center;
     }
-    .banner-content h1 {
-      font-size: 3em;
-      margin: 0;
-      color: var(--color-light);
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    .splash-logo {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+    }
+    .phone-number {
+        color: var(--color-gray);
+        font-size: 1.2em;
+        font-weight: 400;
+        margin-top: 25px; /* Отступ от логотипа */
+        letter-spacing: 1.5px;
     }
 
-    /* 2. ГЛАВНОЕ МЕНЮ */
-    .main-nav {
-      background: #000;
-      padding: 15px 0;
-      border-top: 1px solid var(--color-gray);
-      border-bottom: 2px solid var(--color-primary-red);
-      text-align: center;
-    }
-    .main-nav a {
-      color: var(--color-light);
-      text-decoration: none;
-      margin: 5px 12px;
-      font-weight: 700;
-      transition: color 0.3s;
-      display: inline-block;
-    }
-    .main-nav a:hover {
-      color: var(--color-accent-yellow);
-    }
-
-    /* СЕКЦИИ */
-    .section {
-      padding: 50px 0;
-    }
-    .section-title {
-      font-size: 2em;
-      font-weight: 700;
-      color: var(--color-accent-yellow);
-      margin-bottom: 30px;
-      text-align: center;
-    }
-    
-    /* 3. О НАС */
-    .about-us {
+    /* --- ИЗМЕНЕНИЯ ЗДЕСЬ --- */
+    /* Контейнер для позиционирования кнопки внизу */
+    .button-container {
+        position: absolute;
+        bottom: 50px; /* Отступ от нижнего края экрана */
+        left: 0;
+        right: 0;
         text-align: center;
     }
-    .about-us p {
-      font-size: 1.1em;
-      line-height: 1.7;
-      max-width: 800px;
-      margin: 0 auto 1.2em auto;
-    }
-    .about-us .quote {
-        font-style: italic;
-        color: var(--color-accent-yellow);
-        margin-top: 2em;
-    }
 
-    /* КЕЙСЫ */
-    .cases-container {
-        display: flex;
-        justify-content: center;
-        gap: 40px;
-        flex-wrap: wrap;
-    }
-    .case-column {
-        background: var(--color-gray);
-        padding: 20px 30px;
-        border-radius: 12px;
-        flex: 1;
-        min-width: 280px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    .case-column h3 {
-        color: var(--color-accent-yellow);
-        border-bottom: 2px solid var(--color-primary-red);
-        padding-bottom: 10px;
-        margin-top: 0;
-    }
-    .case-column ul {
-        list-style: none;
-        padding: 0;
-    }
-    .case-column li {
-        margin-bottom: 10px;
-        font-size: 1.05em;
-    }
-
-    /* ГАЛЕРЕЯ */
-    .gallery-container {
-      max-width: 900px;
-      margin: 0 auto;
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      position: relative;
-    }
-    .gallery-slider {
-      display: flex;
-      width: 400%;
-      height: 100%;
-      position: relative;
-      animation: slide 20s infinite ease-in-out;
-    }
-    .gallery-slider img {
-      width: 25%;
-      height: 100%;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-    @keyframes slide {
-      0%, 20% { transform: translateX(0%); }
-      25%, 45% { transform: translateX(-25%); }
-      50%, 70% { transform: translateX(-50%); }
-      75%, 95% { transform: translateX(-75%); }
-      100% { transform: translateX(0%); }
-    }
-
-    /* КОНТАКТЫ */
-    .contacts-content {
-      text-align: center;
-      font-size: 1.2em;
-    }
-    .contacts-content p { margin: 10px 0; }
-    .social-links a {
-        color: var(--color-light);
-        font-size: 1.8em;
-        margin: 0 15px;
-        transition: color 0.3s;
-    }
-    .social-links a:hover {
-        color: var(--color-primary-red);
-    }
-
-    /* ПОДВАЛ */
-    footer {
-      background: #000;
-      text-align: center;
-      padding: 25px;
-      margin-top: 40px;
-      border-top: 1px solid var(--color-gray);
-      font-size: 0.9em;
-    }
-
-    /* НИЖНЕЕ МЕНЮ */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #000;
-      display: none; /* Скрыто по умолчанию, появляется на мобильных */
-      justify-content: space-around;
-      border-top: 2px solid var(--color-primary-red);
-      padding: 8px 0;
-      z-index: 1000;
-    }
-    .bottom-nav a {
-      color: var(--color-light);
+    /* Стили для переливающейся кнопки */
+    .start-button {
+      display: inline-block;
+      padding: 15px 45px;
       font-size: 1.5em;
-      transition: color 0.3s;
+      font-weight: 700;
+      color: #333;
+      text-decoration: none;
+      border-radius: 50px;
+      border: 2px solid #ccc;
+      background: linear-gradient(
+        100deg,
+        #a9a9a9, #f0f0f0, #a9a9a9, #d3d3d3, #a9a9a9
+      );
+      background-size: 300% 100%;
+      transition: all 0.4s ease-in-out;
+      animation: shimmer 4s infinite linear;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
     }
-    .bottom-nav a:hover, .bottom-nav a.active {
-      color: var(--color-accent-yellow);
+    .start-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(255, 214, 0, 0.3);
+      color: #000;
     }
-    
-    /* Адаптивность */
-    @media (max-width: 768px) {
-      .bottom-nav { display: flex; }
-      .banner-content h1 { font-size: 1.8em; }
-      .section-title { font-size: 1.5em; }
+
+    /* Анимация переливания */
+    @keyframes shimmer {
+      0% { background-position: 150% 0; }
+      100% { background-position: -150% 0; }
+    }
+
+    /* Адаптивность для мобильных */
+    @media (max-width: 480px) {
+        .splash-logo {
+            width: 180px;
+            height: 180px;
+        }
+        .phone-number {
+            font-size: 1em;
+        }
+        .button-container {
+            bottom: 40px; /* Уменьшаем отступ на мобильных */
+        }
+        .start-button {
+            font-size: 1.2em;
+            padding: 12px 35px;
+        }
     }
   </style>
 </head>
-<body class="">
+<body>
 
-  <header>
-    <a href="index.html"><img src="images/logo.png" alt="VinylM Logo" class="logo"></a>
-    <div class="lang-switcher">
-      <button onclick="changeLanguage('sr')" class="active">SR</button>
-      <button onclick="changeLanguage('ru')">RU</button>
-      <button onclick="changeLanguage('en')">EN</button>
-    </div>
-  </header>
-  
-  <div class="banner">
-    <div class="banner-content">
-      <h1 data-lang-key="bannerTitle">Решения для Ваших Событий</h1>
-    </div>
+  <div class="splash-container">
+    <img src="videos/logo.gif" alt="VinylM Animated Logo" class="splash-logo">
+    <p class="phone-number">+382 67 439 100</p>
   </div>
   
-  <nav class="main-nav">
-    <a href="index.html" data-lang-key="navHome">Главная</a>
-    <a href="#about" data-lang-key="navAbout">О компании</a>
-    <a href="sound.html" data-lang-key="navSound">Звук</a>
-    <a href="light.html" data-lang-key="navLight">Свет</a>
-    <a href="effects.html" data-lang-key="navEffects">Эффекты</a>
-    <a href="gallery.html" data-lang-key="navGallery">Галерея</a>
-    <a href="#contact" data-lang-key="navContact">Контакты</a>
-  </nav>
+  <div class="button-container">
+    <a href="main.html" class="start-button">START</a>
+  </div>
 
-  <main class="container">
-    <section id="about" class="section fade-in-section">
-      <h2 class="section-title" data-lang-key="aboutTitle">О компании</h2>
-      <div class="about-us">
-        <p data-lang-key="aboutP1">🎧 VinylM — это компания, которая уже много лет успешно предоставляет профессиональное оборудование и команду специалистов для корпоративных мероприятий, фестивалей, концертов, торжеств, семинаров и конференций.</p>
-        <p data-lang-key="aboutP2">Мы располагаем современным оборудованием: музыкальными инструментами, звуковыми системами, концертным и театральным светом, сценическими конструкциями (truss), видеостенами, проекторами, конференц-системами и всей необходимой логистикой для мероприятий любого формата.</p>
-        <p data-lang-key="aboutP3">Также мы предлагаем подбор профессиональных музыкантов и помощь в поиске специфического музыкального оборудования под индивидуальные запросы.</p>
-        <p data-lang-key="aboutP4">Наша команда — это профессионалы в области звука, видео, фото, декора и дизайна.</p>
-        <p data-lang-key="aboutP5">🎶 Будучи командой профессиональных музыкантов, мы превратили свою любовь к музыке в возможность делиться ею с другими, создавая яркие, живые и незабываемые моменты.</p>
-        <p class="quote" data-lang-key="aboutQuote">“Стив Джобс был цифровым пионером, но дома он слушал винил.” — Нил Янг</p>
-      </div>
-    </section>
-
-    <section id="cases" class="section fade-in-section">
-        <h2 class="section-title" data-lang-key="casesTitle">Наши коллаборации и события</h2>
-        <div class="cases-container">
-            <div class="case-column">
-                <h3 data-lang-key="artistsTitle">Артисты, с которыми мы работали</h3>
-                <ul>
-                    <li>Leb i Sol</li>
-                    <li>Električni orgazam</li>
-                    <li>Perper</li>
-                    <li>Travega (Irska)</li>
-                    <li>Dubioza Kolektiv</li>
-                    <li data-lang-key="artistBG">Борис Гребенщиков (русский Боб Дилан)</li>
-                    <li data-lang-key="artistPK">Псой Короленко (Россия)</li>
-                    <li data-lang-key="artistHB">Hermes Brothers (Россия)</li>
-                    <li data-lang-key="artistMegapolis">Группа «Мегаполис» — Олег Нестеров (Россия)</li>
-                </ul>
-            </div>
-            <div class="case-column">
-                <h3 data-lang-key="eventsTitle">События, которые мы организовали</h3>
-                <ul>
-                    <li>Montenegro Jazz Festival — Petrovac</li>
-                    <li>Reggae Festival — Budva</li>
-                    <li>Garden Planet Festival — Budva</li>
-                    <li data-lang-key="eventBrass">Фестиваль духовых оркестров — Будва</li>
-                    <li data-lang-key="eventSlovo">Фестиваль «Слово ново»</li>
-                    <li>Tivat World Music Festival</li>
-                    <li>Dukley Music Festival — Budva</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section id="gallery-preview" class="section fade-in-section">
-      <h2 class="section-title" data-lang-key="galleryTitle">Галерея</h2>
-      <div class="gallery-container">
-        <div class="gallery-slider">
-          <img src="images/gallery1.jpg" alt="Фото с мероприятия 1">
-          <img src="images/gallery2.jpg" alt="Фото с мероприятия 2">
-          <img src="images/gallery13.jpg" alt="Фото с мероприятия 3">
-          <img src="images/gallery24.jpg" alt="Фото с мероприятия 4">
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="section fade-in-section">
-      <h2 class="section-title" data-lang-key="contactTitle">Свяжитесь с нами</h2>
-      <div class="contacts-content">
-        <p>Budva, Montenegro</p>
-        <p>+382 67 439 100</p>
-        <p>vinylmbudva@gmail.com</p>
-        <div class="social-links">
-            <a href="https://www.facebook.com/share/198Ar6UoX1/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/_vinyl_m/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        </div>
-      </div>
-    </section>
-  </main>
-  
-  <footer>
-    <p>&copy; 2025 VinylM. <span data-lang-key="footerRights">Все права защищены.</span></p>
-  </footer>
-
-  <nav class="bottom-nav">
-    <a href="index.html" class="active"><i class="fas fa-home"></i></a>
-    <a href="#about"><i class="fas fa-info-circle"></i></a>
-    <a href="gallery.html"><i class="fas fa-images"></i></a>
-    <a href="#contact"><i class="fas fa-envelope"></i></a>
-  </nav>
-
-  <script>
-    const langData = {
-      "sr": {
-        "bannerTitle": "Rešenja za Vaše Događaje",
-        "navHome": "Početna",
-        "navAbout": "O nama",
-        "navSound": "Zvuk",
-        "navLight": "Svetlo",
-        "navEffects": "Efekti",
-        "navGallery": "Galerija",
-        "navContact": "Kontakt",
-        "aboutTitle": "O nama",
-        "aboutP1": "🎧 VinylM je kompanija koja već dugi niz godina uspešno pruža profesionalnu opremu i tim stručnjaka za korporativne događaje, festivale, koncerte, proslave, seminare i konferencije.",
-        "aboutP2": "Posedujemo savremenu opremu: muzičke instrumente, zvučne sisteme, koncertno i pozorišno svetlo, scenske konstrukcije (truss), video zidove, projektore, konferencijske sisteme i svu potrebnu logistiku za događaje bilo kog formata.",
-        "aboutP3": "Takođe, nudimo izbor profesionalnih muzičara i pomoć u pronalaženju specifične muzičke opreme prema individualnim zahtevima.",
-        "aboutP4": "Naš tim čine profesionalci iz oblasti zvuka, videa, fotografije, dekora i dizajna.",
-        "aboutP5": "🎶 Kao tim profesionalnih muzičara, svoju ljubav prema muzici pretvorili smo u priliku da je delimo sa drugima, stvarajući svetle, žive i nezaboravne trenutke.",
-        "aboutQuote": "“Stiv Džobs je bio digitalni pionir, ali kod kuće je slušao vinil.” — Nil Jang",
-        "casesTitle": "Naše saradnje i događaji",
-        "artistsTitle": "Umetnici sa kojima smo radili",
-        "eventsTitle": "Događaji koje smo organizovali",
-        "galleryTitle": "Galerija",
-        "contactTitle": "Kontaktirajte nas",
-        "footerRights": "Sva prava zadržana."
-      },
-      "ru": {
-        "bannerTitle": "Решения для Ваших Событий",
-        "navHome": "Главная",
-        "navAbout": "О компании",
-        "navSound": "Звук",
-        "navLight": "Свет",
-        "navEffects": "Эффекты",
-        "navGallery": "Галерея",
-        "navContact": "Контакты",
-        "aboutTitle": "О компании",
-        "aboutP1": "🎧 VinylM — это компания, которая уже много лет успешно предоставляет профессиональное оборудование и команду специалистов для корпоративных мероприятий, фестивалей, концертов, торжеств, семинаров и конференций.",
-        "aboutP2": "Мы располагаем современным оборудованием: музыкальными инструментами, звуковыми системами, концертным и театральным светом, сценическими конструкциями (truss), видеостенами, проекторами, конференц-системами и всей необходимой логистикой для мероприятий любого формата.",
-        "aboutP3": "Также мы предлагаем подбор профессиональных музыкантов и помощь в поиске специфического музыкального оборудования под индивидуальные запросы.",
-        "aboutP4": "Наша команда — это профессионалы в области звука, видео, фото, декора и дизайна.",
-        "aboutP5": "🎶 Будучи командой профессиональных музыкантов, мы превратили свою любовь к музыке в возможность делиться ею с другими, создавая яркие, живые и незабываемые моменты.",
-        "aboutQuote": "“Стив Джобс был цифровым пионером, но дома он слушал винил.” — Нил Янг",
-        "casesTitle": "Наши коллаборации и события",
-        "artistsTitle": "Артисты, с которыми мы работали",
-        "eventsTitle": "События, которые мы организовали",
-        "galleryTitle": "Галерея",
-        "contactTitle": "Свяжитесь с нами",
-        "footerRights": "Все права защищены."
-      },
-      "en": {
-        "bannerTitle": "Solutions for Your Events",
-        "navHome": "Home",
-        "navAbout": "About Us",
-        "navSound": "Sound",
-        "navLight": "Light",
-        "navEffects": "Effects",
-        "navGallery": "Gallery",
-        "navContact": "Contact",
-        "aboutTitle": "About Us",
-        "aboutP1": "🎧 VinylM is a company that has been successfully providing professional equipment and a team of specialists for corporate events, festivals, concerts, celebrations, seminars, and conferences for many years.",
-        "aboutP2": "We have modern equipment: musical instruments, sound systems, concert and theatrical lighting, stage structures (truss), video walls, projectors, conference systems, and all the necessary logistics for events of any format.",
-        "aboutP3": "We also offer the selection of professional musicians and assistance in finding specific musical equipment for individual requests.",
-        "aboutP4": "Our team consists of professionals in sound, video, photography, decor, and design.",
-        "aboutP5": "🎶 As a team of professional musicians, we have turned our love for music into an opportunity to share it with others, creating bright, lively, and unforgettable moments.",
-        "aboutQuote": "“Steve Jobs was a digital pioneer, but when he went home, he listened to vinyl.” — Neil Young",
-        "casesTitle": "Our Collaborations and Events",
-        "artistsTitle": "Artists We've Worked With",
-        "eventsTitle": "Events We've Organized",
-        "galleryTitle": "Gallery",
-        "contactTitle": "Contact Us",
-        "footerRights": "All rights reserved."
-      }
-    };
-
-    function changeLanguage(lang) {
-        document.documentElement.lang = lang === 'sr' ? 'sr-Latn' : lang;
-        document.querySelectorAll('[data-lang-key]').forEach(element => {
-            const key = element.getAttribute('data-lang-key');
-            if (langData[lang][key]) {
-                element.innerHTML = langData[lang][key];
-            }
-        });
-        document.querySelectorAll('.lang-switcher button').forEach(button => {
-            button.classList.remove('active');
-        });
-        document.querySelector(`.lang-switcher button[onclick="changeLanguage('${lang}')"]`).classList.add('active');
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        changeLanguage('sr');
-
-        setTimeout(() => {
-            document.body.classList.add('loaded');
-            const sections = document.querySelectorAll('.fade-in-section');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-        }, 100);
-    });
-  </script>
 </body>
 </html>
