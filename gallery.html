@@ -4,306 +4,307 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VinylM — Galerija</title>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <meta name="description" content="VinylM galerija — fotografije i video zapisi sa naših nastupa, festivala i korporativnih događaja u Crnoj Gori.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-  <!-- Подключаем стили для Lightbox (Fancybox) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+  <link rel="stylesheet" href="style.css">
   <style>
-    :root {
-      --color-primary-red: #e53935;
-      --color-accent-yellow: #ffd600;
-      --color-dark: #111;
-      --color-light: #fff;
-      --color-gray: #222;
+    /* Override gallery grid for gallery page — use CSS grid instead of multi-column */
+    .gallery-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
     }
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: var(--color-dark);
-      color: var(--color-light);
-      overflow-x: hidden;
+    .gallery-photo-grid .gallery-item {
+      aspect-ratio: 4/3;
     }
-    .container {
-      padding: 0 16px;
-      max-width: 1200px;
-      margin: 0 auto;
+    .gallery-video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
     }
-
-    /* ШАПКА и МЕНЮ (стили идентичны другим страницам) */
-    header {
-      padding: 10px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #000;
+    .gallery-video-grid .gallery-item {
+      aspect-ratio: 9/16;
     }
-    .logo { height: 40px; width: auto; }
-    .lang-switcher {
-      display: flex; gap: 5px; background: var(--color-gray); border-radius: 20px; padding: 4px;
-    }
-    .lang-switcher button {
-      background: none; border: none; color: var(--color-light); font-family: 'Montserrat', sans-serif;
-      font-weight: 700; padding: 6px 12px; cursor: pointer; border-radius: 16px; transition: background 0.3s, color 0.3s;
-    }
-    .lang-switcher button.active { background: var(--color-primary-red); color: var(--color-light); }
-    .main-nav {
-      background: #000; padding: 15px 0; border-top: 1px solid var(--color-gray);
-      border-bottom: 2px solid var(--color-primary-red); text-align: center;
-    }
-    .main-nav a {
-      color: var(--color-light); text-decoration: none; margin: 5px 12px;
-      font-weight: 700; transition: color 0.3s; display: inline-block;
-    }
-    .main-nav a:hover, .main-nav a.active { color: var(--color-accent-yellow); }
-
-    /* СТИЛИ ГАЛЕРЕИ */
-    .page-title {
-        font-size: 2.5em; text-align: center; margin: 40px 0; color: var(--color-accent-yellow);
-    }
-    .gallery-section { margin-bottom: 60px; }
-    .gallery-section-title {
-        font-size: 1.8em; color: var(--color-light); margin-bottom: 30px;
-        text-align: center; border-bottom: 2px solid var(--color-primary-red); padding-bottom: 10px;
-    }
-    .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-    }
-    .gallery-item {
-        display: block;
-        position: relative;
-        overflow: hidden;
-        border-radius: 12px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-        transition: transform 0.3s ease;
-    }
-    .gallery-item:hover { transform: scale(1.05); }
-    .gallery-item img, .gallery-item video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
-    .photo-item { aspect-ratio: 16 / 9; }
-    .video-item { 
-        aspect-ratio: 9 / 16; 
-        cursor: pointer;
-    }
-    
-    .gallery-item::after {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-        opacity: 0.8;
-        transition: opacity 0.3s ease;
-    }
-    .gallery-item:hover::after { opacity: 1; }
-    .video-playing::after { display: none; }
-
-    .play-icon {
-        position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 4em;
-        color: rgba(255, 255, 255, 0.8);
-        text-shadow: 0 0 15px rgba(0,0,0,0.7);
-        pointer-events: none;
-        transition: color 0.3s;
-    }
-     .gallery-item:hover .play-icon { color: var(--color-accent-yellow); }
-
-    /* ПОДВАЛ и НИЖНЕЕ МЕНЮ */
-    footer {
-      background: #000; text-align: center; padding: 25px;
-      margin-top: 50px; border-top: 1px solid var(--color-gray); font-size: 0.9em;
-    }
-    .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0; background: #000; display: none;
-      justify-content: space-around; border-top: 2px solid var(--color-primary-red); padding: 8px 0; z-index: 1000;
-    }
-    .bottom-nav a { color: var(--color-light); font-size: 1.5em; transition: color 0.3s; }
-    .bottom-nav a:hover, .bottom-nav a.active { color: var(--color-accent-yellow); }
-    
-    /* Адаптивность */
     @media (max-width: 768px) {
-      .bottom-nav { display: flex; }
-      .page-title { font-size: 1.8em; }
+      .gallery-photo-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-video-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .gallery-photo-grid { grid-template-columns: 1fr; }
+      .gallery-video-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <a href="index.html"><img src="images/logo.png" alt="VinylM Logo" class="logo"></a>
-    <div class="lang-switcher">
-      <button onclick="changeLanguage('sr')" class="active">MN</button>
-      <button onclick="changeLanguage('ru')">RU</button>
-      <button onclick="changeLanguage('en')">EN</button>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <header class="site-header" id="siteHeader">
+    <a href="index.html" class="header-logo"><img src="images/logo.png" alt="VinylM Logo"></a>
+    <nav class="header-nav">
+      <a href="main.html" data-lang-key="navHome">Početna</a>
+      <a href="main.html#about" data-lang-key="navAbout">O nama</a>
+      <a href="sound.html" data-lang-key="navSound">Zvuk</a>
+      <a href="light.html" data-lang-key="navLight">Svetlo</a>
+      <a href="effects.html" data-lang-key="navEffects">Efekti</a>
+      <a href="gallery.html" class="active" data-lang-key="navGallery">Galerija</a>
+      <a href="main.html#contact" data-lang-key="navContact">Kontakt</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <button onclick="changeLanguage('sr')" class="active" id="langBtn-sr">MN</button>
+        <button onclick="changeLanguage('ru')" id="langBtn-ru">RU</button>
+        <button onclick="changeLanguage('en')" id="langBtn-en">EN</button>
+      </div>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
     </div>
   </header>
-  
-  <nav class="main-nav">
-    <a href="index.html" data-lang-key="navHome">Главная</a>
-    <a href="index.html#about" data-lang-key="navAbout">О компании</a>
-    <a href="sound.html" data-lang-key="navSound">Звук</a>
-    <a href="light.html" data-lang-key="navLight">Свет</a>
-    <a href="effects.html" data-lang-key="navEffects">Эффекты</a>
-    <a href="gallery.html" class="active" data-lang-key="navGallery">Галерея</a>
-    <a href="index.html#contact" data-lang-key="navContact">Контакты</a>
+
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="main.html" data-lang-key="navHome">Početna</a>
+    <a href="main.html#about" data-lang-key="navAbout">O nama</a>
+    <a href="sound.html" data-lang-key="navSound">Zvuk</a>
+    <a href="light.html" data-lang-key="navLight">Svetlo</a>
+    <a href="effects.html" data-lang-key="navEffects">Efekti</a>
+    <a href="gallery.html" class="active" data-lang-key="navGallery">Galerija</a>
+    <a href="main.html#contact" data-lang-key="navContact">Kontakt</a>
+    <div class="lang-switcher" style="margin-top:20px">
+      <button onclick="changeLanguage('sr')" class="active" id="mLangBtn-sr">MN</button>
+      <button onclick="changeLanguage('ru')" id="mLangBtn-ru">RU</button>
+      <button onclick="changeLanguage('en')" id="mLangBtn-en">EN</button>
+    </div>
   </nav>
 
-  <main class="container">
-    <h1 class="page-title" data-lang-key="pageTitle">Наша работа</h1>
-
-    <!-- Секция с фотографиями -->
-    <section class="gallery-section">
-      <h2 class="gallery-section-title" data-lang-key="photoTitle">Фотографии</h2>
-      <div class="gallery-grid">
-        <a href="images/gallery1.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery1.jpg" alt="Фото 1"></a>
-        <a href="images/gallery2.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery2.jpg" alt="Фото 2"></a>
-        <a href="images/gallery3.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery3.jpg" alt="Фото 3"></a>
-        <a href="images/gallery4.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery4.jpg" alt="Фото 4"></a>
-        <a href="images/gallery5.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery5.jpg" alt="Фото 5"></a>
-        <a href="images/gallery6.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery6.jpg" alt="Фото 6"></a>
-        <a href="images/gallery7.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery7.jpg" alt="Фото 7"></a>
-        <a href="images/gallery8.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery8.jpg" alt="Фото 8"></a>
-        <a href="images/gallery9.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery9.jpg" alt="Фото 9"></a>
-        <a href="images/gallery10.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery10.jpg" alt="Фото 10"></a>
-        <a href="images/gallery11.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery11.jpg" alt="Фото 11"></a>
-        <a href="images/gallery12.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery12.jpg" alt="Фото 12"></a>
-        <a href="images/gallery13.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery13.jpg" alt="Фото 13"></a>
-        <a href="images/gallery14.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery14.jpg" alt="Фото 14"></a>
-        <a href="images/gallery15.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery15.jpg" alt="Фото 15"></a>
-        <a href="images/gallery16.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery16.jpg" alt="Фото 16"></a>
-        <a href="images/gallery17.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery17.jpg" alt="Фото 17"></a>
-        <a href="images/gallery18.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery18.jpg" alt="Фото 18"></a>
-        <a href="images/gallery19.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery19.jpg" alt="Фото 19"></a>
-        <a href="images/gallery20.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery20.jpg" alt="Фото 20"></a>
-        <a href="images/gallery21.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery21.jpg" alt="Фото 21"></a>
-        <a href="images/gallery22.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery22.jpg" alt="Фото 22"></a>
-        <a href="images/gallery23.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery23.jpg" alt="Фото 23"></a>
-        <a href="images/gallery24.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery24.jpg" alt="Фото 24"></a>
-        <a href="images/gallery25.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery25.jpg" alt="Фото 25"></a>
-        <a href="images/gallery26.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery26.jpg" alt="Фото 26"></a>
-        <a href="images/gallery27.jpg" data-fancybox="gallery-photo" class="gallery-item photo-item"><img src="images/gallery27.jpg" alt="Фото 27"></a>
-      
+  <div class="page-hero">
+    <div class="container">
+      <span class="section-label" data-lang-key="pageLabel">Naš rad</span>
+      <div class="gold-divider"></div>
+      <h1 class="page-hero-title reveal" data-lang-key="pageTitle">Galerija</h1>
+      <p class="page-hero-sub reveal delay-1" data-lang-key="pageSub">Momenti koje smo stvorili zajedno</p>
     </div>
-    </section>
+  </div>
 
-    <!-- Секция с видео -->
-    <section class="gallery-section">
-      <h2 class="gallery-section-title" data-lang-key="videoTitle">Видео</h2>
-      <div class="gallery-grid">
-        <div class="gallery-item video-item" data-video-src="videos/1.mp4">
-          <img src="images/video1_preview.jpg" alt="Видео 1">
-          <div class="play-icon"><i class="fas fa-play"></i></div>
-        </div>
-        <div class="gallery-item video-item" data-video-src="videos/2.mp4">
-          <img src="images/video2_preview.jpg" alt="Видео 2">
-          <div class="play-icon"><i class="fas fa-play"></i></div>
-        </div>
-        <div class="gallery-item video-item" data-video-src="videos/3.mp4">
-          <img src="images/video3_preview.jpg" alt="Видео 3">
-          <div class="play-icon"><i class="fas fa-play"></i></div>
-        </div>
-        <div class="gallery-item video-item" data-video-src="videos/4.mp4">
-          <img src="images/video4_preview.jpg" alt="Видео 4">
-          <div class="play-icon"><i class="fas fa-play"></i></div>
-        </div>
-        <div class="gallery-item video-item" data-video-src="videos/5.mp4">
-          <img src="images/video5_preview.jpg" alt="Видео 5">
-          <div class="play-icon"><i class="fas fa-play"></i></div>
+  <main class="section" style="padding-top:0;">
+    <div class="container">
+
+      <!-- PHOTOS -->
+      <div class="section-header" style="text-align:left; margin-bottom:32px;">
+        <h2 class="gallery-section-title" data-lang-key="photoTitle">Fotografije</h2>
+      </div>
+      <div class="gallery-photo-grid reveal">
+        <a href="images/gallery1.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery1.jpg" alt="Event 1" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery2.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery2.jpg" alt="Event 2" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery3.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery3.jpg" alt="Event 3" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery4.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery4.jpg" alt="Event 4" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery5.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery5.jpg" alt="Event 5" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery6.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery6.jpg" alt="Event 6" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery7.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery7.jpg" alt="Event 7" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery8.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery8.jpg" alt="Event 8" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery9.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery9.jpg" alt="Event 9" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery10.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery10.jpg" alt="Event 10" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery11.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery11.jpg" alt="Event 11" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery12.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery12.jpg" alt="Event 12" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery13.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery13.jpg" alt="Event 13" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery14.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery14.jpg" alt="Event 14" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery15.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery15.jpg" alt="Event 15" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery16.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery16.jpg" alt="Event 16" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery17.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery17.jpg" alt="Event 17" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery18.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery18.jpg" alt="Event 18" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery19.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery19.jpg" alt="Event 19" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery20.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery20.jpg" alt="Event 20" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery21.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery21.jpg" alt="Event 21" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery22.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery22.jpg" alt="Event 22" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery23.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery23.jpg" alt="Event 23" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery24.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery24.jpg" alt="Event 24" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery25.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery25.jpg" alt="Event 25" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery26.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery26.jpg" alt="Event 26" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+        <a href="images/gallery27.jpg" data-fancybox="gallery-photo" class="gallery-item">
+          <img src="images/gallery27.jpg" alt="Event 27" loading="lazy">
+          <div class="gallery-zoom"><i class="fas fa-expand-alt"></i></div>
+        </a>
+      </div>
+
+      <!-- VIDEOS -->
+      <div style="margin-top:64px;">
+        <h2 class="gallery-section-title" data-lang-key="videoTitle">Video</h2>
+        <div class="gallery-video-grid reveal">
+          <div class="gallery-item video-item" data-video-src="videos/1.mp4">
+            <img src="images/video1_preview.jpg" alt="Video 1" loading="lazy">
+            <div class="play-icon"><i class="fas fa-play"></i></div>
+          </div>
+          <div class="gallery-item video-item" data-video-src="videos/2.mp4">
+            <img src="images/video2_preview.jpg" alt="Video 2" loading="lazy">
+            <div class="play-icon"><i class="fas fa-play"></i></div>
+          </div>
+          <div class="gallery-item video-item" data-video-src="videos/3.mp4">
+            <img src="images/video3_preview.jpg" alt="Video 3" loading="lazy">
+            <div class="play-icon"><i class="fas fa-play"></i></div>
+          </div>
+          <div class="gallery-item video-item" data-video-src="videos/4.mp4">
+            <img src="images/video4_preview.jpg" alt="Video 4" loading="lazy">
+            <div class="play-icon"><i class="fas fa-play"></i></div>
+          </div>
+          <div class="gallery-item video-item" data-video-src="videos/5.mp4">
+            <img src="images/video5_preview.jpg" alt="Video 5" loading="lazy">
+            <div class="play-icon"><i class="fas fa-play"></i></div>
+          </div>
         </div>
       </div>
-    </section>
 
+      <div style="text-align:center; margin-top:60px;" class="reveal">
+        <a href="main.html#contact" class="btn btn-primary btn-lg">
+          <i class="fas fa-paper-plane"></i>
+          <span data-lang-key="ctaBtn">Zatražite ponudu</span>
+        </a>
+      </div>
+
+    </div>
   </main>
-  
-  <footer>
-    <p>&copy; 2025 VinylM. <span data-lang-key="footerRights">Все права защищены.</span></p>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="padding-top:0; border-top:none;">
+        <p>&copy; 2025 VinylM. <span data-lang-key="footerRights">Sva prava zadržana.</span></p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/share/198Ar6UoX1/" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/_vinyl_m/" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
   </footer>
 
   <nav class="bottom-nav">
-    <a href="main.html"><i class="fas fa-home"></i></a>
-    <a href="main.html#about"><i class="fas fa-info-circle"></i></a>
-    <a href="gallery.html"><i class="fas fa-images"></i></a>
-    <a href="main.html#contact"><i class="fas fa-envelope"></i></a>
+    <a href="main.html"><i class="fas fa-home"></i><span data-lang-key="navHome">Home</span></a>
+    <a href="main.html#about"><i class="fas fa-info-circle"></i><span data-lang-key="navAbout">About</span></a>
+    <a href="gallery.html" class="active"><i class="fas fa-images"></i><span data-lang-key="navGallery">Gallery</span></a>
+    <a href="main.html#contact"><i class="fas fa-envelope"></i><span data-lang-key="navContact">Contact</span></a>
   </nav>
-  <!-- Подключаем скрипт для Lightbox (Fancybox) -->
+
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
   <script>
     const langData = {
-      "sr": {
-        "navHome": "Početna", "navAbout": "O nama", "navSound": "Zvuk", "navLight": "Svetlo", "navEffects": "Efekti", "navGallery": "Galerija", "navContact": "Kontakt",
-        "pageTitle": "Naš Rad",
-        "photoTitle": "Fotografije",
-        "videoTitle": "Video",
-        "footerRights": "Sva prava zadržana."
-      },
-      "ru": {
-        "navHome": "Главная", "navAbout": "О компании", "navSound": "Звук", "navLight": "Свет", "navEffects": "Эффекты", "navGallery": "Галерея", "navContact": "Контакты",
-        "pageTitle": "Наша работа",
-        "photoTitle": "Фотографии",
-        "videoTitle": "Видео",
-        "footerRights": "Все права защищены."
-      },
-      "en": {
-        "navHome": "Home", "navAbout": "About Us", "navSound": "Sound", "navLight": "Light", "navEffects": "Effects", "navGallery": "Gallery", "navContact": "Contact",
-        "pageTitle": "Our Work",
-        "photoTitle": "Photos",
-        "videoTitle": "Videos",
-        "footerRights": "All rights reserved."
-      }
+      "sr": { "pageLabel": "Naš rad", "pageTitle": "Galerija", "pageSub": "Momenti koje smo stvorili zajedno", "photoTitle": "Fotografije", "videoTitle": "Video", "ctaBtn": "Zatražite ponudu", "footerRights": "Sva prava zadržana.", "navHome": "Početna", "navAbout": "O nama", "navSound": "Zvuk", "navLight": "Svetlo", "navEffects": "Efekti", "navGallery": "Galerija", "navContact": "Kontakt" },
+      "ru": { "pageLabel": "Наша работа", "pageTitle": "Галерея", "pageSub": "Моменты, которые мы создали вместе", "photoTitle": "Фотографии", "videoTitle": "Видео", "ctaBtn": "Запросить предложение", "footerRights": "Все права защищены.", "navHome": "Главная", "navAbout": "О компании", "navSound": "Звук", "navLight": "Свет", "navEffects": "Эффекты", "navGallery": "Галерея", "navContact": "Контакты" },
+      "en": { "pageLabel": "Our Work", "pageTitle": "Gallery", "pageSub": "Moments we created together", "photoTitle": "Photos", "videoTitle": "Videos", "ctaBtn": "Get a Quote", "footerRights": "All rights reserved.", "navHome": "Home", "navAbout": "About Us", "navSound": "Sound", "navLight": "Light", "navEffects": "Effects", "navGallery": "Gallery", "navContact": "Contact" }
     };
-
     function changeLanguage(lang) {
-        document.documentElement.lang = lang === 'sr' ? 'sr-Latn' : lang;
-        document.querySelectorAll('[data-lang-key]').forEach(element => {
-            const key = element.getAttribute('data-lang-key');
-            if (langData[lang][key]) {
-                element.innerHTML = langData[lang][key];
-            }
-        });
-        document.querySelectorAll('.lang-switcher button').forEach(button => {
-            button.classList.remove('active');
-        });
-        document.querySelector(`.lang-switcher button[onclick="changeLanguage('${lang}')"]`).classList.add('active');
-        document.title = (lang === 'sr') ? 'VinylM — Galerija' : (lang === 'ru') ? 'VinylM — Галерея' : 'VinylM — Gallery';
+      document.documentElement.lang = lang === 'sr' ? 'sr-Latn' : lang;
+      const data = langData[lang];
+      document.querySelectorAll('[data-lang-key]').forEach(el => { const k = el.getAttribute('data-lang-key'); if (data[k]) el.innerHTML = data[k]; });
+      ['sr','ru','en'].forEach(l => {
+        const b1 = document.getElementById(`langBtn-${l}`), b2 = document.getElementById(`mLangBtn-${l}`);
+        if (b1) b1.classList.toggle('active', l === lang);
+        if (b2) b2.classList.toggle('active', l === lang);
+      });
+      document.title = lang === 'ru' ? 'VinylM — Галерея' : lang === 'en' ? 'VinylM — Gallery' : 'VinylM — Galerija';
     }
-
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileNav.classList.toggle('open'); });
+    window.addEventListener('scroll', () => {
+      const s = document.documentElement.scrollTop, h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('scrollProgress').style.width = (s/h*100) + '%';
+      document.getElementById('siteHeader').classList.toggle('scrolled', s > 50);
+    }, { passive: true });
+    const obs = new IntersectionObserver((es) => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     document.addEventListener('DOMContentLoaded', () => {
-        changeLanguage('sr');
-        
-        // Инициализация Fancybox только для фотографий
-        Fancybox.bind('[data-fancybox="gallery-photo"]', {
+      changeLanguage('sr');
+      Fancybox.bind('[data-fancybox="gallery-photo"]', { Thumbs: { type: 'strip' } });
+      document.querySelectorAll('.video-item').forEach(item => {
+        item.addEventListener('click', function() {
+          if (this.querySelector('video')) return;
+          const src = this.dataset.videoSrc;
+          if (!src) return;
+          const v = document.createElement('video');
+          v.src = src; v.autoplay = true; v.muted = true; v.controls = true; v.loop = true; v.playsinline = true;
+          this.innerHTML = '';
+          this.appendChild(v);
+          this.classList.add('video-playing');
         });
-        
-        // Скрипт для воспроизведения видео на месте
-        document.querySelectorAll('.video-item').forEach(item => {
-            item.addEventListener('click', function() {
-                if (this.querySelector('video')) {
-                    return;
-                }
-
-                const videoSrc = this.dataset.videoSrc;
-                if (!videoSrc) return;
-
-                const videoPlayer = document.createElement('video');
-                videoPlayer.src = videoSrc;
-                // --- ИЗМЕНЕНИЯ ЗДЕСЬ ---
-                videoPlayer.autoplay = true; // Автовоспроизведение
-                videoPlayer.muted = true;    // Обязательно для автовоспроизведения в большинстве браузеров
-                videoPlayer.controls = true;
-                videoPlayer.loop = true;
-                videoPlayer.playsinline = true;
-
-                this.innerHTML = ''; 
-                this.appendChild(videoPlayer);
-                this.classList.add('video-playing');
-            });
-        });
+      });
     });
   </script>
 </body>

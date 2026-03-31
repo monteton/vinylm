@@ -4,114 +4,243 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VinylM — Dobrodošli</title>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <meta name="description" content="VinylM — profesionalno ozvučenje, rasveta i specijalni efekti za festivale, koncerte i korporativne događaje u Crnoj Gori.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --color-dark: #000000;
-      --color-light: #fff;
-      --color-gray: #ccc;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
       height: 100%;
-      margin: 0;
+      background: #0A0A0A;
+      font-family: 'Outfit', sans-serif;
+      color: #fff;
       overflow: hidden;
     }
-    body {
+
+    /* Animated background particles */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.04) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .splash {
       display: flex;
-      align-items: center; /* Центрирует по вертикали */
-      justify-content: center; /* Центрирует по горизонтали */
-      background-color: var(--color-dark);
-      font-family: 'Montserrat', sans-serif;
-      position: relative; /* Необходимо для позиционирования дочерних элементов */
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+      position: relative;
     }
-    .splash-container {
-      text-align: center;
-    }
+
+    /* GIF Logo */
     .splash-logo {
-      width: 250px;
-      height: 250px;
+      width: 200px;
+      height: 200px;
       object-fit: cover;
-      border-radius: 15px;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow:
+        0 0 0 1px rgba(201,168,76,0.2),
+        0 0 60px rgba(201,168,76,0.15),
+        0 20px 60px rgba(0,0,0,0.6);
+      animation: logoIn 0.9s cubic-bezier(0.4,0,0.2,1) forwards;
+      opacity: 0;
     }
-    .phone-number {
-        color: var(--color-gray);
-        font-size: 1.2em;
-        font-weight: 400;
-        margin-top: 25px; /* Отступ от логотипа */
-        letter-spacing: 1.5px;
-    }
-
-    /* --- ИЗМЕНЕНИЯ ЗДЕСЬ --- */
-    /* Контейнер для позиционирования кнопки внизу */
-    .button-container {
-        position: absolute;
-        bottom: 50px; /* Отступ от нижнего края экрана */
-        left: 0;
-        right: 0;
-        text-align: center;
+    @keyframes logoIn {
+      from { opacity: 0; transform: scale(0.85) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    /* Стили для переливающейся кнопки */
-    .start-button {
-      display: inline-block;
-      padding: 15px 45px;
-      font-size: 1.5em;
-      font-weight: 700;
-      color: #333;
+    /* Brand name */
+    .brand-name {
+      font-size: clamp(3rem, 12vw, 6rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin-top: 32px;
+      background: linear-gradient(135deg, #fff 30%, #E8C97A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: slideUp 0.8s 0.3s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    .brand-tagline {
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 10px;
+      animation: slideUp 0.8s 0.5s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    .phone {
+      font-size: 1.1rem;
+      color: rgba(201,168,76,0.7);
+      font-weight: 600;
+      margin-top: 24px;
+      letter-spacing: 0.06em;
+      animation: slideUp 0.8s 0.6s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    /* Gold divider */
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+      margin: 28px auto;
+      animation: slideUp 0.8s 0.7s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* START button */
+    .start-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 52px;
+      background: linear-gradient(135deg, #9A6F28, #C9A84C, #E8C97A);
+      background-size: 200% 100%;
+      background-position: 0% 50%;
+      color: #0A0A0A;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       text-decoration: none;
-      border-radius: 50px;
-      border: 2px solid #ccc;
-      background: linear-gradient(
-        100deg,
-        #a9a9a9, #f0f0f0, #a9a9a9, #d3d3d3, #a9a9a9
-      );
-      background-size: 300% 100%;
-      transition: all 0.4s ease-in-out;
-      animation: shimmer 4s infinite linear;
-      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+      border-radius: 60px;
+      border: none;
+      cursor: pointer;
+      box-shadow:
+        0 8px 32px rgba(201,168,76,0.4),
+        0 0 0 1px rgba(201,168,76,0.2);
+      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+      animation: slideUp 0.8s 0.8s cubic-bezier(0.4,0,0.2,1) both;
+      position: relative;
+      overflow: hidden;
     }
-    .start-button:hover {
+    .start-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #E8C97A, #9A6F28);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .start-btn:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow:
+        0 16px 48px rgba(201,168,76,0.6),
+        0 0 0 1px rgba(201,168,76,0.5);
+    }
+    .start-btn:hover::before { opacity: 1; }
+    .start-btn span, .start-btn i { position: relative; z-index: 1; }
+
+    /* Social row */
+    .social-row {
+      display: flex;
+      gap: 16px;
+      margin-top: 40px;
+      animation: slideUp 0.8s 1s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .soc-link {
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 10px;
+      color: rgba(201,168,76,0.6);
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .soc-link:hover {
+      background: rgba(201,168,76,0.1);
+      border-color: rgba(201,168,76,0.5);
+      color: #C9A84C;
       transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(255, 214, 0, 0.3);
-      color: #000;
     }
 
-    /* Анимация переливания */
-    @keyframes shimmer {
-      0% { background-position: 150% 0; }
-      100% { background-position: -150% 0; }
+    /* Bottom badge */
+    .location-badge {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: fadeIn 1s 1.2s both;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Shimmer ring around logo */
+    .logo-ring {
+      position: relative;
+      display: inline-block;
+    }
+    .logo-ring::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 28px;
+      border: 1px solid rgba(201,168,76,0.3);
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+    @keyframes ringPulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.03); }
     }
 
-    /* Адаптивность для мобильных */
     @media (max-width: 480px) {
-        .splash-logo {
-            width: 180px;
-            height: 180px;
-        }
-        .phone-number {
-            font-size: 1em;
-        }
-        .button-container {
-            bottom: 40px; /* Уменьшаем отступ на мобильных */
-        }
-        .start-button {
-            font-size: 1.2em;
-            padding: 12px 35px;
-        }
+      .splash-logo { width: 150px; height: 150px; }
     }
   </style>
 </head>
 <body>
+  <div class="splash">
+    <div class="logo-ring">
+      <img src="videos/logo.gif" alt="VinylM" class="splash-logo">
+    </div>
 
-  <div class="splash-container">
-    <img src="videos/logo.gif" alt="VinylM Animated Logo" class="splash-logo">
-    <p class="phone-number">+382 67 439 100</p>
-  </div>
-  
-  <div class="button-container">
-    <a href="main.html" class="start-button">START</a>
+    <div class="brand-name">VinylM</div>
+    <div class="brand-tagline">Event Solutions · Montenegro</div>
+    <div class="phone">+382 67 439 100</div>
+
+    <div class="divider"></div>
+
+    <a href="main.html" class="start-btn">
+      <span>Uđi na sajt</span>
+      <i class="fas fa-arrow-right" style="font-size:0.85rem;"></i>
+    </a>
+
+    <div class="social-row">
+      <a href="https://www.facebook.com/share/198Ar6UoX1/" target="_blank" class="soc-link">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://www.instagram.com/_vinyl_m/" target="_blank" class="soc-link">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://wa.me/38267439100" target="_blank" class="soc-link">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+    </div>
   </div>
 
+  <div class="location-badge">Budva · Montenegro · Since 2007</div>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </body>
 </html>
