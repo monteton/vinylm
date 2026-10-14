@@ -98,12 +98,10 @@ header.top.solid{background:rgba(242,238,230,.88);backdrop-filter:blur(14px);-we
 @media(max-width:900px){.cbts{grid-template-columns:1fr 1fr;gap:10px}.cbt{min-height:128px;gap:20px;padding:16px;border-radius:22px}.vrec{right:-34vw;top:30%;width:92vw;margin-top:-46vw;opacity:.16}.hero{padding-top:100px}.hero h1{font-size:clamp(64px,22vw,200px)}.hero-top{justify-content:flex-start;padding-top:40px}}
 
 /* promo banner */
-.promo{position:relative;z-index:3;display:grid;grid-template-columns:auto 1fr auto;gap:clamp(14px,2.4vw,34px);align-items:center;margin-top:40px;padding:clamp(14px,2vw,22px) clamp(16px,2.4vw,30px);border-radius:28px;overflow:hidden;background:#111;color:#fff;border:2px solid var(--ink)}
-.promo .pbg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.5;filter:saturate(1.2)}
-.promo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(17,17,17,.92) 8%,rgba(17,17,17,.55) 55%,rgba(17,17,17,.2));pointer-events:none}
-.promo .pdots{position:absolute;inset:0;z-index:1;background-image:radial-gradient(circle,rgba(255,255,255,.28) 1.2px,transparent 1.6px);background-size:9px 9px;-webkit-mask-image:linear-gradient(100deg,#000,transparent 70%);mask-image:linear-gradient(100deg,#000,transparent 70%);animation:dots 5s linear infinite}
-@keyframes dots{to{background-position:90px 0}}
-.promo>*:not(.pbg):not(.pdots){position:relative;z-index:2}
+.promo{position:relative;z-index:3;display:grid;grid-template-columns:auto 1fr auto;gap:clamp(14px,2.4vw,34px);align-items:center;margin-top:40px;padding:clamp(14px,2vw,22px) clamp(16px,2.4vw,30px);min-height:clamp(140px,15vw,210px);border-radius:28px;overflow:hidden;background:#111;color:#fff;border:2px solid var(--ink)}
+.promo .pbg,.promo .pvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background-size:cover;background-position:center}
+.promo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,10,14,.9) 6%,rgba(8,10,14,.5) 52%,rgba(8,10,14,.06) 100%);pointer-events:none;z-index:1}
+.promo>*:not(.pbg):not(.pvid){position:relative;z-index:2}
 .promo .pnew{font:900 13px var(--sans);letter-spacing:.16em;background:var(--red);color:#fff;padding:9px 16px;border-radius:99px;box-shadow:0 0 0 0 rgba(255,74,28,.7);animation:pulse 2.2s infinite}
 @keyframes pulse{70%{box-shadow:0 0 0 14px rgba(255,74,28,0)}100%{box-shadow:0 0 0 0 rgba(255,74,28,0)}}
 .promo .ptx b{display:block;font:900 clamp(24px,3vw,44px)/1.05 var(--disp);letter-spacing:-.05em;text-transform:uppercase}
@@ -115,7 +113,7 @@ header.top.solid{background:rgba(242,238,230,.88);backdrop-filter:blur(14px);-we
 @media(max-width:900px){.promo{grid-template-columns:1fr auto;margin-top:26px;border-radius:24px;gap:10px 14px}.promo .pnew{grid-column:1/-1;justify-self:start}.promo .pgo span{display:none}.promo .ptx small{max-width:none}}
 /* expanding photo */
 .band{padding:0 clamp(18px,4vw,56px)}
-.band .fr{height:min(70vh,640px);border-radius:36px;overflow:hidden;position:relative;will-change:transform}
+.band .fr{width:min(720px,100%);aspect-ratio:1;margin:0 auto;border-radius:36px;overflow:hidden;position:relative;will-change:transform}
 .band img{position:absolute;left:0;top:-10%;width:100%;height:120%;object-fit:cover}
 .band .cap{position:absolute;left:24px;bottom:22px;font:700 12px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);padding:10px 18px;border-radius:99px}
 
@@ -275,7 +273,7 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
   </div>
   <div class="wrap" style="width:100%">
     <a class="promo" href="#catalog" data-open="effects" id="promo">
-      <span class="pbg" style="background-image:url(assets/img/g16.webp)"></span><span class="pdots"></span>
+      <span class="pbg" style="background-image:url(assets/img/led-banner.webp)"></span><video class="pvid" id="pvid" src="assets/video/led-banner.mp4" poster="assets/img/led-banner.webp" muted loop playsinline preload="metadata" aria-hidden="true"></video>
       <span class="pnew" data-i="promoNew"></span>
       <span class="ptx"><b data-i="promoTitle"></b><small data-i="promoSub"></small></span>
       <span class="pgo"><span data-i="promoCta"></span><i id="pArrow"></i></span>
@@ -285,7 +283,7 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
   </div>
 </section>
 
-<section class="band"><div class="fr" id="bandFr"><img src="assets/img/festival.webp" alt="" id="bandImg"><span class="cap" data-i="heroBadge"></span></div></section>
+<section class="band"><div class="fr" id="bandFr"><img src="assets/img/square.webp" alt="" id="bandImg"><span class="cap" data-i="heroBadge"></span></div></section>
 
 <div class="mq"><div id="mq"></div></div>
 
@@ -447,6 +445,8 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
     var a=e.target.closest('a[href^="#"]');if(a&&a.getAttribute('href').length>1){e.preventDefault();if(mOpen){setMenu(false);setTimeout(function(){goto(a.getAttribute('href'))},500)}else goto(a.getAttribute('href'))}
   });
 
+  /* видео-подложка баннера: играет, пока видна */
+  var pv=$('#pvid');if(pv&&!reduce){var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){pv.play().catch(function(){})}else pv.pause()})},{threshold:.1});io.observe(pv)}
   /* hero: пластинка, текст, расширение фото */
   var rotY={v:0};
   gsap.to('#rec',{rotation:360,duration:26,ease:'none',repeat:-1});
