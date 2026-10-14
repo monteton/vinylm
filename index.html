@@ -251,6 +251,7 @@ form{display:grid;gap:8px}
 .fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--red)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:26px}
 .sendrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.sendhint{font-size:13px;color:var(--mut);margin-top:12px}
+.copybox{display:none;width:100%;margin-top:10px;padding:14px;border:2px solid var(--ink);border-radius:14px;background:#fbf9f4;font:500 15px/1.5 var(--sans);resize:none}
 .note{display:none;font-size:14px;color:var(--red);font-weight:700}
 @media(max-width:900px){.cgrid,.two{grid-template-columns:1fr}}
 footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
@@ -353,7 +354,7 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
       <div class="fld"><input id="b3" name="email" type="email" placeholder=" "><label for="b3" data-i="email"></label></div>
       <div class="fld s"><select id="b4" name="event"><option value="" data-i="formEventSelect"></option><option data-i="eventConcert"></option><option data-i="eventCorporate"></option><option data-i="eventWedding"></option><option data-i="eventConference"></option><option data-i="eventOther"></option></select><label for="b4" data-i="formEvent"></label></div>
       <div class="fld"><textarea id="b5" name="message" rows="3" placeholder=" "></textarea><label for="b5" data-i="formMessage"></label></div>
-      <div class="sendrow"><button class="btn solid" type="button" data-send="wa"><span data-i="sendWa"></span></button><button class="btn" type="button" data-send="viber"><span data-i="sendViber"></span></button></div><p class="sendhint" data-i="sendHint"></p><p class="note" id="note"></p>
+      <div class="sendrow"><button class="btn solid" type="button" data-send="wa"><span data-i="sendWa"></span></button><button class="btn" type="button" data-send="viber"><span data-i="sendViber"></span></button></div><p class="sendhint" data-i="sendHint"></p><p class="note" id="note"></p><textarea class="copybox" id="copybox" readonly rows="6"></textarea>
     </form>
   </div>
 </div></section>
@@ -509,11 +510,23 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
     if(g('b5'))L.push(VM.t('formMessage')+': '+g('b5'));
     return L.join('\n');
   }
+  function copySync(t){
+    var ok=false;
+    try{var ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;font-size:16px';document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,t.length);ok=document.execCommand('copy');document.body.removeChild(ta)}catch(e){}
+    return ok;
+  }
   function note(t){var n=$('#note');n.style.display='block';n.style.color='var(--red)';n.textContent=t}
   $$('[data-send]').forEach(function(btn){btn.addEventListener('click',function(){
     if(!formEl.reportValidity())return;var text=compose();
     if(btn.dataset.send==='wa'){window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(text),'_blank','noopener')}
-    else{try{navigator.clipboard.writeText(text)}catch(e){}note(VM.t('copied'));location.href='viber://chat?number=%2B'+PHONE}
+    else{
+      var ok=copySync(text);
+      try{navigator.clipboard&&navigator.clipboard.writeText&&navigator.clipboard.writeText(text).catch(function(){})}catch(e){}
+      var box=$('#copybox');box.value=text;box.style.display=ok?'none':'block';
+      note(ok?VM.t('copied'):VM.t('copyManual'));
+      if(!ok){box.focus();box.select()}
+      setTimeout(function(){location.href='viber://chat?number=%2B'+PHONE},ok?0:900);
+    }
   })});
   formEl.addEventListener('submit',function(e){e.preventDefault();$('[data-send="wa"]').click()});
 
