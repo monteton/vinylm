@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="assets/img/logo-dark.png">
 <title>VinylM — Event Solutions | Montenegro · звук, свет, экраны для событий</title>
-<meta name="description" content="VinylM — профессиональное ozvučenje, rasveta i LED ekrani za festivale, koncerte i korporativne događaje u Crnoj Gori. Звук, свет, спецэффекты, LED-экраны. Budva, Montenegro. Since 2007.">
+<meta name="description" content="VinylM — profesionalno ozvučenje, rasveta i LED ekrani za festivale, koncerte i korporativne događaje u Crnoj Gori. Звук, свет, спецэффекты, LED-экраны. Budva, Montenegro. Since 2007.">
 <link rel="canonical" href="https://vinyl-m.com/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="VinylM — Event Solutions | Montenegro">
@@ -97,6 +97,22 @@ header.top.solid{background:rgba(242,238,230,.88);backdrop-filter:blur(14px);-we
 .cbt:hover{color:#fff}.cbt:hover .n{color:rgba(255,255,255,.8)}
 @media(max-width:900px){.cbts{grid-template-columns:1fr 1fr;gap:10px}.cbt{min-height:128px;gap:20px;padding:16px;border-radius:22px}.vrec{right:-34vw;top:30%;width:92vw;margin-top:-46vw;opacity:.16}.hero{padding-top:100px}.hero h1{font-size:clamp(64px,22vw,200px)}.hero-top{justify-content:flex-start;padding-top:40px}}
 
+/* promo banner */
+.promo{position:relative;z-index:3;display:grid;grid-template-columns:auto 1fr auto;gap:clamp(14px,2.4vw,34px);align-items:center;margin-top:40px;padding:clamp(14px,2vw,22px) clamp(16px,2.4vw,30px);border-radius:28px;overflow:hidden;background:#111;color:#fff;border:2px solid var(--ink)}
+.promo .pbg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.5;filter:saturate(1.2)}
+.promo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(17,17,17,.92) 8%,rgba(17,17,17,.55) 55%,rgba(17,17,17,.2));pointer-events:none}
+.promo .pdots{position:absolute;inset:0;z-index:1;background-image:radial-gradient(circle,rgba(255,255,255,.28) 1.2px,transparent 1.6px);background-size:9px 9px;-webkit-mask-image:linear-gradient(100deg,#000,transparent 70%);mask-image:linear-gradient(100deg,#000,transparent 70%);animation:dots 5s linear infinite}
+@keyframes dots{to{background-position:90px 0}}
+.promo>*:not(.pbg):not(.pdots){position:relative;z-index:2}
+.promo .pnew{font:900 13px var(--sans);letter-spacing:.16em;background:var(--red);color:#fff;padding:9px 16px;border-radius:99px;box-shadow:0 0 0 0 rgba(255,74,28,.7);animation:pulse 2.2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 14px rgba(255,74,28,0)}100%{box-shadow:0 0 0 0 rgba(255,74,28,0)}}
+.promo .ptx b{display:block;font:900 clamp(24px,3vw,44px)/1.05 var(--disp);letter-spacing:-.05em;text-transform:uppercase}
+.promo .ptx small{display:block;margin-top:6px;font:500 clamp(13px,1.2vw,16px)/1.4 var(--sans);color:#e8e3d8;max-width:560px}
+.promo .pgo{display:flex;align-items:center;gap:12px;font:800 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.promo .pgo i{width:48px;height:48px;border-radius:50%;background:var(--red);display:grid;place-items:center}
+.promo .pgo i .ic{width:20px;height:20px}
+.promo:hover .pgo i{background:#fff;color:var(--ink)}
+@media(max-width:900px){.promo{grid-template-columns:1fr auto;margin-top:26px;border-radius:24px;gap:10px 14px}.promo .pnew{grid-column:1/-1;justify-self:start}.promo .pgo span{display:none}.promo .ptx small{max-width:none}}
 /* expanding photo */
 .band{padding:0 clamp(18px,4vw,56px)}
 .band .fr{height:min(70vh,640px);border-radius:36px;overflow:hidden;position:relative;will-change:transform}
@@ -223,6 +239,7 @@ form{display:grid;gap:8px}
 .fld input:focus+label,.fld input:not(:placeholder-shown)+label,.fld textarea:focus+label,.fld textarea:not(:placeholder-shown)+label,.fld.s label{top:2px;font:700 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
 .fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--red)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.sendrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.sendhint{font-size:13px;color:var(--mut);margin-top:12px}
 .note{display:none;font-size:14px;color:var(--red);font-weight:700}
 @media(max-width:900px){.cgrid,.two{grid-template-columns:1fr}}
 footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
@@ -257,6 +274,12 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
     <div class="ctas"><a class="btn solid" href="#contact" data-i="heroCta1"></a><a class="btn" href="#about" data-i="heroCta2"></a></div>
   </div>
   <div class="wrap" style="width:100%">
+    <a class="promo" href="#catalog" data-open="effects" id="promo">
+      <span class="pbg" style="background-image:url(assets/img/g16.webp)"></span><span class="pdots"></span>
+      <span class="pnew" data-i="promoNew"></span>
+      <span class="ptx"><b data-i="promoTitle"></b><small data-i="promoSub"></small></span>
+      <span class="pgo"><span data-i="promoCta"></span><i id="pArrow"></i></span>
+    </a>
     <div class="hint" data-i="catalogHint"></div>
     <div class="cbts" id="cbts"></div>
   </div>
@@ -319,7 +342,7 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
       <div class="fld"><input id="b3" name="email" type="email" placeholder=" "><label for="b3" data-i="email"></label></div>
       <div class="fld s"><select id="b4" name="event"><option value="" data-i="formEventSelect"></option><option data-i="eventConcert"></option><option data-i="eventCorporate"></option><option data-i="eventWedding"></option><option data-i="eventConference"></option><option data-i="eventOther"></option></select><label for="b4" data-i="formEvent"></label></div>
       <div class="fld"><textarea id="b5" name="message" rows="3" placeholder=" "></textarea><label for="b5" data-i="formMessage"></label></div>
-      <div style="margin-top:20px"><button class="btn solid" type="submit" data-i="formSubmit"></button></div><p class="note" id="note"></p>
+      <div class="sendrow"><button class="btn solid" type="button" data-send="wa"><span data-i="sendWa"></span></button><button class="btn" type="button" data-send="viber"><span data-i="sendViber"></span></button></div><p class="sendhint" data-i="sendHint"></p><p class="note" id="note"></p>
     </form>
   </div>
 </div></section>
@@ -371,7 +394,7 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
     $('#reels').innerHTML=D.gallery.videos.map(function(n){return '<div class="reel" data-v="'+n+'"><img src="assets/img/v'+n+'.webp" alt="" loading="lazy"><div class="pl">'+VM.icon('play')+'</div></div>'}).join('');
     var ap=$('#allP');if(ap)ap.onclick=function(){VM.lightbox(gOrder.map(function(x){return 'assets/img/g'+x+'.webp'}),0)};
   }
-  function icons(){$('#ic1').innerHTML=VM.icon('pin');$('#ic2').innerHTML=VM.icon('phone');$('#ic3').innerHTML=VM.icon('mail');$('#ic4').innerHTML=VM.icon('insta');$('#ic5').innerHTML=VM.icon('fb')}
+  function icons(){$('#pArrow').innerHTML=VM.icon('arrow');$('#ic1').innerHTML=VM.icon('pin');$('#ic2').innerHTML=VM.icon('phone');$('#ic3').innerHTML=VM.icon('mail');$('#ic4').innerHTML=VM.icon('insta');$('#ic5').innerHTML=VM.icon('fb')}
   function all(){renderHero();renderRows();renderPortfolio();renderGallery();refreshPin()}
   VM.onLang(function(){all();splitAll()});
   VM.init();icons();all();
@@ -448,17 +471,24 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
   $$('[data-n]').forEach(function(el){var end=+el.dataset.n,o={v:0};ScrollTrigger.create({trigger:el,start:'top 92%',once:true,onEnter:function(){gsap.to(o,{v:end,duration:2,ease:'power2.out',onUpdate:function(){el.textContent=Math.round(o.v)}})}})});
   var mq=gsap.to('#mq',{xPercent:-33.33,ease:'none',duration:28,repeat:-1});
   ScrollTrigger.create({trigger:'.mq',start:'top bottom',end:'bottom top',onUpdate:function(s){mq.timeScale(1+Math.abs(s.getVelocity()/260))}});
-  /* форма: на живом сайте уходит в Formspree (как на прежнем сайте), локально — демо */
-  var FORM_URL='https://formspree.io/f/mjgpywpe';
-  var LIVE=/^https?:$/.test(location.protocol)&&!/^(localhost|127\.|\[::1\])/.test(location.hostname);
-  $('#form').addEventListener('submit',function(e){
-    e.preventDefault();var f=this,n=$('#note'),b=$('button[type=submit]',f);n.style.display='block';n.style.color='var(--red)';
-    if(!LIVE){n.textContent=VM.t('formOk')+' · '+VM.t('formDemo');return}
-    b.disabled=true;n.textContent='…';
-    fetch(FORM_URL,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){
-      if(r.ok){f.reset();n.textContent=VM.t('formOk')}else{n.textContent=VM.t('formErr')}
-    }).catch(function(){n.textContent=VM.t('formErr')}).then(function(){b.disabled=false});
-  });
+  /* форма: отправка в WhatsApp / Viber на номер компании */
+  var PHONE='38267439100';
+  var formEl=$('#form');
+  function compose(){
+    var g=function(id){return (document.getElementById(id).value||'').trim()},ev=document.getElementById('b4'),evt=ev.value;
+    var L=[VM.t('msgHello'),'',VM.t('formName')+': '+g('b1'),VM.t('formPhone')+': '+g('b2')];
+    if(g('b3'))L.push(VM.t('email')+': '+g('b3'));
+    if(evt)L.push(VM.t('formEvent')+': '+evt);
+    if(g('b5'))L.push(VM.t('formMessage')+': '+g('b5'));
+    return L.join('\n');
+  }
+  function note(t){var n=$('#note');n.style.display='block';n.style.color='var(--red)';n.textContent=t}
+  $$('[data-send]').forEach(function(btn){btn.addEventListener('click',function(){
+    if(!formEl.reportValidity())return;var text=compose();
+    if(btn.dataset.send==='wa'){window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(text),'_blank','noopener')}
+    else{try{navigator.clipboard.writeText(text)}catch(e){}note(VM.t('copied'));location.href='viber://chat?number=%2B'+PHONE}
+  })});
+  formEl.addEventListener('submit',function(e){e.preventDefault();$('[data-send="wa"]').click()});
 
   /* вступление */
   document.body.classList.add('lock');
@@ -467,7 +497,7 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
     .from('header.top',{y:-80,opacity:0,duration:1},'-=.5')
     .from('.hero-badge',{y:20,opacity:0,duration:.8},'-=.7')
     .from('.hero h1 .ln>span',{yPercent:115,rotate:2,duration:1.4,stagger:.14},'-=.6')
-    .fromTo('.hero-sub,.ctas,.hint',{y:30,opacity:0},{y:0,opacity:1,stagger:.1,duration:.9,clearProps:'transform,opacity'},'-=1')
+    .fromTo('.hero-sub,.ctas,.promo,.hint',{y:30,opacity:0},{y:0,opacity:1,stagger:.1,duration:.9,clearProps:'transform,opacity'},'-=1')
     .fromTo('.cbt',{y:60,opacity:0},{y:0,opacity:1,stagger:.08,duration:.9,clearProps:'transform,opacity'},'-=.8')
     .from('#rec',{scale:.7,opacity:0,duration:1.6},'-=1.8');
   if(reduce)tl.progress(1);
