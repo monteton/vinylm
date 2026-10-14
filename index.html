@@ -350,7 +350,7 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
       <div class="fld"><input id="b3" name="email" type="email" placeholder=" "><label for="b3" data-i="email"></label></div>
       <div class="fld s"><select id="b4" name="event"><option value="" data-i="formEventSelect"></option><option data-i="eventConcert"></option><option data-i="eventCorporate"></option><option data-i="eventWedding"></option><option data-i="eventConference"></option><option data-i="eventOther"></option></select><label for="b4" data-i="formEvent"></label></div>
       <div class="fld"><textarea id="b5" name="message" rows="3" placeholder=" "></textarea><label for="b5" data-i="formMessage"></label></div>
-      <div class="sendrow"><button class="btn solid" type="button" data-send="wa"><span data-i="sendWa"></span></button><button class="btn" type="button" data-send="viber"><span data-i="sendViber"></span></button></div><p class="sendhint" data-i="sendHint"></p><p class="note" id="note"></p><textarea class="copybox" id="copybox" readonly rows="6"></textarea>
+      <div class="sendrow"><button class="btn solid" type="button" data-send="wa"><span data-i="sendWa"></span></button><button class="btn" type="button" data-send="viber"><span data-i="sendViber"></span></button><button class="btn" type="button" data-send="mail"><span data-i="sendMail"></span></button></div><p class="sendhint" data-i="sendHint"></p><p class="note" id="note"></p><textarea class="copybox" id="copybox" readonly rows="6"></textarea>
     </form>
   </div>
 </div></section>
@@ -501,9 +501,20 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
     try{var ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;font-size:16px';document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,t.length);ok=document.execCommand('copy');document.body.removeChild(ta)}catch(e){}
     return ok;
   }
+  var FORM_URL='https://formspree.io/f/mjgpywpe';
+  var LIVE=/^https?:$/.test(location.protocol)&&!/^(localhost|127\.|\[::1\])/.test(location.hostname);
+  function sendMail(btn){
+    if(!LIVE){note(VM.t('formOk')+' · '+VM.t('formDemo'));return}
+    var fd=new FormData(formEl);fd.append('_subject','Upit sa sajta VinylM');
+    btn.disabled=true;note('…');
+    fetch(FORM_URL,{method:'POST',body:fd,headers:{'Accept':'application/json'}}).then(function(r){
+      if(r.ok){formEl.reset();note(VM.t('formOk'))}else{note(VM.t('formErr'))}
+    }).catch(function(){note(VM.t('formErr'))}).then(function(){btn.disabled=false});
+  }
   function note(t){var n=$('#note');n.style.display='block';n.style.color='var(--red)';n.textContent=t}
   $$('[data-send]').forEach(function(btn){btn.addEventListener('click',function(){
     if(!formEl.reportValidity())return;var text=compose();
+    if(btn.dataset.send==='mail'){sendMail(btn);return}
     if(btn.dataset.send==='wa'){window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(text),'_blank','noopener')}
     else{
       var ok=copySync(text);
