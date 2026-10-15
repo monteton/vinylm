@@ -321,7 +321,7 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
   </div>
 </section>
 
-<section class="band"><div class="fr" id="bandFr"><img src="assets/img/square.webp" alt="" id="bandImg"><span class="cap" data-i="heroBadge"></span></div></section>
+<section class="band"><div class="fr" id="bandFr"><img src="assets/img/square.webp" alt="Vinyl M — vinil ploča sa logotipom" id="bandImg"><span class="cap" data-i="heroBadge"></span></div></section>
 
 <div class="mq"><div id="mq"></div></div>
 
@@ -335,7 +335,7 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
 <section class="sec" id="about" style="padding-top:20px"><div class="wrap">
   <div class="eyebrow" data-i="aboutLabel"></div>
   <div class="about">
-    <div class="l"><h2 data-split data-i="aboutTitle"></h2><div class="ph rv"><div class="sticker"><span>15+<small data-i="badgeLabel"></small></span></div><img src="assets/img/about-console.webp" alt="" id="abImg"></div></div>
+    <div class="l"><h2 data-split data-i="aboutTitle"></h2><div class="ph rv"><div class="sticker"><span>15+<small data-i="badgeLabel"></small></span></div><img src="assets/img/about-console.webp" alt="Mikseta sa logotipom Vinyl M" id="abImg"></div></div>
     <div class="r"><p class="rv" data-i="aboutP1"></p><p class="rv" data-i="aboutP2"></p><p class="rv" data-i="aboutP3"></p><p class="rv" data-i="aboutP4"></p><p class="rv" data-i="aboutP5"></p><div class="pull rv" data-i="aboutQuote"></div></div>
   </div>
 </div></section>
@@ -428,11 +428,13 @@ footer{background:var(--ink);color:var(--paper);padding:70px 0 36px}
   var phOrder=[17,15,18].concat(gOrder.filter(function(x){return [17,15,18].indexOf(x)<0}));
   var phAll=false,vAll=false;
   function moreTexts(){$('#pMore').textContent=phAll?VM.t('collapse'):VM.t('allPhotos')+' ('+phOrder.length+')';$('#vMore').textContent=vAll?VM.t('collapse'):VM.t('allVideos')+' ('+D.gallery.videos.length+')'}
+  var GALT={"1": "Scena sa LED ekranima i truss konstrukcijom na modnoj reviji", "2": "Gitare na pozornici ispod truss konstrukcije sa rasvjetom", "3": "Koncert uz LED ekran, crvenu scensku rasvjetu i svjetlosne snopove", "4": "Bubnjevi na bini sa pokretnim glavama i svjetlosnim snopovima", "5": "Konferencijska sala sa mikrofonskim sistemom za diskusiju", "6": "Bubnjevi i pojačala na bini ispod truss konstrukcije", "7": "Koncertna bina sa truss konstrukcijom, pokretnim glavama i LED zidom", "8": "Klavijature i bubnjevi na bini uz rasvjetu sa dimom", "9": "Backline pojačala i oprema na pozadini bine tokom probe", "10": "Festivalski nastup uz LED ekran i zelenu scensku rasvjetu", "11": "Muzičari na bini ispred LED ekrana na korporativnom događaju", "12": "Velika hala sa dugim svečanim stolom osvijetljenim ambijentalnom rasvjetom", "13": "Svečana sala sa pokretnim glavama i ambijentalnom rasvjetom", "14": "Terasa za svečanost sa plavom ambijentalnom rasvjetom i stolovima", "15": "Kongresni centar Mediteran, ukrašen svečani sto sa ambijentalnom rasvjetom", "16": "Hor na bini ispred LED ekrana sa zastavom Crne Gore", "17": "Nastup hora Viva Vox na bini sa truss konstrukcijom i rasvjetom", "18": "Koncert na otvorenom sa LED ekranom i plavim svjetlosnim snopovima", "19": "Koncert u dvorani sa roze scenskom rasvjetom i zavjesama", "20": "Večernji koncert na trgu sa LED ekranom i scenskom rasvjetom", "21": "Prvi ples mladenaca uz tešku maglu i ambijentalnu rasvjetu", "22": "Hladne pirotehničke fontane i teška magla na svadbi", "23": "Korporativna dodjela nagrada sa LED ekranima i scenskom rasvjetom", "24": "Postavka sa LED ekranima i stolovima za svečanost ispred stare tvrđave"};
+  var VALT={"1": "Video: scena sa logotipom Vinyl M", "2": "Video: DJ miks u ljubičastom svjetlu", "3": "Video: muzičari na bini", "4": "Video: kontrabasista na koncertu", "5": "Video: pjevačice na bini sa logotipom Vinyl M", "6": "Video: promotivna scena Vinyl M", "7": "Video: Petrovac Jazz Festival, nastup uz logotip Vinyl M", "8": "Video: Petrovac Jazz Festival", "9": "Video: pjevač na bini sa logotipom Vinyl M", "10": "Video: promotivna scena Vinyl M", "11": "Video: LED ekran"};
   function renderGallery(){
     var g=$('#pgrid');g.className='pgrid'+(phAll?' all':'');
-    g.innerHTML=phOrder.map(function(n,i){return '<div class="pc'+(i>2?' extra':'')+'" data-p="'+n+'"><img src="assets/img/g'+n+'.webp" alt=""'+(i>2?' loading="lazy"':'')+'></div>'}).join('');
+    g.innerHTML=phOrder.map(function(n,i){return '<div class="pc'+(i>2?' extra':'')+'" data-p="'+n+'"><img src="assets/img/g'+n+'.webp" alt="'+(GALT[n]||'Vinyl M — oprema za događaje')+'"'+(i>2?' loading="lazy"':'')+'></div>'}).join('');
     var r=$('#reels');r.className='reels'+(vAll?' all':'');
-    r.innerHTML=D.gallery.videos.map(function(n,i){return '<div class="reel'+(i>5?' extra':'')+'" data-v="'+n+'"><img src="assets/img/v'+n+'.webp" alt="" loading="lazy"><div class="pl">'+VM.icon('play')+'</div></div>'}).join('');
+    r.innerHTML=D.gallery.videos.map(function(n,i){return '<div class="reel'+(i>5?' extra':'')+'" data-v="'+n+'"><img src="assets/img/v'+n+'.webp" alt="'+(VALT[n]||'Vinyl M video')+'" loading="lazy"><div class="pl">'+VM.icon('play')+'</div></div>'}).join('');
     moreTexts();
   }
   function icons(){$('#pArrow').innerHTML=VM.icon('arrow');$('#ic1').innerHTML=VM.icon('pin');$('#ic2').innerHTML=VM.icon('phone');$('#ic3').innerHTML=VM.icon('mail');$('#ic4').innerHTML=VM.icon('insta');$('#ic5').innerHTML=VM.icon('fb')}
